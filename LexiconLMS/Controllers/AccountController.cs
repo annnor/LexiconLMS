@@ -449,7 +449,7 @@ namespace LexiconLMS.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Cources");
+            return RedirectToAction("Index", "Courses");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
