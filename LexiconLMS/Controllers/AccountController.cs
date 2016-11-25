@@ -133,7 +133,7 @@ namespace LexiconLMS.Controllers
                     return View(model);
             }
         }
-
+/*   XXX TA BORT !(?)
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -171,7 +171,7 @@ namespace LexiconLMS.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+*/
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -392,7 +392,7 @@ namespace LexiconLMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -449,7 +449,7 @@ namespace LexiconLMS.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Cources");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
