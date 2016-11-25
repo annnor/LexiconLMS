@@ -58,19 +58,6 @@ namespace LexiconLMS.Migrations
             var teacher = userManager.FindByName(emailString);
             userManager.AddToRole(teacher.Id, "Teacher");
 
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
             context.Courses.AddOrUpdate(c => c.Name,
                 new Course { Name = ".Net HT16", StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0), Description = "DotNet utveckling och frontend." },
                 new Course { Name = "It-tekniker", StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0), Description = "Utbildning för potentiella it-tekniker." }
@@ -81,17 +68,13 @@ namespace LexiconLMS.Migrations
             if (!context.Users.Any(u => u.UserName == studentEmailString)) {
                 var user = new ApplicationUser { FirstName = "Annika", LastName = "Nordqvist", Email = studentEmailString, UserName = studentEmailString, Adress = "Björkhagsvägen 2" };
 
-                var result = userManager.Create(user, "Abc123!");
+                var result = userManager.Create(user, "Abc123!"); 
                 if (!result.Succeeded) {
                     throw new Exception(string.Join("\n", result.Errors));
                 }
             }
             var student1 = userManager.FindByName(studentEmailString);
             userManager.AddToRole(student1.Id, "Student");
-
-
-
-
         }
     }
 }
