@@ -85,9 +85,8 @@ namespace LexiconLMS.Controllers
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { Id = course.Id });
             }
-
             return View(course);
         }
 
