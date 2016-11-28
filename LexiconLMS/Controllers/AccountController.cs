@@ -133,7 +133,7 @@ namespace LexiconLMS.Controllers
                     return View(model);
             }
         }
-/*   XXX TA BORT !(?)
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -151,7 +151,7 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                        var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
                 var result = await UserManager.CreateAsync(user, model.Password);
                         var teacher = UserManager.FindByName(user.Email); //new
                         UserManager.AddToRole(teacher.Id, "Teacher"); //new
