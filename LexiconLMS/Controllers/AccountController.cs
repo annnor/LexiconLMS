@@ -105,17 +105,20 @@ namespace LexiconLMS.Controllers
                 //    var studentInSession = db.Users.FirstOrDefault(s => s.Email == User.Identity.Name);
                     var studentInSessionCourseId = studentInSession.CourseId;
 
-                foreach (var user in newDbContext.Users)
+                foreach (var user in newDbContext.Users.ToList())
                 {
                     if (studentInSessionCourseId == user.CourseId)
                     {
-                         //för över till viewmodeln från gamla
-                         UserViewModels studenInSameCourse = new UserViewModels
+                        var getCourseName = newDbContext.Courses.FirstOrDefault(c => c.Id == user.CourseId).Name;//students can only attend 1 course at a tiem
+                                                                                                                     //för över till viewmodeln från gamla
+                        UserViewModels studenInSameCourse = new UserViewModels
                         {
                             Adress = user.Adress,
                             FirstName = user.FirstName,
                             //Id = int.Parse(user.Id),
-                            LastName = user.LastName
+                            LastName = user.LastName,
+                            Email = user.Email,
+                            CourseName = getCourseName
                         };
                         listOfUsers.Add(studenInSameCourse);
                     }
