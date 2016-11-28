@@ -22,7 +22,7 @@ namespace LexiconLMS.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +34,9 @@ namespace LexiconLMS.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -120,7 +120,7 @@ namespace LexiconLMS.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -132,48 +132,47 @@ namespace LexiconLMS.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
-        }
-
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
-                var result = await UserManager.CreateAsync(user, model.Password);
-                var teacher = UserManager.FindByName(user.Email); //new
-                UserManager.AddToRole(teacher.Id, "Teacher"); //new
-                if (result.Succeeded)
+        }       
+                // GET: /Account/Register
+                [AllowAnonymous]
+                public ActionResult Register()
                 {
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    return View();
+                }
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //
+                // POST: /Account/Register
+                [HttpPost]
+                [AllowAnonymous]
+                [ValidateAntiForgeryToken]
+                public async Task<ActionResult> Register(RegisterViewModel model)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        var teacher = UserManager.FindByName(user.Email); //new
+                        UserManager.AddToRole(teacher.Id, "Teacher"); //new
+                        if (result.Succeeded)
+                        {
+                            //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    //return RedirectToAction("Index", "Home");
+                            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                            // Send an email with this link
+                            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                            //return RedirectToAction("Index", "Home");
+                            return View(model);
+                        }
+                        AddErrors(result);
+                    }
+
+                    // If we got this far, something failed, redisplay form
                     return View(model);
                 }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+               
         // GET: /Account/RegisterStudent
         [AllowAnonymous]
         public ActionResult RegisterStudent()
@@ -431,7 +430,7 @@ namespace LexiconLMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -488,7 +487,7 @@ namespace LexiconLMS.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Courses");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
