@@ -20,8 +20,7 @@
                 @if (User.IsInRole("Teacher")) {
                     @Html.ActionLink("Lexicon LMS", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })
                 } else {
-                    var courseId = 1; <!-- XXX Fixa!! -->
-                    @Html.ActionLink("Lexicon LMS", "Details", "Courses", new { id = courseId, area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Lexicon LMS", "StudentHome", "Courses", new { area = "" }, new { @class = "navbar-brand" })
                 }
 
             </div>

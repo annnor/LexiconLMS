@@ -18,6 +18,7 @@ namespace LexiconLMS.Migrations
         protected override void Seed(LexiconLMS.Models.ApplicationDbContext context)
         {
 
+            // --------------- Roles -------------------------------------
 
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
@@ -41,6 +42,8 @@ namespace LexiconLMS.Migrations
                 }
             }
 
+            // --------------- Teachers -------------------------------------
+
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
@@ -63,27 +66,36 @@ namespace LexiconLMS.Migrations
             var teacher = userManager.FindByName(emailString);
             userManager.AddToRole(teacher.Id, "Teacher");
 
-            context.Courses.AddOrUpdate(c => c.Name,
+            // --------------- Courses -------------------------------------
+            var courses = new Course[] {
                 new Course {
                     Name = ".Net HT16",
                     StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
-                    Description = "DotNet utveckling och frontend." },
+                    Description = "DotNet utveckling och frontend."
+                },
                 new Course {
                     Name = "It-tekniker",
                     StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
-                    Description = "Utbildning för potentiella it-tekniker." }
-                            );
+                    Description = "Utbildning för potentiella it-tekniker."
+                }
+            };
+            context.Courses.AddOrUpdate(c => c.Name, courses);
+            context.SaveChanges();
+
+            // --------------- Students -------------------------------------
 
             var studentEmailString = "annika.nordqvist@lexicon.se";
 
             if (!context.Users.Any(u => u.UserName == studentEmailString)) {
+
                 var user = new ApplicationUser {
                     FirstName = "Annika",
                     LastName = "Nordqvist",
                     Email = studentEmailString,
                     UserName = studentEmailString,
-                    Adress = "Björkhagsvägen 2" };
-
+                    Adress = "Björkhagsvägen 2",
+                    CourseId = courses[0].Id
+                };
                 var result = userManager.Create(user, "Abc123!"); 
                 if (!result.Succeeded) {
                     throw new Exception(string.Join("\n", result.Errors));
