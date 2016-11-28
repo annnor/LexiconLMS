@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
+using System.Collections.Generic;
+using System.Web.UI.WebControls.WebParts;
 
 namespace LexiconLMS.Controllers
 {
@@ -21,6 +23,108 @@ namespace LexiconLMS.Controllers
         public AccountController()
         {
         }
+
+        public ActionResult TeacherList()
+        {
+            
+            if (!User.IsInRole("Teacher"))
+            {
+                return RedirectToAction("StudentHome", "Courses");
+            }//end rollkoll-if
+             
+
+            List<UserViewModels> listOfTeachers = new List<UserViewModels>();
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+
+            var studentRoleInformation = newDbContext.Roles.FirstOrDefault(n => n.Name == "Teacher");
+            var allTeachers = newDbContext.Users.Where(u => u.Roles.FirstOrDefault().RoleId == studentRoleInformation.Id);
+
+            //transfer over allteachers to be compatible with the UserViewModel
+            foreach (var teachers in allTeachers.ToList())
+            {
+                //string getCourseName = "";
+                //var firstOrDefault = newDbContext.Courses.FirstOrDefault(c => c.Id == teachers.CourseId);
+                //if (firstOrDefault != null)
+                //    getCourseName = firstOrDefault.Name;
+                UserViewModels teacher = new UserViewModels
+                {
+                    Adress = teachers.Adress,
+                    FirstName = teachers.FirstName,
+                    //Id = int.Parse(user.Id),
+                    LastName = teachers.LastName,
+                    Email = teachers.Email
+                    //CourseName = getCourseName
+                };
+                listOfTeachers.Add(teacher); //add objects one by one to the list to be presented
+            }
+            
+            return View(listOfTeachers);
+        }
+
+
+
+        public ActionResult StudentList()
+        {
+            ApplicationDbContext newDbContext=new ApplicationDbContext();
+            //skapa en tom lista. fyll på med lämliga applicationusers i if-satserna
+            List<UserViewModels> listOfUsers = new List<UserViewModels>();
+
+            //lärare skall se alla lärare och elever nu visas alla lärare och elever oordnat i if-satsen nedan, måste städas upp.
+            if (User.IsInRole("Teacher"))
+            {
+                //find student object in roles (with ID's), then get all students based on that
+                var studentRoleInformation = newDbContext.Roles.FirstOrDefault(n => n.Name == "Student");
+                var allStudents = newDbContext.Users.Where(u => u.Roles.FirstOrDefault().RoleId == studentRoleInformation.Id);
+
+                //transfer over allStudents to be compatible with the UserViewModel
+                foreach (var students in allStudents.ToList())
+                {
+                    var getCourseName = newDbContext.Courses.FirstOrDefault(c => c.Id == students.CourseId).Name;//students can only attend 1 course at a tiem
+                   
+                    UserViewModels studentInSameCourse = new UserViewModels
+                    {
+                        Adress = students.Adress,
+                        FirstName = students.FirstName,
+                        //Id = int.Parse(user.Id) -denna går ju icke att parsa. låter vara orörd tills vidare
+                        LastName = students.LastName,
+                        Email = students.Email,
+                        CourseName = getCourseName
+                    };
+                    listOfUsers.Add(studentInSameCourse); //add objects one by one to the list to be presented
+                }
+
+
+
+            }
+
+
+            else if (User.IsInRole("Student"))
+            {
+            //    //studenter skall endast se (ev sin lärare) och sina klasskamrater. hämta studenten som är inloggads studentid
+            var studentInSession=newDbContext.Users.FirstOrDefault(s => s.Email == User.Identity.Name);
+                //    var studentInSession = db.Users.FirstOrDefault(s => s.Email == User.Identity.Name);
+                    var studentInSessionCourseId = studentInSession.CourseId;
+
+                foreach (var user in newDbContext.Users)
+                {
+                    if (studentInSessionCourseId == user.CourseId)
+                    {
+                         //för över till viewmodeln från gamla
+                         UserViewModels studenInSameCourse = new UserViewModels
+                        {
+                            Adress = user.Adress,
+                            FirstName = user.FirstName,
+                            //Id = int.Parse(user.Id),
+                            LastName = user.LastName
+                        };
+                        listOfUsers.Add(studenInSameCourse);
+                    }
+                }
+
+            }
+            return View(listOfUsers); //returnera case user är student
+        }
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
