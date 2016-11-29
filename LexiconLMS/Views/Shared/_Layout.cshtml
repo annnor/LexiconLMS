@@ -20,15 +20,18 @@
                 @if (User.IsInRole("Teacher")) {
                     @Html.ActionLink("Lexicon LMS", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })
                 } else {
-                    var courseId = 1; <!-- XXX Fixa!! -->
-                    @Html.ActionLink("Lexicon LMS", "Details", "Courses", new { id = courseId, area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Lexicon LMS", "StudentHome", "Courses", new { area = "" }, new { @class = "navbar-brand" })
                 }
 
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Teacher list", "About", "Home")</li>
-                    <li>@Html.ActionLink("Student list", "Contact", "Home")</li>
+                    @if (User.IsInRole("Student")){<li>@Html.ActionLink("Student list", "StudentList", "Account")</li> }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <li>@Html.ActionLink("Teacher list", "TeacherList", "Account")</li>
+                        <li>@Html.ActionLink("Student list", "StudentList", "Account")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

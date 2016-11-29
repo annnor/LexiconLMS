@@ -76,7 +76,6 @@ namespace LexiconLMS.Models
         [Display(Name = "Adress")]
         public string Adress { get; set; }
 
-
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -95,7 +94,7 @@ namespace LexiconLMS.Models
 
         public string CourseId { get; set; }
     }
-    
+
     public class ResetPasswordViewModel
     {
         [Required]

@@ -10,6 +10,7 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,6 +18,13 @@ namespace LexiconLMS.Controllers
         // GET: Courses
         public ActionResult Index()
         {
+
+
+
+            if (User.IsInRole("Student"))
+            {
+                return RedirectToAction("StudentHome");
+            }
             return View(db.Courses.ToList());
         }
 
@@ -27,6 +35,10 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (User.IsInRole("Student"))
+            {
+                return RedirectToAction("StudentHome");
+            }
             Course course = db.Courses.Find(id);
             if (course == null)
             {
@@ -35,7 +47,30 @@ namespace LexiconLMS.Controllers
             return View(course);
         }
 
+        // GET: Courses/StudentHome
+        public ActionResult StudentHome()
+        {
+            //ApplicationUserManager manager = new ApplicationUserManager()
+            //var user = await UserManager.FindByNameAsync(User.Identity.Name);
+            if (User.IsInRole("Student"))
+            {
+                var user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                if (user != null)
+                {
+                    Course course = db.Courses.Find(user.CourseId);
+                    if (course != null)
+                    {
+                        return View(course);
+                    }
+                    return HttpNotFound();
+                }
+                return HttpNotFound();
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
         // GET: Courses/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
             return View();
@@ -46,19 +81,20 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,Name,StartDateTime,Description")] Course course)
         {
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { Id = course.Id });
             }
-
             return View(course);
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +114,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,StartDateTime,Description")] Course course)
         {
             if (ModelState.IsValid)
@@ -90,6 +127,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +145,7 @@ namespace LexiconLMS.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
             Course course = db.Courses.Find(id);
