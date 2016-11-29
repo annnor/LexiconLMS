@@ -92,12 +92,7 @@ namespace LexiconLMS.Controllers
                     };
                     listOfUsers.Add(studentInSameCourse); //add objects one by one to the list to be presented
                 }
-
-
-
             }
-
-
             else if (User.IsInRole("Student"))
             {
             //    //studenter skall endast se (ev sin lärare) och sina klasskamrater. hämta studenten som är inloggads studentid
@@ -123,7 +118,6 @@ namespace LexiconLMS.Controllers
                         listOfUsers.Add(studenInSameCourse);
                     }
                 }
-
             }
             return View(listOfUsers); //returnera case user är student
         }
