@@ -18,9 +18,6 @@ namespace LexiconLMS.Controllers
         // GET: Courses
         public ActionResult Index()
         {
-
-
-
             if (User.IsInRole("Student"))
             {
                 return RedirectToAction("StudentHome");
@@ -102,8 +99,6 @@ namespace LexiconLMS.Controllers
                     return View();
                     }
                 }
-           
-
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -233,7 +228,6 @@ namespace LexiconLMS.Controllers
             }//sen måste den skickas till klienten
             return PartialView("_StudentList", listOfUsers); 
         }
-
 
         protected override void Dispose(bool disposing)
         {
