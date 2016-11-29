@@ -84,6 +84,26 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,Name,StartDateTime,Description")] Course course)
         {
+            //kontroll av att startdatum inte är satt tidigare än idag
+            if (course.StartDateTime<DateTime.Today)
+            {
+                //felmeddelande + returnera view
+                //ViewBag.Message = "You tried to create a course with a startdate earlier than today. Please try again.";
+                //använder tempdata istället
+                TempData["CreateError"] = "You tried to create a course with a startdate earlier than today. Please try again.";
+                return View();
+            }
+            //kontroll av att kursnamnet är unikt
+            foreach (var existingcourse in db.Courses)
+                {
+                    if (existingcourse.Name==course.Name)
+                    {//kurs med det namnet existerar redan i databasen. skicka felmeddelande till klient.
+                    TempData["CreateError"] = "You tried to create a course with a name that already exists. Please try again.";
+                    return View();
+                    }
+                }
+           
+
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
