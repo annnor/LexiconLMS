@@ -18,6 +18,9 @@ namespace LexiconLMS.Controllers
         // GET: Courses
         public ActionResult Index()
         {
+
+
+
             if (User.IsInRole("Student"))
             {
                 return RedirectToAction("StudentHome");
