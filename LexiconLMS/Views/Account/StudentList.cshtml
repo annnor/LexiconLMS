@@ -31,14 +31,16 @@
                     @Html.DisplayNameFor(model => model.Adress)
                 </th>
             }
-
             <th data-defaultsign="AZ">
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.CourseName)
-            </th>
-            <th></th>
+            @if (User.IsInRole("Teacher"))
+            {
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </th>
+                <th></th>
+            }
         </tr>
     </thead>
 
@@ -60,18 +62,23 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
-            </td>
-            <td>
-                @if (User.IsInRole("Teacher"))
-                {  /*koden nedan måste ändras till att peka till lämplig kontroller och måste även skicka med någon form av id.*/
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                    @Html.Raw(" | ")
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                }
+            @if (User.IsInRole("Teacher"))
 
-            </td>
+                {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+
+                    <td>
+                        <!-- Koden nedan måste ändras till att peka till lämplig kontroller -->
+                        <!-- och måste även skicka med någon form av id. -->
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        @Html.Raw(" | ")
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+            }
+
+
         </tr>
     }
 
