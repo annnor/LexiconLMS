@@ -9,6 +9,10 @@
 <div>
     <h4>Course</h4>
     <hr />
+    <p>
+        @Html.ActionLink("Add student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
+    </p>
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -37,6 +41,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+     @Html.ActionLink("Back to List", "Index")
 </p>
