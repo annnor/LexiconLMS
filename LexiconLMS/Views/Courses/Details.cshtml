@@ -10,6 +10,10 @@
 <div>
     <h4>Course</h4>
     <hr />
+    <p>
+        @Html.ActionLink("Add student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
+    </p>
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)

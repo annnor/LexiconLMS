@@ -243,7 +243,7 @@ namespace LexiconLMS.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Register()
         {
             return View();
@@ -252,13 +252,13 @@ namespace LexiconLMS.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
+                        var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
                 var result = await UserManager.CreateAsync(user, model.Password);
                         var teacher = UserManager.FindByName(user.Email); //new
                         UserManager.AddToRole(teacher.Id, "Teacher"); //new
@@ -283,20 +283,22 @@ namespace LexiconLMS.Controllers
                 }
                
         // GET: /Account/RegisterStudent
-        [AllowAnonymous]
-        public ActionResult RegisterStudent()
+        [Authorize(Roles = "Teacher")]
+        public ActionResult RegisterStudent(int courseId)
         {
+            ViewBag.CourseId = courseId;
+
             return View();
         }
         // POST: /Account/RegisterStudent
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterStudent(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress }; // ,CourseId = courseId};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress, CourseId = int.Parse(model.CourseId) };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var student = UserManager.FindByName(user.Email); //new
                 UserManager.AddToRole(student.Id, "Student"); //new
@@ -316,6 +318,7 @@ namespace LexiconLMS.Controllers
                 AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
+            ViewBag.CourseId = model.CourseId;
             return View(model);
         }
 
