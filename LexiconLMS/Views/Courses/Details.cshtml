@@ -50,3 +50,9 @@
 <div>
     @Html.Action("StudentListForCourse",new { courseId = Model.Id})
 </div>
+<p>
+    @Html.ActionLink("Add new student to course", "RegisterStudent", "Account", new { courseId = Model.Id },null)
+    @*need to implement so that a student can be added to the course.
+        needed things:courseId must follow. a sex check must be done when creating a user,
+        a man cannot attend java4women etc.*@
+</p>
