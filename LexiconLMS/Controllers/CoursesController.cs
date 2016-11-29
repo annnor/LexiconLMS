@@ -174,6 +174,36 @@ namespace LexiconLMS.Controllers
             return RedirectToAction("Index");
         }
 
+        //metod för att visa eleverna på vald kursdetaljsidan
+        public ActionResult StudentListForCourse(int courseId) 
+        {                   
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+            //skapa en tom lista. fyll på med lämliga applicationusers i if-satserna
+            List<UserViewModels> listOfUsers = new List<UserViewModels>();
+
+            if (User.IsInRole("Teacher")) //lärare skall se alla studenter i kursen han är på i detaljsidan
+            {
+               foreach (var user in newDbContext.Users.ToList()) //sen måste eleverna som går den kursen fås fram från identitymodels och föras över till userviewmodel
+                {
+                    if (courseId == user.CourseId) //elev är med i kursen på detaljsidan
+                    {                                                                                    
+                        UserViewModels studenInSameCourse = new UserViewModels
+                        {
+                            Adress = user.Adress,
+                            FirstName = user.FirstName,
+                            //Id = int.Parse(user.Id),
+                            LastName = user.LastName,
+                            Email = user.Email,
+                           // CourseName = getCourseName
+                        };
+                        listOfUsers.Add(studenInSameCourse);
+                    }
+                }
+            }//sen måste den skickas till klienten
+            return PartialView("_StudentList", listOfUsers); 
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
