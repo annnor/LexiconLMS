@@ -4,7 +4,16 @@
     ViewBag.Title = "StudentList";
 }
 
-<h2>Student List</h2>
+@if (User.IsInRole("Student"))
+{
+    <h2>List of class mates in your course</h2>
+}
+
+@if (User.IsInRole("Teacher"))
+{
+    <h2>List of all students currently in the LMS</h2>
+}
+
 
 
 <table class="table">
