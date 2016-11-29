@@ -176,7 +176,7 @@ namespace LexiconLMS.Controllers
         private bool DeleteStudents(int id)
         {
             ApplicationDbContext newDbContext = new ApplicationDbContext();
-            LexiconLMS.Models.ApplicationUser student;
+            LexiconLMS.Models.AppUser student;
             
             //Find students by courseId    
             var allStudents = newDbContext.Users.Where(u => u.CourseId == id);

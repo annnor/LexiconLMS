@@ -6,8 +6,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LexiconLMS.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    // You can add profile data for the user by adding more properties to your AppUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    public class AppUser : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -15,8 +15,10 @@ namespace LexiconLMS.Models
         public string Adress { get; set; }
         public int? CourseId { get; set; }
 
+        public virtual Course Course { get; set; }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)
         {
 
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -27,7 +29,7 @@ namespace LexiconLMS.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -42,6 +44,6 @@ namespace LexiconLMS.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<LexiconLMS.Models.UserViewModels> UserViewModels { get; set; }
+ //       public System.Data.Entity.DbSet<LexiconLMS.Models.AppUser> AppUsers { get; set; }
     }
 }

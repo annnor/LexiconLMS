@@ -46,8 +46,8 @@ namespace LexiconLMS.Controllers
                 //var firstOrDefault = newDbContext.Courses.FirstOrDefault(c => c.Id == teachers.CourseId);
                 //if (firstOrDefault != null)
                 //    getCourseName = firstOrDefault.Name;
-                UserViewModels teacher = new UserViewModels
-                {
+                UserViewModels teacher = new UserViewModels {
+                    Id = teachers.Id,
                     Adress = teachers.Adress,
                     FirstName = teachers.FirstName,
                     //Id = int.Parse(user.Id),
@@ -81,8 +81,8 @@ namespace LexiconLMS.Controllers
                 {
                     var getCourseName = newDbContext.Courses.FirstOrDefault(c => c.Id == students.CourseId).Name;//students can only attend 1 course at a tiem
                    
-                    UserViewModels studentInSameCourse = new UserViewModels
-                    {
+                    UserViewModels studentInSameCourse = new UserViewModels {
+                        Id = students.Id,
                         Adress = students.Adress,
                         FirstName = students.FirstName,
                         //Id = int.Parse(user.Id) -denna går ju icke att parsa. låter vara orörd tills vidare
@@ -105,9 +105,9 @@ namespace LexiconLMS.Controllers
                     if (studentInSessionCourseId == user.CourseId)
                     {
                         var getCourseName = newDbContext.Courses.FirstOrDefault(c => c.Id == user.CourseId).Name;//students can only attend 1 course at a tiem
-                                                                                                                     //för över till viewmodeln från gamla
-                        UserViewModels studenInSameCourse = new UserViewModels
-                        {
+                                                                                                                 //för över till viewmodeln från gamla
+                        UserViewModels studenInSameCourse = new UserViewModels {
+                            Id = user.Id,
                             Adress = user.Adress,
                             FirstName = user.FirstName,
                             //Id = int.Parse(user.Id),
@@ -252,7 +252,7 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                        var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
+                        var user = new AppUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
                 var result = await UserManager.CreateAsync(user, model.Password);
                         var teacher = UserManager.FindByName(user.Email); //new
                         UserManager.AddToRole(teacher.Id, "Teacher"); //new
@@ -292,7 +292,7 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress, CourseId = int.Parse(model.CourseId) };
+                var user = new AppUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress, CourseId = int.Parse(model.CourseId) };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var student = UserManager.FindByName(user.Email); //new
                 UserManager.AddToRole(student.Id, "Student"); //new
@@ -514,7 +514,7 @@ namespace LexiconLMS.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new AppUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -39,8 +39,8 @@ namespace LexiconLMS.Migrations
             }
             // --------------- Teachers -------------------------------------
 
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
+            var userStore = new UserStore<AppUser>(context);
+            var userManager = new UserManager<AppUser>(userStore);
 
             string[,] teachers = {
                 { "Anna", "Larnia"},
@@ -71,7 +71,7 @@ namespace LexiconLMS.Migrations
                 var streetNo = i + 1;
                 if (!context.Users.Any(u => u.UserName == email))
                 {
-                    var user = new ApplicationUser
+                    var user = new AppUser
                     {
                         FirstName = firstName,
                         LastName = lastName,
@@ -162,7 +162,7 @@ namespace LexiconLMS.Migrations
                 {
                     var streetNr = i + 1;
 
-                    var user = new ApplicationUser
+                    var user = new AppUser
                     {
                         FirstName = firstName,
                         LastName = lastName,
