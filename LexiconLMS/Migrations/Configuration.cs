@@ -23,48 +23,72 @@ namespace LexiconLMS.Migrations
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            if (!context.Roles.Any(r=>r.Name=="Teacher")) 
+            var teacherRole = "Teacher";
+            var studentRole = "Student";
+            foreach (var role in new[] { teacherRole, studentRole })
+            {
+                if (!context.Roles.Any(r => r.Name == role))
                 {
-                var role = new IdentityRole { Name = "Teacher" };
-                var result = roleManager.Create(role);
-                if (!result.Succeeded) 
+                    var roleObj = new IdentityRole { Name = role };
+                    var result = roleManager.Create(roleObj);
+                    if (!result.Succeeded)
                     {
-                    throw new Exception(string.Join("\n", result.Errors));
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
                 }
             }
-            
-            if (!context.Roles.Any(r=>r.Name=="Student")) 
-                {
-                var role= new IdentityRole { Name="Student"};
-                var result = roleManager.Create(role);
-                if (!result.Succeeded) {
-                    throw new Exception(string.Join("\n", result.Errors));
-                }
-            }
-
             // --------------- Teachers -------------------------------------
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var emailString = "Anna.Larare@lexicon.se";
-
-            if (!context.Users.Any(u => u.UserName == emailString)) {
-                var user = new ApplicationUser {
-                    FirstName = "Anna",
-                    LastName = "Lärare",
-                    Email = emailString,
-                    UserName = emailString,
-                    Adress = "Björkhagsvägen 1" };
-                
-                var result = userManager.Create(user,"Abc123!");
-                if (!result.Succeeded) 
+            string[,] teachers = {
+                { "Anna", "Larnia"},
+                { "Bo", "Larka"},
+                { "Curt", "Schola"},
+                { "Bert", "Bengtsen"},
+                { "Sven", "Svala"},
+                { "Aron", "Arlof"},
+                { "Frank", "Fidell"},
+                { "Franco", "Mills"},
+                { "Markus", "Thalen"},
+                { "Tore", "Bertzen"},
+                { "Arvid", "Fidell"},
+                { "Katarina", "Mills"},
+                { "Paula", "Thalen"},
+                { "Nils", "Bertzen"},
+                { "Thore", "Fridell"},
+                { "Lars", "Bills"},
+                { "Markus", "Agarth"},
+                { "Karl", "Bertzen"}
+            };
+            int upperBound = teachers.GetUpperBound(0);
+            for (int i = 0; i <= upperBound; i++)
+            {
+                var firstName = teachers[i, 0];
+                var lastName = teachers[i, 1];
+                var email = firstName + "." + lastName + "@lexicon.se";
+                var streetNo = i + 1;
+                if (!context.Users.Any(u => u.UserName == email))
+                {
+                    var user = new ApplicationUser
                     {
-                    throw new Exception(string.Join("\n", result.Errors));
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Email = email,
+                        UserName = email,
+                        Adress = "Malmövägen " + streetNo
+                    };
+
+                    var result = userManager.Create(user, "Abc123!");
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
                     }
+                }
+                var teacher = userManager.FindByName(email);
+                userManager.AddToRole(teacher.Id, teacherRole);
             }
-            var teacher = userManager.FindByName(emailString);
-            userManager.AddToRole(teacher.Id, "Teacher");
 
             // --------------- Courses -------------------------------------
             var courses = new Course[] {
@@ -77,6 +101,11 @@ namespace LexiconLMS.Migrations
                     Name = "It-tekniker",
                     StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
                     Description = "Utbildning för potentiella it-tekniker."
+                },
+                new Course {
+                    Name = "Java4W",
+                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
+                    Description = "Java-utveckling för tjejer."
                 }
             };
             context.Courses.AddOrUpdate(c => c.Name, courses);
@@ -84,25 +113,64 @@ namespace LexiconLMS.Migrations
 
             // --------------- Students -------------------------------------
 
-            var studentEmailString = "annika.nordqvist@lexicon.se";
+            string[,] studentList = {
+                { "Anna", "Andersson" },
+                { "Bengt", "Carlen" },
+                { "Carl",  "Bengtsson"},
+                { "David", "Davidsson" },
+                { "Erik", "Eriksson" },
+                { "Eric", "Ericsson" },
+                { "Fredrik", "Henriksson" },
+                { "Henrik", "Fredriksson" },
+                { "Ivar", "Ivarsson" },
+                { "Joakim", "Jarlen" },
+                { "Karl", "Larsson" },
+                { "Lars", "Karlsson" },
+                { "Magnus", "Nilsson" },
+                { "Nils", "Magnusson" },
+                { "Olof", "Persson" },
+                { "Per", "Nilsson" },
+                { "Quintus", "Magnusson" },
+                { "Rolf", "Magnusson" },
+                { "Stella", "Nilsson" },
+                { "Thomas", "Magnusson" },
+                { "Ulf", "Nilsson" },
+                { "Viktor", "Magnusson" },
+                { "Wiktor", "Nilsson" }
+            };
+            int cLength = courses.Length;
+            upperBound = studentList.GetUpperBound(0);
+            for (int i = 0; i <= upperBound; i++)
+            {
+                // cIndex - index to use for courses list:
+                var cIndex = i % cLength;
 
-            if (!context.Users.Any(u => u.UserName == studentEmailString)) {
+                var firstName = studentList[i, 0];
+                var lastName = studentList[i, 1];
+                var email = firstName + "." + lastName + "@lexicon.se";
 
-                var user = new ApplicationUser {
-                    FirstName = "Annika",
-                    LastName = "Nordqvist",
-                    Email = studentEmailString,
-                    UserName = studentEmailString,
-                    Adress = "Björkhagsvägen 2",
-                    CourseId = courses[0].Id
-                };
-                var result = userManager.Create(user, "Abc123!"); 
-                if (!result.Succeeded) {
-                    throw new Exception(string.Join("\n", result.Errors));
+                if (!context.Users.Any(u => u.UserName == email))
+                {
+                    var streetNr = i + 1;
+
+                    var user = new ApplicationUser
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Email = email,
+                        UserName = email,
+                        Adress = "Studentgatan " + streetNr,
+                        CourseId = courses[cIndex].Id
+                    };
+                    var result = userManager.Create(user, "Abc123!");
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
                 }
+                var student = userManager.FindByName(email);
+                userManager.AddToRole(student.Id, studentRole);
             }
-            var student1 = userManager.FindByName(studentEmailString);
-            userManager.AddToRole(student1.Id, "Student");
         }
     }
 }
