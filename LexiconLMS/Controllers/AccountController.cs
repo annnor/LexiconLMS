@@ -26,12 +26,12 @@ namespace LexiconLMS.Controllers
 
         public ActionResult TeacherList()
         {
-            
+
             if (!User.IsInRole("Teacher"))
             {
                 return RedirectToAction("StudentHome", "Courses");
             }//end rollkoll-if
-             
+
 
             List<UserViewModels> listOfTeachers = new List<UserViewModels>();
             ApplicationDbContext newDbContext = new ApplicationDbContext();
@@ -57,7 +57,7 @@ namespace LexiconLMS.Controllers
                 };
                 listOfTeachers.Add(teacher); //add objects one by one to the list to be presented
             }
-            
+
             return View(listOfTeachers);
         }
 
@@ -65,7 +65,7 @@ namespace LexiconLMS.Controllers
 
         public ActionResult StudentList()
         {
-            ApplicationDbContext newDbContext=new ApplicationDbContext();
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
             //skapa en tom lista. fyll på med lämliga applicationusers i if-satserna
             List<UserViewModels> listOfUsers = new List<UserViewModels>();
 
@@ -80,7 +80,7 @@ namespace LexiconLMS.Controllers
                 foreach (var students in allStudents.ToList())
                 {
                     var getCourseName = newDbContext.Courses.FirstOrDefault(c => c.Id == students.CourseId).Name;//students can only attend 1 course at a tiem
-                   
+
                     UserViewModels studentInSameCourse = new UserViewModels
                     {
                         Adress = students.Adress,
@@ -92,20 +92,19 @@ namespace LexiconLMS.Controllers
                     };
                     listOfUsers.Add(studentInSameCourse); //add objects one by one to the list to be presented
                 }
-            }
-            else if (User.IsInRole("Student"))
+            } else if (User.IsInRole("Student"))
             {
-            //    //studenter skall endast se (ev sin lärare) och sina klasskamrater. hämta studenten som är inloggads studentid
-            var studentInSession=newDbContext.Users.FirstOrDefault(s => s.Email == User.Identity.Name);
+                //    //studenter skall endast se (ev sin lärare) och sina klasskamrater. hämta studenten som är inloggads studentid
+                var studentInSession = newDbContext.Users.FirstOrDefault(s => s.Email == User.Identity.Name);
                 //    var studentInSession = db.Users.FirstOrDefault(s => s.Email == User.Identity.Name);
-                    var studentInSessionCourseId = studentInSession.CourseId;
+                var studentInSessionCourseId = studentInSession.CourseId;
 
                 foreach (var user in newDbContext.Users.ToList())
                 {
                     if (studentInSessionCourseId == user.CourseId)
                     {
                         var getCourseName = newDbContext.Courses.FirstOrDefault(c => c.Id == user.CourseId).Name;//students can only attend 1 course at a tiem
-                                                                                                                     //för över till viewmodeln från gamla
+                                                                                                                 //för över till viewmodeln från gamla
                         UserViewModels studenInSameCourse = new UserViewModels
                         {
                             Adress = user.Adress,
@@ -123,7 +122,7 @@ namespace LexiconLMS.Controllers
         }
 
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -135,9 +134,9 @@ namespace LexiconLMS.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -252,30 +251,31 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                        var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                        var teacher = UserManager.FindByName(user.Email); //new
-                        UserManager.AddToRole(teacher.Id, "Teacher"); //new
+                var teacher = UserManager.FindByName(user.Email); //new
+                UserManager.AddToRole(teacher.Id, "Teacher"); //new
                 if (result.Succeeded)
                 {
-                            //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                            //return RedirectToAction("Index", "Home");
-                            return View(model);
+                    //return RedirectToAction("Index", "Home");
+                    ModelState.Clear();
+                    return View();
                 }
                 AddErrors(result);
             }
 
-                    // If we got this far, something failed, redisplay form
-                    return View(model);
-                }
-               
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         // GET: /Account/RegisterStudent
         [Authorize(Roles = "Teacher")]
         public ActionResult RegisterStudent(int courseId)
@@ -307,7 +307,7 @@ namespace LexiconLMS.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //return RedirectToAction("Index", "Home");
-                   
+
                     ViewBag.CourseId = model.CourseId;
                     ModelState.Clear();
                     return View();
