@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /Lexicon-LMS_keep/
+/LexiconLMS/Migrations
