@@ -192,7 +192,7 @@ namespace LexiconLMS.Controllers
                     }
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }
@@ -219,7 +219,7 @@ namespace LexiconLMS.Controllers
                             FirstName = user.FirstName,
                             //Id = int.Parse(user.Id),
                             LastName = user.LastName,
-                            Email = user.Email,
+                            Email = user.Email
                            // CourseName = getCourseName
                         };
                         listOfUsers.Add(studenInSameCourse);

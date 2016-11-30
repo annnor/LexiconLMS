@@ -24,6 +24,7 @@ namespace LexiconLMS.Controllers
         {
         }
 
+        
         public ActionResult TeacherList()
         {
 
@@ -52,8 +53,8 @@ namespace LexiconLMS.Controllers
                     FirstName = teachers.FirstName,
                     //Id = int.Parse(user.Id),
                     LastName = teachers.LastName,
-                    Email = teachers.Email
-                    //CourseName = getCourseName
+                    Email = teachers.Email,
+                   //CourseName = getCourseName
                 };
                 listOfTeachers.Add(teacher); //add objects one by one to the list to be presented
             }
@@ -113,7 +114,7 @@ namespace LexiconLMS.Controllers
                             LastName = user.LastName,
                             Email = user.Email,
                             CourseName = getCourseName
-                        };
+                            };
                         listOfUsers.Add(studenInSameCourse);
                     }
                 }

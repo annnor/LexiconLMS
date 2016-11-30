@@ -72,9 +72,9 @@
                     <td>
                         <!-- Koden nedan måste ändras till att peka till lämplig kontroller -->
                         <!-- och måste även skicka med någon form av id. -->
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Email })
                         @Html.Raw(" | ")
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Email })
                     </td>
             }
 
