@@ -202,21 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611291512308_sprint1.cs" />
-    <Compile Include="Migrations\201611291512308_sprint1.Designer.cs">
-      <DependentUpon>201611291512308_sprint1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611291525494_nokeyonuserviewmodel.cs" />
-    <Compile Include="Migrations\201611291525494_nokeyonuserviewmodel.Designer.cs">
-      <DependentUpon>201611291525494_nokeyonuserviewmodel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611291529541_testaddingId.cs" />
-    <Compile Include="Migrations\201611291529541_testaddingId.Designer.cs">
-      <DependentUpon>201611291529541_testaddingId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611291532099_testaddingIdasstring.cs" />
-    <Compile Include="Migrations\201611291532099_testaddingIdasstring.Designer.cs">
-      <DependentUpon>201611291532099_testaddingIdasstring.cs</DependentUpon>
+    <Compile Include="Migrations\201611300739352_xxxxxx.cs" />
+    <Compile Include="Migrations\201611300739352_xxxxxx.Designer.cs">
+      <DependentUpon>201611300739352_xxxxxx.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -324,17 +312,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611291512308_sprint1.resx">
-      <DependentUpon>201611291512308_sprint1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611291525494_nokeyonuserviewmodel.resx">
-      <DependentUpon>201611291525494_nokeyonuserviewmodel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611291529541_testaddingId.resx">
-      <DependentUpon>201611291529541_testaddingId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611291532099_testaddingIdasstring.resx">
-      <DependentUpon>201611291532099_testaddingIdasstring.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611300739352_xxxxxx.resx">
+      <DependentUpon>201611300739352_xxxxxx.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

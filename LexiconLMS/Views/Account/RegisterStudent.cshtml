@@ -4,7 +4,11 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
+<!--XXX Ta bort...eller flytta alla länkar hit
+<div>
+    @Html.ActionLink("Back to Course index", "Index", "Courses")
+</div>
+    -->
 @using (Html.BeginForm("RegisterStudent", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -54,6 +58,11 @@
         </div>
     </div>
 }
+
+<p>
+    @Html.ActionLink("Back to Course details", "Details", "Courses", new { id = @ViewBag.CourseId }, "")
+</p>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

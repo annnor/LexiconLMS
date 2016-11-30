@@ -8,12 +8,13 @@
 <h3>Course Details for @Html.DisplayFor(model => model.Name)</h3>
 
 <div>
-    
+<!-- XXX Ta bort...eller flytta alla länkar hit
     <hr />
     @*<p>
         @Html.ActionLink("Add student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
-    </p>*@
- 
+    </p>
+    <hr />
+    -->
     <dl class="dl-horizontal">
         @*<dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -42,16 +43,12 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to Course List", "Index")
+    @Html.ActionLink("Add student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
+    @Html.ActionLink("Edit course info ", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to Course List ", "Index")
 </p>
 
     @*show student list for this course*@
 <div>
     @Html.Action("StudentListForCourse",new { courseId = Model.Id})
 </div>
-<p>
-    @Html.ActionLink("Add new student to course", "RegisterStudent", "Account", new { courseId = Model.Id },null)
-    @*need to implement :a sex check must be done when creating a user,
-        a man cannot attend java4women etc.*@
-</p>

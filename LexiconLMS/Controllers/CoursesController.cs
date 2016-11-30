@@ -18,9 +18,6 @@ namespace LexiconLMS.Controllers
         // GET: Courses
         public ActionResult Index()
         {
-
-
-
             if (User.IsInRole("Student"))
             {
                 return RedirectToAction("StudentHome");
@@ -102,8 +99,6 @@ namespace LexiconLMS.Controllers
                     return View();
                     }
                 }
-           
-
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -168,10 +163,41 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
+            bool sucess = DeleteStudents(id);
+
+            if (sucess)
+            {
+                Course course = db.Courses.Find(id);
+                db.Courses.Remove(course);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
+        }
+        private bool DeleteStudents(int id)
+        {
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+            LexiconLMS.Models.ApplicationUser student;
+            
+            //Find students by courseId    
+            var allStudents = newDbContext.Users.Where(u => u.CourseId == id);
+
+                try
+                {
+                    //Delete students by course
+                    foreach (var students in allStudents.ToList())
+                    {
+                        student = db.Users.Find(students.Id);
+                        db.Users.Remove(student);
+                        //db.SaveChanges();
+                    }
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            //}
+            
         }
 
         //metod för att visa eleverna på vald kursdetaljsidan
@@ -203,7 +229,6 @@ namespace LexiconLMS.Controllers
             }//sen måste den skickas till klienten
             return PartialView("_StudentList", listOfUsers); 
         }
-
 
         protected override void Dispose(bool disposing)
         {
