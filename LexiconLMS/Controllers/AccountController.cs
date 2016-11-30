@@ -24,6 +24,7 @@ namespace LexiconLMS.Controllers
         {
         }
 
+        
         public ActionResult TeacherList()
         {
             
@@ -52,7 +53,8 @@ namespace LexiconLMS.Controllers
                     FirstName = teachers.FirstName,
                     //Id = int.Parse(user.Id),
                     LastName = teachers.LastName,
-                    Email = teachers.Email
+                    Email = teachers.Email,
+                    Id = teachers.Id
                     //CourseName = getCourseName
                 };
                 listOfTeachers.Add(teacher); //add objects one by one to the list to be presented
@@ -88,7 +90,8 @@ namespace LexiconLMS.Controllers
                         //Id = int.Parse(user.Id) -denna går ju icke att parsa. låter vara orörd tills vidare
                         LastName = students.LastName,
                         Email = students.Email,
-                        CourseName = getCourseName
+                        CourseName = getCourseName,
+                        Id = students.Id
                     };
                     listOfUsers.Add(studentInSameCourse); //add objects one by one to the list to be presented
                 }
@@ -118,7 +121,8 @@ namespace LexiconLMS.Controllers
                             //Id = int.Parse(user.Id),
                             LastName = user.LastName,
                             Email = user.Email,
-                            CourseName = getCourseName
+                            CourseName = getCourseName,
+                            Id = user.Id
                         };
                         listOfUsers.Add(studenInSameCourse);
                     }

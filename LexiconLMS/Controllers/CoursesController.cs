@@ -194,6 +194,7 @@ namespace LexiconLMS.Controllers
                             //Id = int.Parse(user.Id),
                             LastName = user.LastName,
                             Email = user.Email,
+                            Id = user.Id
                            // CourseName = getCourseName
                         };
                         listOfUsers.Add(studenInSameCourse);
