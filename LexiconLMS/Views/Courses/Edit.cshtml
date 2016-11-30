@@ -12,11 +12,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <!-- XXX Ta bort...eller flytta alla länkar hit
         <hr />
         <p>
             @Html.ActionLink("Add student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
         </p>
         <hr />
+        -->
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
@@ -53,6 +55,7 @@
 }
 
 <div>
+    @Html.ActionLink("Add student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
     @Html.ActionLink("Back to Course List", "Index")
 </div>
 
