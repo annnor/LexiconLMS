@@ -301,6 +301,7 @@
     <Content Include="Views\Account\TeacherList.cshtml" />
     <Content Include="Views\Account\RegisterStudent.cshtml" />
     <Content Include="Views\Shared\_StudentList.cshtml" />
+    <Content Include="Views\Courses\StudentHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
