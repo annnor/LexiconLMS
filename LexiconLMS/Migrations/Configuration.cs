@@ -94,22 +94,46 @@ namespace LexiconLMS.Migrations
             var courses = new Course[] {
                 new Course {
                     Name = ".Net HT16",
-                    StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29, 10, 0, 0),
                     Description = "DotNet utveckling och frontend."
                 },
                 new Course {
                     Name = "It-tekniker",
-                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29, 13, 0, 0),
                     Description = "Utbildning för potentiella it-tekniker."
                 },
                 new Course {
                     Name = "Java4W",
-                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29, 13, 0, 0),
                     Description = "Java-utveckling för tjejer."
                 }
             };
             context.Courses.AddOrUpdate(c => c.Name, courses);
             context.SaveChanges();
+
+            // --------------- Modules -------------------------------------
+            //var modules = new Module[] {
+            //    new Module {
+            //        Name = "C#",
+            //        StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
+            //        EndDateTime = new DateTime(2016, 09, 16, 15, 0, 0),
+            //        Description = "Programmering i C#."
+            //    },
+            //    new Module {
+            //        Name = "MVC",
+            //        StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
+            //        EndDateTime = new DateTime(2016, 09, 30, 15, 0, 0),
+            //        Description = "DotNet utveckling och frontend."
+            //    },
+            //    new Module {
+            //        Name = "Bootstrap",
+            //        StartDateTime = new DateTime(2016, 10, 02, 09, 0, 0),
+            //        EndDateTime = new DateTime(2016, 10, 06, 15, 0, 0),
+            //        Description = "Responsiva webb-sidonr."
+            //    }
+            //};
+            //context.Courses.AddOrUpdate(c => c.Name, courses);
+            //context.SaveChanges();
 
             // --------------- Students -------------------------------------
 

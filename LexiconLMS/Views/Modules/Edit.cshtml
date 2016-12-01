@@ -1,10 +1,10 @@
-﻿@model LexiconLMS.Models.Course
+﻿@model LexiconLMS.Models.Module
 
 @{
-    ViewBag.Title = "Edit Course";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Edit Course</h2>
+<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -12,15 +12,18 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <!-- XXX Ta bort...eller flytta alla länkar hit
+        <h4>Module for Course @ViewBag.CourseName</h4>
         <hr />
-        <p>
-            @Html.ActionLink("Register Student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
-        </p>
-        <hr />
-        -->
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+           <!-- @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })-->
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.CourseId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -31,10 +34,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.StartDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.StartDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDateTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDateTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -55,8 +66,7 @@
 }
 
 <div>
-    @Html.ActionLink("Register Student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
-    @Html.ActionLink("Back to Course List", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {

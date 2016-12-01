@@ -11,7 +11,7 @@
 <!-- XXX Ta bort...eller flytta alla länkar hit
     <hr />
     <p>
-        @Html.ActionLink("Add student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
+        @Html.ActionLink("Register Student", "RegisterStudent", "Account", new { courseId = Model.Id }, null)
     </p>
     <hr />
     -->
@@ -25,11 +25,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StartDateTime)
+            @Html.DisplayNameFor(model => model.StartDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StartDateTime)
+            @Html.DisplayFor(model => model.StartDate)
         </dd>
 
         <dt>
@@ -43,12 +43,12 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Add student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
-    @Html.ActionLink("Edit course info ", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Register Student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
+    @Html.ActionLink("Edit Course Info ", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to Course List ", "Index")
 </p>
 
     @*show student list for this course*@
 <div>
-    @Html.Action("StudentListForCourse",new { courseId = Model.Id})
+    @Html.Action("StudentListForCourse", new { courseId = Model.Id})
 </div>
