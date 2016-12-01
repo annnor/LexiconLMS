@@ -26,3 +26,13 @@ textarea {
 #Full{
     color:red;
 }
+
+.Event{
+    color:green;
+    
+}
+
+.NegativeEvent{
+    text-align: right;
+    color:red;
+}
