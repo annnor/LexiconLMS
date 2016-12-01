@@ -15,9 +15,9 @@ namespace LexiconLMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
-        public ActionResult Index()
+        public ActionResult Index(int courseId)
         {
-            int courseId = 3;
+            //int courseId = 3;
             ApplicationDbContext newDbContext = new ApplicationDbContext();
             // Find course name by courseId
             var course = newDbContext.Courses.First(u => u.Id == courseId);

@@ -45,7 +45,7 @@
 <p>
     @Html.ActionLink("Register Student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
     @Html.ActionLink("Edit Course Info ", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to Course List ", "Index")
+    @Html.ActionLink("Modules", "Index", "Modules", new { courseId = Model.Id }, null)
 </p>
 
     @*show student list for this course*@
