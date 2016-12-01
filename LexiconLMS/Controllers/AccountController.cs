@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using LexiconLMS.Models;
 using System.Collections.Generic;
 using System.Web.UI.WebControls.WebParts;
+using System.Net;
 
 namespace LexiconLMS.Controllers
 {
@@ -19,11 +20,201 @@ namespace LexiconLMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        
+        public static string selectedList { get; set; }
 
         public AccountController()
         {
         }
 
+
+        // GET: Own made edit by Johan/Edit/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Edit(string email)
+        {
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+            if (email == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = newDbContext.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            //user är hittad. sätt värden till placeholdern userviewmodel och skicka till klienten
+            UserViewModels userToEdit = new UserViewModels
+            {
+                Adress = user.Adress,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+            };
+            return View(userToEdit);
+        }
+
+        //hårt modifierad Post metod för edit av Johan S.
+        // POST: users/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        //public ActionResult Edit([Bind(Include = "Id,Name,StartDateTime,Description")] Course course)
+        public ActionResult Edit(string firstName, string lastName, string adress, string email,string oldEmail)
+        {
+            //skapa temporär anslutning till databasen
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+
+            if (oldEmail == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //kontroll av att användaren finns i databasen
+            var originalUser = newDbContext.Users.FirstOrDefault(u => u.Email == oldEmail);
+            bool hasUpdated = false;
+
+            if (originalUser!=null)
+            {
+                //uppdatera fälten - nullcheck innan. kan behövas att e-postformatet är korrekt. detta bör ske på klientsidan (antar jag)
+                if (email!=null && email!=oldEmail) //om nya email har ett värde och att värdet inte är samma som gamla värdet så fortsätt
+                {
+                    originalUser.Email = email;
+                    originalUser.UserName = email;
+                    hasUpdated = true;
+                }
+                if (firstName!=null && firstName!=originalUser.FirstName)
+                {
+                    originalUser.FirstName = firstName;
+                    hasUpdated = true;
+                }
+                if (lastName!=null &&lastName!=originalUser.LastName)
+                {
+                    originalUser.LastName = lastName;
+                    hasUpdated = true;
+                }
+                if (adress!=null &&adress!=originalUser.Adress)
+                {
+                    originalUser.Adress = adress;
+                    hasUpdated = true;
+                }
+                //spara till databasen 
+                newDbContext.SaveChanges();
+
+                if (hasUpdated)
+                {
+                    //skicka ok meddelande till klient.
+                    TempData["Event"] = originalUser.FullName + " updated.";
+                }
+                //redirecta till rätt lista
+
+                if (selectedList == "Teacherlist")
+                {
+                    return RedirectToAction("TeacherList");
+                }
+                else
+                {
+                    return RedirectToAction("StudentList");
+                }
+                
+            }
+            //om vi har kommit hit är originaluser inte hittad. skicka felmeddelande till klient 
+            TempData["NegativeEvent"] ="User not found. Please try again or navigate using the navbar on top of the page.";
+            return View(); 
+        }
+
+        // GET: Users/Delete/By Johan. Delete user, regardless of a teacher or student. Must be a teacher to perform this.
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Delete(string email)
+        {
+            if (email == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+            var user = newDbContext.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            if (user.Email==User.Identity.Name) //användare kan inte ta bort själv. deleteknappen är borta men detta är en extra koll
+            {
+                TempData["NegativeEvent"] = "You cannot delete yourself.";
+                return RedirectToAction("Index", "Courses");
+            }
+
+            //här måste user konverteras till viewmodel som presenteras till läraren
+            UserViewModels userToDelete = new UserViewModels
+            {
+                Adress = user.Adress,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                
+               
+            };
+            if (user.CourseId!=null) //user går en kurs. denna kurs skall presenteras till delete view
+            {
+                Course course = newDbContext.Courses.Find(user.CourseId);
+                string courseName = course.Name;
+                TempData["courseName"] = "Studying "+courseName;
+            }
+
+            //även rollen skall med
+            var teacherRoleInformation = newDbContext.Roles.FirstOrDefault(n => n.Name == "Teacher");
+            var allTeachers = newDbContext.Users.Where(u => u.Roles.FirstOrDefault().RoleId == teacherRoleInformation.Id);
+            //nu har vi ett objekt all teachers. nu måste vi kolla om personen finns med i objektet. 
+            foreach (var teacher in allTeachers)
+            {
+                if (teacher.Email==user.Email)
+                {
+                    TempData["userRole"] = "This user is a teacher.";
+                }
+            }
+
+            var studentRoleInformation = newDbContext.Roles.FirstOrDefault(n => n.Name == "Student");
+            var allStudents = newDbContext.Users.Where(u => u.Roles.FirstOrDefault().RoleId == studentRoleInformation.Id);
+            foreach (var student in allStudents)
+            {
+                if (student.Email == user.Email)
+                {
+                    TempData["userRole"] = "This user is a student.";
+                }
+            }
+
+
+            return View(userToDelete);
+        }
+
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DeleteConfirmed(string email)
+        {
+            ApplicationDbContext newDbContext = new ApplicationDbContext();
+            //hitta user genom eposten
+            ApplicationUser user = newDbContext.Users.FirstOrDefault(u => u.Email == email);
+            if (user!=null)
+            {
+                string presentedName = user.FullName;
+                newDbContext.Users.Remove(user);
+                newDbContext.SaveChanges();
+
+                //in med konfirmeringsmeddelande nedan
+                TempData["Event"] = presentedName + " deleted from the LMS.";
+                if (selectedList == "Teacherlist")
+                {
+                    return RedirectToAction("TeacherList");
+                }
+                else
+                {
+                    return RedirectToAction("StudentList");
+                }
+            }
+            //om vi har kommit hit är originaluser inte hittad. skicka felmeddelande till klient 
+            TempData["NegativeEvent"] = "User not found. Please try again or navigate using the navbar on top of the page.";
+            return View();
+        }
 
         public ActionResult TeacherList()
         {
@@ -54,11 +245,12 @@ namespace LexiconLMS.Controllers
                     //Id = int.Parse(user.Id),
                     LastName = teachers.LastName,
                     Email = teachers.Email,
-                    //CourseName = getCourseName
+                   //CourseName = getCourseName
                 };
                 listOfTeachers.Add(teacher); //add objects one by one to the list to be presented
             }
-
+            
+            selectedList = "Teacherlist";
             return View(listOfTeachers);
         }
 
@@ -119,6 +311,7 @@ namespace LexiconLMS.Controllers
                     }
                 }
             }
+            selectedList = "StudentList";//sätt global variabel till studentlist så redirect blir korrekt
             return View(listOfUsers); //returnera case user är student
         }
 
