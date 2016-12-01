@@ -9,10 +9,11 @@ namespace LexiconLMS.Models
     public class Course
     {
         public int? Id { get; set; }
+        [Display(Name = "Course Name")]
         public string Name { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh\\:mm}")]
-        [Display(Name = "Start time")]
+        [Display(Name = "Start Time")]
         public DateTime StartDateTime { get; set; }
         public string Description { get; set; }
 

@@ -1,17 +1,19 @@
 ﻿@model IEnumerable<LexiconLMS.Models.UserViewModels>
 
 @{
-    ViewBag.Title = "StudentList";
+    ViewBag.Title = "Student List";
 }
 
 @if (User.IsInRole("Student"))
 {
-    <h2>List of class mates in your course</h2>
+    var courseName = Model.FirstOrDefault().CourseName; 
+    <h2>All Students in Course @courseName</h2>
+    
 }
 
 @if (User.IsInRole("Teacher"))
 {
-    <h2>List of all students currently in the LMS</h2>
+    <h2>All Registered Students</h2>
 }
 
 
@@ -72,9 +74,9 @@
                     <td>
                         <!-- Koden nedan måste ändras till att peka till lämplig kontroller -->
                         <!-- och måste även skicka med någon form av id. -->
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Email })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Email }, new { @style = "color:red;" })
                         @Html.Raw(" | ")
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Email })
+                        @Html.ActionLink("Remove", "Delete", new { id = item.Email }, new { @style = "color:red;" })
                     </td>
             }
 

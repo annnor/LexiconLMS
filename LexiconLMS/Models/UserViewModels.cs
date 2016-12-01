@@ -10,15 +10,15 @@ namespace LexiconLMS.Models
     {
         //public string Id { get; set; }
         
-        [Display(Name = "First name")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last name")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Adress { get; set; }
         public string Email { get; set; }
 
-        [Display(Name = "Course name")]
+        [Display(Name = "Course Name")]
         public string CourseName { get; set; }
     }
 }
