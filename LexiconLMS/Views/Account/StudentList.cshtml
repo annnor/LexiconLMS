@@ -15,7 +15,22 @@
 {
     <h2>All Registered Students</h2>
 }
-
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+}
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
 
 
 <table class="table table-bordered table-condensed table-striped table-hover sortable">
@@ -74,9 +89,9 @@
                     <td>
                         <!-- Koden nedan måste ändras till att peka till lämplig kontroller -->
                         <!-- och måste även skicka med någon form av id. -->
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Email }, new { @style = "color:red;" })
+                        @Html.ActionLink("Edit", "Edit", new { email = item.Email })
                         @Html.Raw(" | ")
-                        @Html.ActionLink("Remove", "Delete", new { id = item.Email }, new { @style = "color:red;" })
+                        @Html.ActionLink("Remove", "Delete", new { id = item.Email })
                     </td>
             }
 

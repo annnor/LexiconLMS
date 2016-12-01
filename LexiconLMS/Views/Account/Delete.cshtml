@@ -1,0 +1,80 @@
+﻿@model LexiconLMS.Models.UserViewModels
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Are you sure you want to remove this account?</h3>
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        
+        @if (TempData["userRole"] != null)
+        {
+            
+                <dt>
+                    <h5> <b>Account status</b></h5>
+                </dt>
+            <dd>
+                <h5> @TempData["userRole"]</h5>
+                @if (TempData["courseName"] != null)
+                {<h5>@TempData["courseName"]</h5>}
+            </dd>
+        }
+
+
+        
+
+
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Remove user" class="btn btn-default" /> 
+            </div>
+    }
+</div>
