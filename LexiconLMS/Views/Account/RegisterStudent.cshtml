@@ -1,12 +1,12 @@
 ﻿@model LexiconLMS.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register student";
+    ViewBag.Title = "Register Student";
 }
 
 <h2>@ViewBag.Title</h2>
 <!--XXX Ta bort...eller flytta alla länkar hit
 <div>
-    @Html.ActionLink("Back to Course index", "Index", "Courses")
+    @Html.ActionLink("Back to Course List", "Index", "Courses")
 </div>
     -->
 @using (Html.BeginForm("RegisterStudent", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -60,7 +60,7 @@
 }
 
 <p>
-    @Html.ActionLink("Back to Course details", "Details", "Courses", new { id = @ViewBag.CourseId }, "")
+    @Html.ActionLink("Back to Course Details", "Details", "Courses", new { id = @ViewBag.CourseId }, "")
 </p>
 
 

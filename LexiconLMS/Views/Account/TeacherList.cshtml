@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<LexiconLMS.Models.UserViewModels>
 
 @{
-    ViewBag.Title = "TeacherList";
+    ViewBag.Title = "Teacher List";
 }
 
-<h2>List of all teachers in the LMS</h2>
+<h2>All Registered Teachers</h2>
 
 <p>
-    @Html.ActionLink("Create New Teacher", "Register")
+    @Html.ActionLink("Register Teacher", "Register")
 </p>
 <table class="table table-bordered table-condensed table-striped table-hover sortable">
     <thead>
@@ -50,9 +50,14 @@
                     @Html.DisplayFor(modelItem => item.CourseName)
                 </td>*@
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Email }, new { @style = "color:red;" }) 
                 @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @if (item.Email!=User.Identity.Name)
+                {
+                    @Html.Raw(" | ")
+                    @Html.ActionLink("Remove", "Delete", new { id = item.Email }, new { @style = "color:red;" })
+                }
+                
             </td>
         </tr>
     }

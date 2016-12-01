@@ -202,9 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611300739352_xxxxxx.cs" />
-    <Compile Include="Migrations\201611300739352_xxxxxx.Designer.cs">
-      <DependentUpon>201611300739352_xxxxxx.cs</DependentUpon>
+    <Compile Include="Migrations\201612011021275_yyz.cs" />
+    <Compile Include="Migrations\201612011021275_yyz.Designer.cs">
+      <DependentUpon>201612011021275_yyz.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -301,6 +301,7 @@
     <Content Include="Views\Account\TeacherList.cshtml" />
     <Content Include="Views\Account\RegisterStudent.cshtml" />
     <Content Include="Views\Shared\_StudentList.cshtml" />
+    <Content Include="Views\Courses\StudentHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -312,8 +313,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611300739352_xxxxxx.resx">
-      <DependentUpon>201611300739352_xxxxxx.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612011021275_yyz.resx">
+      <DependentUpon>201612011021275_yyz.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
