@@ -13,7 +13,7 @@ namespace LexiconLMS.Controllers
     public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+/*
         // GET: Modules
         public ActionResult Index()
         {
@@ -131,7 +131,7 @@ namespace LexiconLMS.Controllers
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            TempData["message"] = "You have deleted Module " + module.Name;
+            TempData["message"] = "You have removed Module " + module.Name;
             return RedirectToAction("Index");
         }
 
@@ -143,5 +143,6 @@ namespace LexiconLMS.Controllers
             }
             base.Dispose(disposing);
         }
+        */
     }
 }

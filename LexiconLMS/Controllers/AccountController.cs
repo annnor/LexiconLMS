@@ -136,9 +136,9 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            if (user.Email==User.Identity.Name) //användare kan inte ta bort själv. deleteknappen är borta men detta är en extra koll
+            if (user.Email==User.Identity.Name) //användare kan inte ta bort själv. Remove-knappen är borta men detta är en extra koll
             {
-                TempData["NegativeEvent"] = "You cannot delete yourself.";
+                TempData["NegativeEvent"] = "You cannot remove yourself.";
                 return RedirectToAction("Index", "Courses");
             }
 
@@ -201,7 +201,7 @@ namespace LexiconLMS.Controllers
                 newDbContext.SaveChanges();
 
                 //in med konfirmeringsmeddelande nedan
-                TempData["Event"] = presentedName + " deleted from the LMS.";
+                TempData["Event"] = presentedName + " removed from the LMS.";
                 if (selectedList == "Teacherlist")
                 {
                     return RedirectToAction("TeacherList");
