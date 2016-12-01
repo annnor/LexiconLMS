@@ -79,15 +79,15 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "Id,Name,StartDateTime,Description")] Course course)
+        public ActionResult Create([Bind(Include = "Id,Name,StartDate,Description")] Course course)
         {
             //kontroll av att startdatum inte är satt tidigare än idag
-            if (course.StartDateTime<DateTime.Today)
+            if (course.StartDate<DateTime.Today)
             {
                 //felmeddelande + returnera view
                 //ViewBag.Message = "You tried to create a course with a startdate earlier than today. Please try again.";
                 //använder tempdata istället
-                TempData["CreateError"] = "You tried to create a course with a startdate earlier than today. Please try again.";
+                TempData["CreateError"] = "You tried to create a course with a start date earlier than today. Please try again!";
                 return View();
             }
             //kontroll av att kursnamnet är unikt
@@ -95,7 +95,7 @@ namespace LexiconLMS.Controllers
                 {
                     if (existingcourse.Name==course.Name)
                     {//kurs med det namnet existerar redan i databasen. skicka felmeddelande till klient.
-                    TempData["CreateError"] = "You tried to create a course with a name that already exists. Please try again.";
+                    TempData["CreateError"] = "You tried to create a course with a name that already exists. Please try again with another name!";
                     return View();
                     }
                 }
@@ -130,7 +130,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "Id,Name,StartDateTime,Description")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,Name,StartDate,Description")] Course course)
         {
             if (ModelState.IsValid)
             {

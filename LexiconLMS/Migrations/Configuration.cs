@@ -94,17 +94,17 @@ namespace LexiconLMS.Migrations
             var courses = new Course[] {
                 new Course {
                     Name = ".Net HT16",
-                    StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29, 10, 0, 0),
                     Description = "DotNet utveckling och frontend."
                 },
                 new Course {
                     Name = "It-tekniker",
-                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29, 13, 0, 0),
                     Description = "Utbildning för potentiella it-tekniker."
                 },
                 new Course {
                     Name = "Java4W",
-                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29, 13, 0, 0),
                     Description = "Java-utveckling för tjejer."
                 }
             };
