@@ -13,7 +13,7 @@ namespace LexiconLMS.Controllers
     public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-/*
+
         // GET: Modules
         public ActionResult Index(int courseId)
         {
@@ -143,6 +143,6 @@ namespace LexiconLMS.Controllers
             }
             base.Dispose(disposing);
         }
-        */
+        
     }
 }
