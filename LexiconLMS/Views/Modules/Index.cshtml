@@ -7,7 +7,8 @@
 <h2>Modules for Course @ViewBag.CourseName</h2>
 
 <p>
-    @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName})
+    @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName}) |
+    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new {id = @ViewBag.CourseId }, null)
 </p>
 @TempData["message"]
 <table class="table">
@@ -58,5 +59,8 @@
         </td>
     </tr>
 }
-
+   
 </table>
+<div>
+    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new {id = @ViewBag.CourseId }, null)
+</div>

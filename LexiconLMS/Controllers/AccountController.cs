@@ -143,9 +143,9 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            if (user.Email==User.Identity.Name) //användare kan inte ta bort själv. deleteknappen är borta men detta är en extra koll
+            if (user.Email==User.Identity.Name) //användare kan inte ta bort själv. Remove-knappen är borta men detta är en extra koll
             {
-                TempData["NegativeEvent"] = "You cannot delete yourself.";
+                TempData["NegativeEvent"] = "You cannot remove yourself.";
                 return RedirectToAction("Index", "Courses");
             }
 
@@ -320,7 +320,7 @@ namespace LexiconLMS.Controllers
                             LastName = user.LastName,
                             Email = user.Email,
                             CourseName = getCourseName
-                            };
+                        };
                         listOfUsers.Add(studenInSameCourse);
                     }
                 }
@@ -492,8 +492,14 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult RegisterStudent(int courseId)
         {
+            var db = new ApplicationDbContext();
+            var courseName = db.Courses.Find(courseId)?.Name;
+            if (courseName == null)
+            {
+                return View("Error");
+            }
             ViewBag.CourseId = courseId;
-
+            ViewBag.CourseName = courseName;
             return View();
         }
         // POST: /Account/RegisterStudent
@@ -502,6 +508,15 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterStudent(RegisterViewModel model)
         {
+            var db = new ApplicationDbContext();
+            var courseName = db.Courses.Find(int.Parse(model.CourseId))?.Name;
+            if (courseName == null)
+            {
+                return View("Error");
+            }
+            ViewBag.CourseName = courseName;
+            ViewBag.CourseId = model.CourseId;
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Adress = model.Adress, CourseId = int.Parse(model.CourseId) };
@@ -518,9 +533,6 @@ namespace LexiconLMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    //return RedirectToAction("Index", "Home");
-
-                    ViewBag.CourseId = model.CourseId;
                     ModelState.Clear();
                     //send ok message to client
                     TempData["Event"] = student.FullName + " added to course.";
@@ -529,7 +541,6 @@ namespace LexiconLMS.Controllers
                 AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
-            ViewBag.CourseId = model.CourseId;
             return View(model);
         }
 
