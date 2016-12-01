@@ -48,7 +48,9 @@
     @Html.ActionLink("Back to Course List ", "Index")
 </p>
 
+
     @*show student list for this course*@
+
 <div>
     @Html.Action("StudentListForCourse", new { courseId = Model.Id})
 </div>

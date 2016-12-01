@@ -2,8 +2,24 @@
 @if (User.IsInRole("Teacher"))
 {
     <hr>
-    <h3>Students</h3>
 
+    <h3>Students</h3>
+    if (TempData["Event"] != null)
+    {
+        <div class="Event alert alert-success">
+            <h4>
+                @TempData["Event"]
+            </h4>
+        </div>
+    }
+    if (TempData["NegativeEvent"] != null)
+    {
+        <div class="TempData alert alert-danger" id="Full">
+            <h4>
+                @TempData["NegativeEvent"]
+            </h4>
+        </div>
+    }
 <table class="table table-bordered table-condensed table-striped table-hover sortable">
     <thead>
         <tr>
@@ -38,10 +54,11 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
 
-                <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Email }, new { @style = "color:red;" }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Email }, new { @style = "color:red;" }) |
-                        @Html.ActionLink("Remove", "Delete", new { id = item.Email }, new { @style = "color:red;" })
+                <td>    
+                        @Html.ActionLink("Edit", "Edit","Account",new { email = item.Email }, null) |
+                        @*@Html.ActionLink("Details", "Details", new { id = item.Email }, new { @style = "color:red;" }) |*@
+                        @Html.ActionLink("Remove", "Delete","Account" ,new { email = item.Email},null)
+
                </td>
             </tr>
         }

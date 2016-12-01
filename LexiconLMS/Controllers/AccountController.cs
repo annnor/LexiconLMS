@@ -22,6 +22,7 @@ namespace LexiconLMS.Controllers
         private ApplicationUserManager _userManager;
         
         public static string selectedList { get; set; }
+        public static int details { get; set; }
 
         public AccountController()
         {
@@ -107,14 +108,20 @@ namespace LexiconLMS.Controllers
                 }
                 //redirecta till rätt lista
 
+                if (selectedList== "PartialList")
+                {
+                    //här skall redirect till coursescontroller med korrekt indata av en int till till 
+                    return RedirectToAction("Details", "Courses", new {id = details});
+                }
+
                 if (selectedList == "Teacherlist")
                 {
                     return RedirectToAction("TeacherList");
                 }
-                else
-                {
-                    return RedirectToAction("StudentList");
-                }
+                else return RedirectToAction("StudentList");
+                
+
+
                 
             }
             //om vi har kommit hit är originaluser inte hittad. skicka felmeddelande till klient 
@@ -202,6 +209,13 @@ namespace LexiconLMS.Controllers
 
                 //in med konfirmeringsmeddelande nedan
                 TempData["Event"] = presentedName + " deleted from the LMS.";
+
+                if (selectedList == "PartialList")
+                {
+                    //här skall redirect till coursescontroller med korrekt indata av en int till till 
+                    return RedirectToAction("Details", "Courses", new { id = details });
+                }
+
                 if (selectedList == "Teacherlist")
                 {
                     return RedirectToAction("TeacherList");
@@ -460,7 +474,11 @@ namespace LexiconLMS.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //return RedirectToAction("Index", "Home");
+
+                    //send ok to client
+                    TempData["Event"] = teacher.FullName + " added to LMS.";
                     ModelState.Clear();
+
                     return View();
                 }
                 AddErrors(result);
@@ -504,6 +522,8 @@ namespace LexiconLMS.Controllers
 
                     ViewBag.CourseId = model.CourseId;
                     ModelState.Clear();
+                    //send ok message to client
+                    TempData["Event"] = student.FullName + " added to course.";
                     return View();
                 }
                 AddErrors(result);

@@ -5,6 +5,24 @@
 
 <h2>@ViewBag.Title</h2>
 
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
+
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
