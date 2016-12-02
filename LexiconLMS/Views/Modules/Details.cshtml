@@ -1,7 +1,7 @@
 ﻿@model LexiconLMS.Models.Module
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Module Details";
 }
 
 <h2>Details for Course @ViewBag.courseName</h2>
@@ -55,6 +55,75 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName}) |
+    @Html.ActionLink("Edit Module", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<hr>
+
+<h3>Activities</h3>
+
+@if (Model.Activities.Count > 0)
+{
+    var firstItem = Model.Activities.First();
+
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        <thead>
+            <tr>
+                <th data-defaultsign="AZ">
+                   <!-- @Html.DisplayNameFor(model => firstItem.Type) -->
+                    Type
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => firstItem.Name)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => firstItem.StartDateTime)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => firstItem.EndDateTime)
+                </th>
+                <!--
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => firstItem.Description)
+                </th>
+                    -->
+                <th data-defaultsort='disabled'></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.Activities)
+        {
+            
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type.Name)
+                </td>
+                <td title= "@item.Description" >
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                </td>
+                <!--
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                    -->
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null) |
+                    @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null) |
+                    @Html.ActionLink("Remove", "Delete", "Activities", new { id = item.Id }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+} else
+{
+    <p>No activities have been added so far.</p>
+}
+
