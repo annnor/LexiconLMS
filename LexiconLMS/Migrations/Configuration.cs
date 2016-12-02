@@ -140,6 +140,25 @@ namespace LexiconLMS.Migrations
             context.Modules.AddOrUpdate(m => m.Name, modules);
             context.SaveChanges();
 
+            // --------------- Activity Types -------------------------------------
+
+            var activityTypes = new ActivityType[] {
+                new ActivityType {
+                    Name = "Föreläsning"
+                },
+                new ActivityType {
+                    Name = "E-learning"
+                },
+                new ActivityType {
+                    Name = "Övning"
+                },
+                new ActivityType {
+                    Name = "Tentamen"
+                }
+            };
+            context.ActivityTypes.AddOrUpdate(t => t.Name, activityTypes);
+            context.SaveChanges();
+
             // --------------- Students -------------------------------------
 
             string[,] studentList = {
