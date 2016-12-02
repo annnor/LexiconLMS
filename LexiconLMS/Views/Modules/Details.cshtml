@@ -4,10 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details for Course @ViewBag.courseName</h2>
+<h2>Module Details for Course @ViewBag.courseName</h2>
 
 <div>
-    <h4>Module</h4>
     <hr />
     <dl class="dl-horizontal">
         <!--
@@ -56,5 +55,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName}) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { courseId = Model.CourseId })
 </p>
