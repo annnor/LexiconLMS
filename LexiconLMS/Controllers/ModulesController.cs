@@ -17,7 +17,6 @@ namespace LexiconLMS.Controllers
         // GET: Modules
         public ActionResult Index(int courseId)
         {
-            //int courseId = 3;
             ApplicationDbContext newDbContext = new ApplicationDbContext();
             // Find course name by courseId
             var course = newDbContext.Courses.First(u => u.Id == courseId);
@@ -104,7 +103,7 @@ namespace LexiconLMS.Controllers
                 }
                 db.Modules.Add(module);
                 db.SaveChanges();
-                TempData["message"] = "You have created Module " + module.Name;
+                TempData["Event"] = "You have created Module " + module.Name;
 
                 switch (Add)
                 {
@@ -185,7 +184,7 @@ namespace LexiconLMS.Controllers
                 }
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["message"] = "You have edited Module " + module.Name;
+                TempData["Event"] = "You have edited Module " + module.Name;
                 return RedirectToAction("Index", new { courseId = module.CourseId });
             }
             return View(module);
@@ -219,7 +218,7 @@ namespace LexiconLMS.Controllers
             //ViewBag.CourseId = module.CourseId;
             db.Modules.Remove(module);
             db.SaveChanges();
-            TempData["message"] = "You have deleted Module " + module.Name;
+            TempData["Event"] = "You have deleted Module " + module.Name;
             return RedirectToAction("Index", new { courseId = module.CourseId });
         }
 
