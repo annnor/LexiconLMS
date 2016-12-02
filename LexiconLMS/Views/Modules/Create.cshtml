@@ -6,7 +6,31 @@
 }
 
 <h2>Add Module for Course @ViewBag.CourseName</h2>
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+}
 
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
 
 
 @using (Html.BeginForm()) 
@@ -56,17 +80,18 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
+         
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" name ="Add" id ="Save" value="Save" class="btn btn-default" />
+                <input type="submit" name="Add"  id ="SaveNew" value="Save & Add New" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { courseId = @ViewBag.CourseId })
 </div>
 
 @section Scripts {

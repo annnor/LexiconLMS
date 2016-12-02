@@ -17,7 +17,6 @@ namespace LexiconLMS.Controllers
         // GET: Modules
         public ActionResult Index(int courseId)
         {
-            //int courseId = 3;
             ApplicationDbContext newDbContext = new ApplicationDbContext();
             // Find course name by courseId
             var course = newDbContext.Courses.First(u => u.Id == courseId);
@@ -57,16 +56,67 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseId,Name,StartDateTime,EndDateTime,Description")] Module module)
+        public ActionResult Create(string Add, [Bind(Include = "Id,CourseId,Name,StartDateTime,EndDateTime,Description")] Module module)
         {
             if (ModelState.IsValid)
             {
+                ViewBag.CourseId = module.CourseId;
+                //ApplicationDbContext newDbContext = new ApplicationDbContext();
+                // Find course name by courseId
+                var course = db.Courses.First(u => u.Id == module.CourseId);
+                if (course.StartDate > module.StartDateTime)
+                {
+                    ModelState.AddModelError("StartDateTime", "Start date can´t be earlier than course start date");
+                    return View();
+                }
+                if (module.StartDateTime >= module.EndDateTime)
+                {
+                    ModelState.AddModelError("StartDateTime", "Start date conflicts with end date ");
+                    return View();
+                }
+                //Find modules by CourseId
+                var modules = db.Modules.ToList().Where(c => c.CourseId == module.CourseId);
+
+                foreach (var mod in modules)
+                {
+                    if (module.StartDateTime == mod.StartDateTime)
+                    {
+                        ModelState.AddModelError("StartDateTime", "Start date conflicts with Start date for another module");
+                        return View();
+                    }
+                    else if (module.StartDateTime < mod.StartDateTime)
+                    {
+                        if (module.EndDateTime > mod.StartDateTime)
+                        {
+                            ModelState.AddModelError("EndDateTime", "End date conflicts with Start date for another module");
+                            return View();
+                        }
+                    }
+                    else if (module.StartDateTime > mod.StartDateTime)
+                    {
+                        if (module.StartDateTime < mod.EndDateTime)
+                        {
+                            ModelState.AddModelError("StartDateTime", "Start date conflicts with End date for another module");
+                            return View();
+                        }
+                    }
+                }
                 db.Modules.Add(module);
                 db.SaveChanges();
-                TempData["message"] = "You have created Module " + module.Name;
-                return RedirectToAction("Index");
-            }
+                TempData["Event"] = "You have created Module " + module.Name;
 
+                switch (Add)
+                {
+                    case "Save":
+                        return RedirectToAction("Index", new { courseId = module.CourseId });
+                    case "Save & Add New":
+                        ModelState.Clear();
+                        return View();
+                    default:
+                        throw new Exception();
+                        break;
+                }
+            }
             return View(module);
         }
 
@@ -97,10 +147,45 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(module.StartDateTime >= module.EndDateTime)
+                {
+                    ModelState.AddModelError("StartDateTime", "Start date conflicts with end date ");
+                    return View(module);
+                }
+                //Find modules by CourseId
+                var modules = db.Modules.AsNoTracking().ToList().Where(c => c.CourseId == module.CourseId);
+
+                foreach (var mod in modules)
+                {
+                    if (module.Id != mod.Id)
+                    {
+                        if (module.StartDateTime == mod.StartDateTime)
+                        {
+                            ModelState.AddModelError("StartDateTime", "Start date conflicts with Start date for another module");
+                            return View(module);
+                        }
+                        else if (module.StartDateTime < mod.StartDateTime)
+                        {
+                            if (module.EndDateTime > mod.StartDateTime)
+                            {
+                                ModelState.AddModelError("EndDateTime", "End date conflicts with Start date for another module");
+                                return View(module);
+                            }
+                        }
+                        else if (module.StartDateTime > mod.StartDateTime)
+                        {
+                            if (module.StartDateTime < mod.EndDateTime)
+                            {
+                                ModelState.AddModelError("StartDateTime", "Start date conflicts with End date for another module");
+                                return View(module);
+                            }
+                        }
+                    }
+                }
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["message"] = "You have edited Module " + module.Name;
-                return RedirectToAction("Index");
+                TempData["Event"] = "You have edited Module " + module.Name;
+                return RedirectToAction("Index", new { courseId = module.CourseId });
             }
             return View(module);
         }
@@ -128,11 +213,13 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
+            
             Module module = db.Modules.Find(id);
+            //ViewBag.CourseId = module.CourseId;
             db.Modules.Remove(module);
             db.SaveChanges();
-            TempData["message"] = "You have removed Module " + module.Name;
-            return RedirectToAction("Index");
+            TempData["Event"] = "You have deleted Module " + module.Name;
+            return RedirectToAction("Index", new { courseId = module.CourseId });
         }
 
         protected override void Dispose(bool disposing)

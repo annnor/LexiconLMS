@@ -455,7 +455,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string save1, string saveMultiple)
         {
             if (ModelState.IsValid)
             {
@@ -479,7 +479,9 @@ namespace LexiconLMS.Controllers
                     TempData["Event"] = teacher.FullName + " added to LMS.";
                     ModelState.Clear();
 
-                    return View();
+                    //redirect to right place depending on button chosen
+                    if (save1 != null) return RedirectToAction("TeacherList");
+                    if (saveMultiple != null) return RedirectToAction("Register");
                 }
                 AddErrors(result);
             }
@@ -506,7 +508,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterStudent(RegisterViewModel model)
+        public async Task<ActionResult> RegisterStudent(RegisterViewModel model,string save1, string saveMultiple)
         {
             var db = new ApplicationDbContext();
             var courseName = db.Courses.Find(int.Parse(model.CourseId))?.Name;
@@ -536,6 +538,9 @@ namespace LexiconLMS.Controllers
                     ModelState.Clear();
                     //send ok message to client
                     TempData["Event"] = student.FullName + " added to course.";
+                    if (save1 != null) return RedirectToAction("Details","Courses", new {id=model.CourseId}); //här skall teacher redirectas till rätt coursedetail course
+                    if (saveMultiple != null) return RedirectToAction("RegisterStudent",new { model.CourseId});//här skall teacher redirectas till RegisterStudent med kursid
+
                     return View();
                 }
                 AddErrors(result);

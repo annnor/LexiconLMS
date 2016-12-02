@@ -205,14 +205,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612021216404_ActType3.cs" />
-    <Compile Include="Migrations\201612021216404_ActType3.Designer.cs">
-      <DependentUpon>201612021216404_ActType3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612021352096_ActType4.cs" />
-    <Compile Include="Migrations\201612021352096_ActType4.Designer.cs">
-      <DependentUpon>201612021352096_ActType4.cs</DependentUpon>
-    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -339,14 +332,7 @@
     </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612021216404_ActType3.resx">
-      <DependentUpon>201612021216404_ActType3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612021352096_ActType4.resx">
-      <DependentUpon>201612021352096_ActType4.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+ 
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -14,6 +14,23 @@
         </h4>
     </div>
 }
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -48,7 +65,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" name="save1" value="Save" class="btn btn-default" />
+                <input type="submit" name="saveMultiple" value="Save & add new Corse" class="btn btn-default"/>
             </div>
         </div>
     </div>
