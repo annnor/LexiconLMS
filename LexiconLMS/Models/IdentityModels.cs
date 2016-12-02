@@ -35,7 +35,9 @@ namespace LexiconLMS.Models
         }
 
         public DbSet<Course> Courses { get; set; }
-       // public DbSet<Module> Modules { get; set;}
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
+//        public DbSet<Activity> Activity { get; set; }
 
 
 
