@@ -1,6 +1,6 @@
 ﻿@model LexiconLMS.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register Student";
+    ViewBag.Title = "Register a new student to the course " + @ViewBag.CourseName;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -8,7 +8,25 @@
 <div>
     @Html.ActionLink("Back to Course List", "Index", "Courses")
 </div>
-    -->
+-->
+
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
 @using (Html.BeginForm("RegisterStudent", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()

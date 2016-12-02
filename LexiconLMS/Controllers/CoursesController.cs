@@ -103,7 +103,9 @@ namespace LexiconLMS.Controllers
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("Edit", new { Id = course.Id });
+                //meddelande till klient att kursen är skapad
+                TempData["Event"] = course.Name+" added to LMS.";
+                return RedirectToAction("Index");//, new { Id = course.Id });
             }
             return View(course);
         }
@@ -136,6 +138,8 @@ namespace LexiconLMS.Controllers
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
+                //text till klient
+                TempData["Event"] = course.Name + " edited.";
                 return RedirectToAction("Index");
             }
             return View(course);
@@ -170,6 +174,7 @@ namespace LexiconLMS.Controllers
                 Course course = db.Courses.Find(id);
                 db.Courses.Remove(course);
                 db.SaveChanges();
+                TempData["Event"] ="Course " +course.Name + " removed from LMS.";
             }
             return RedirectToAction("Index");
         }
@@ -225,7 +230,13 @@ namespace LexiconLMS.Controllers
                         listOfUsers.Add(studenInSameCourse);
                     }
                 }
-            }//sen måste den skickas till klienten
+
+            }
+            //sätt globala static strängen i accountcontroller till partiallist så vi vet var vi ska redirecta
+            //även details är en global static i accountcontrollern
+            AccountController.selectedList = "PartialList";
+            AccountController.details = courseId;
+            //sen måste den skickas till klienten
             return PartialView("_StudentList", listOfUsers); 
         }
 

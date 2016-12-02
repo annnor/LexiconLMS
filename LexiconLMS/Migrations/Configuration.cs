@@ -111,29 +111,53 @@ namespace LexiconLMS.Migrations
             context.Courses.AddOrUpdate(c => c.Name, courses);
             context.SaveChanges();
 
+            int amountOfCourses = courses.Length;
+
             // --------------- Modules -------------------------------------
-            //var modules = new Module[] {
-            //    new Module {
-            //        Name = "C#",
-            //        StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
-            //        EndDateTime = new DateTime(2016, 09, 16, 15, 0, 0),
-            //        Description = "Programmering i C#."
-            //    },
-            //    new Module {
-            //        Name = "MVC",
-            //        StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
-            //        EndDateTime = new DateTime(2016, 09, 30, 15, 0, 0),
-            //        Description = "DotNet utveckling och frontend."
-            //    },
-            //    new Module {
-            //        Name = "Bootstrap",
-            //        StartDateTime = new DateTime(2016, 10, 02, 09, 0, 0),
-            //        EndDateTime = new DateTime(2016, 10, 06, 15, 0, 0),
-            //        Description = "Responsiva webb-sidonr."
-            //    }
-            //};
-            //context.Courses.AddOrUpdate(c => c.Name, courses);
-            //context.SaveChanges();
+            var modules = new Module[] {
+                new Module {
+                    Name = "C#",
+                    StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
+                    EndDateTime = new DateTime(2016, 09, 16, 15, 0, 0),
+                    Description = "Programmering i C#.",
+                    CourseId = courses[0].Id
+                },
+                new Module {
+                    Name = "MVC",
+                    StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 09, 30, 15, 0, 0),
+                    Description = "DotNet utveckling och frontend.",
+                    CourseId = courses[0].Id
+                },
+                new Module {
+                    Name = "Bootstrap",
+                    StartDateTime = new DateTime(2016, 10, 02, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 10, 06, 15, 0, 0),
+                    Description = "Responsiva webb-sidonr.",
+                    CourseId = courses[0].Id
+                }
+            };
+            context.Modules.AddOrUpdate(m => m.Name, modules);
+            context.SaveChanges();
+
+            // --------------- Activity Types -------------------------------------
+
+            var activityTypes = new ActivityType[] {
+                new ActivityType {
+                    Name = "Föreläsning"
+                },
+                new ActivityType {
+                    Name = "E-learning"
+                },
+                new ActivityType {
+                    Name = "Övning"
+                },
+                new ActivityType {
+                    Name = "Tentamen"
+                }
+            };
+            context.ActivityTypes.AddOrUpdate(t => t.Name, activityTypes);
+            context.SaveChanges();
 
             // --------------- Students -------------------------------------
 
@@ -171,12 +195,12 @@ namespace LexiconLMS.Migrations
                 { "Viktor", "Magnusson" },
                 { "Wiktor", "Nilsson" }
             };
-            int cLength = courses.Length;
+
             upperBound = studentList.GetUpperBound(0);
             for (int i = 0; i <= upperBound; i++)
             {
                 // cIndex - index to use for courses list:
-                var cIndex = i % cLength;
+                var cIndex = i % amountOfCourses;
 
                 var firstName = studentList[i, 0];
                 var lastName = studentList[i, 1];

@@ -197,18 +197,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityTypesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612011418458_InitVIII.cs" />
-    <Compile Include="Migrations\201612011418458_InitVIII.Designer.cs">
-      <DependentUpon>201612011418458_InitVIII.cs</DependentUpon>
+    <Compile Include="Migrations\201612011541099_latethursdaymerge.cs" />
+    <Compile Include="Migrations\201612011541099_latethursdaymerge.Designer.cs">
+      <DependentUpon>201612011541099_latethursdaymerge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612020947435_ActType1.cs" />
+    <Compile Include="Migrations\201612020947435_ActType1.Designer.cs">
+      <DependentUpon>201612020947435_ActType1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612020958273_ActType2.cs" />
+    <Compile Include="Migrations\201612020958273_ActType2.Designer.cs">
+      <DependentUpon>201612020958273_ActType2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -306,6 +316,11 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Courses\StudentHome.cshtml" />
+    <Content Include="Views\ActivityTypes\Create.cshtml" />
+    <Content Include="Views\ActivityTypes\Delete.cshtml" />
+    <Content Include="Views\ActivityTypes\Details.cshtml" />
+    <Content Include="Views\ActivityTypes\Edit.cshtml" />
+    <Content Include="Views\ActivityTypes\Index.cshtml" />
     <Content Include="Views\Modules\Create.cshtml" />
     <Content Include="Views\Modules\Delete.cshtml" />
     <Content Include="Views\Modules\Details.cshtml" />
@@ -322,8 +337,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612011418458_InitVIII.resx">
-      <DependentUpon>201612011418458_InitVIII.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612011541099_latethursdaymerge.resx">
+      <DependentUpon>201612011541099_latethursdaymerge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

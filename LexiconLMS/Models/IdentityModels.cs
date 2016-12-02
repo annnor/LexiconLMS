@@ -35,7 +35,7 @@ namespace LexiconLMS.Models
         }
 
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Module> Modules { get; set;}
+       public DbSet<Module> Modules { get; set;}
 
 
 
@@ -44,8 +44,5 @@ namespace LexiconLMS.Models
             return new ApplicationDbContext();
         }
 
-       // public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
-
-        //   public System.Data.Entity.DbSet<LexiconLMS.Models.UserViewModels> UserViewModels { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace LexiconLMS.Controllers
             ApplicationDbContext newDbContext = new ApplicationDbContext();
             // Find course name by courseId
             var course = newDbContext.Courses.First(u => u.Id == courseId);
-            ViewBag.CourseName = course.Name; 
+            ViewBag.CourseName = course.Name;
             ViewBag.CourseId = courseId;
             return View(db.Modules.ToList().Where(c => c.CourseId == courseId));
         }
@@ -117,8 +117,8 @@ namespace LexiconLMS.Controllers
                         throw new Exception();
                         break;
                 }
-                                    }
-               return View(module);
+            }
+            return View(module);
         }
 
         // GET: Modules/Edit/5
@@ -231,5 +231,6 @@ namespace LexiconLMS.Controllers
             }
             base.Dispose(disposing);
         }
+        
     }
 }
