@@ -79,7 +79,8 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "Id,Name,StartDate,Description")] Course course)
+        //modified parameter head to allow save multiple and redirect appropriately - test
+        public ActionResult Create([Bind(Include = "Id,Name,StartDate,Description"),] Course course,string save1,string saveMultiple)
         {
             //kontroll av att startdatum inte är satt tidigare än idag
             if (course.StartDate<DateTime.Today)
@@ -105,9 +106,13 @@ namespace LexiconLMS.Controllers
                 db.SaveChanges();
                 //meddelande till klient att kursen är skapad
                 TempData["Event"] = course.Name+" added to LMS.";
-                return RedirectToAction("Index");//, new { Id = course.Id });
+                //return RedirectToAction("Index");//, new { Id = course.Id });
             }
-            return View(course);
+
+            //code for appropriate redirects below
+            if (save1 != null) return RedirectToAction("Index");
+            if (saveMultiple != null) return RedirectToAction("Create");
+            return View(course);//should not be able to reach this return
         }
 
         // GET: Courses/Edit/5

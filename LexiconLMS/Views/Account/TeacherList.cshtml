@@ -70,7 +70,7 @@
                 @if (item.Email!=User.Identity.Name)
                 {
                     @Html.Raw(" | ")
-                    @Html.ActionLink("Remove", "Delete", new { id = item.Email })
+                    @Html.ActionLink("Remove", "Delete", new { email = item.Email })
                 }
                 
             </td>

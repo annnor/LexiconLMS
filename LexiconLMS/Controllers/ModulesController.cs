@@ -57,14 +57,20 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseId,Name,StartDateTime,EndDateTime,Description")] Module module)
+        public ActionResult Create([Bind(Include = "Id,CourseId,Name,StartDateTime,EndDateTime,Description")] Module module/*, string save1, string saveMultiple*/)
         {
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                TempData["message"] = "You have created Module " + module.Name;
-                return RedirectToAction("Index");
+                //TempData["Event"] = "You have created Module " + module.Name;
+                
+                //var courseNameToPassToCreateMethod = db.Courses.First(c => c.Id == module.CourseId).Name;
+                
+
+                ////code for appropriate redirects below
+                //if (save1 != null) return RedirectToAction("Index",new {courseId=module.CourseId});//skicka med rätt courseid
+                //if (saveMultiple != null) return RedirectToAction("Create",new {courseId= module.CourseId, courseName = courseNameToPassToCreateMethod });
             }
 
             return View(module);
