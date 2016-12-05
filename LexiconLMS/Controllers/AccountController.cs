@@ -34,6 +34,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Edit(string email)
         {
             ApplicationDbContext newDbContext = new ApplicationDbContext();
+            
             if (email == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

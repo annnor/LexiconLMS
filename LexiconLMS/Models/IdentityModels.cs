@@ -44,6 +44,6 @@ namespace LexiconLMS.Models
         {
             return new ApplicationDbContext();
         }
-
+        
     }
 }

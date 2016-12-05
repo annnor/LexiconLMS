@@ -4,15 +4,20 @@
     ViewBag.Title = "Create";
   
 }
-
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 <h2>Add Module for Course @ViewBag.CourseName</h2>
 @if (TempData["Event"] != null)
 {
-    <div class="Event alert alert-success">
+    <div class="Event alert alert-success" id="Event">
         <h4>
             @TempData["Event"]
         </h4>
     </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
 }
 
 @if (TempData["Event"] != null)
@@ -31,7 +36,7 @@
             @TempData["NegativeEvent"]
         </h4>
     </div>
-
+}
 
 @using (Html.BeginForm()) 
 {

@@ -114,7 +114,7 @@ namespace LexiconLMS.Controllers
                         return View();
                     default:
                         throw new Exception();
-                        break;
+                        //break;
                 }
             }
             return View(module);
