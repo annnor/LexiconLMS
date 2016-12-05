@@ -4,6 +4,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 <!--XXX Ta bort...eller flytta alla länkar hit
 <div>
     @Html.ActionLink("Back to Course List", "Index", "Courses")
@@ -12,11 +15,14 @@
 
 @if (TempData["Event"] != null)
 {
-    <div class="Event alert alert-success">
+    <div class="Event alert alert-success" id="Event">
         <h4>
             @TempData["Event"]
         </h4>
     </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
 }
 
 @if (TempData["NegativeEvent"] != null)
