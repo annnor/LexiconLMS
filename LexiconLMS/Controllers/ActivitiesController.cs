@@ -39,8 +39,15 @@ namespace LexiconLMS.Controllers
 
         // GET: Activities/Create
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create()
+        public ActionResult Create(int moduleId)
         {
+            var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == moduleId);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ModuleId = module.Id;
+            ViewBag.ModuleName = module.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
             return View();
         }
@@ -51,15 +58,27 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, ModuleId")] Activity activity)
         {
+            //           var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == activity.ModuleId);
+            var module = db.Modules.Find(activity.ModuleId);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            var course = db.Courses.Find(module.CourseId);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Modules", new { id = activity.ModuleId, courseName = course.Name });
             }
-
+            ViewBag.ModuleId = module.Id;
+            ViewBag.ModuleName = module.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
             return View(activity);
         }

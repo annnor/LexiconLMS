@@ -37,6 +37,15 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            if (courseName == null)
+            {
+                Course course = db.Courses.Find(module.CourseId);
+                if (course == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                courseName = course.Name;
+            }
             ViewBag.CourseName = courseName;
             return View(module);
         }

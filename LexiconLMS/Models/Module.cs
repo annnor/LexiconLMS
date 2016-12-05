@@ -15,6 +15,7 @@ namespace LexiconLMS.Models
         public virtual Course Course { get; }
 
         [Required]
+        [Display(Name = "Module Name")]
         public string Name { get; set; }
 
         [Required]

@@ -54,8 +54,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit Module", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName}) |
-    @Html.ActionLink("Back to List", "Index", new { courseId = Model.CourseId })
+    @Html.ActionLink("Add Activity", "Create", "Activities", new { moduleId = Model.Id }, null) |
+    @Html.ActionLink("Edit Module Info", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName }) |
+    @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
 </p>
 
 <hr>
@@ -91,14 +92,14 @@
             </tr>
         </thead>
 
-        @foreach (var item in Model.Activities)
+        @foreach (var item in Model.Activities.OrderBy(a => a.StartDateTime))
         {
             
-            <tr>
+            <tr title= "@item.Description">
                 <td>
                     @Html.DisplayFor(modelItem => item.Type.Name)
                 </td>
-                <td title= "@item.Description" >
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
