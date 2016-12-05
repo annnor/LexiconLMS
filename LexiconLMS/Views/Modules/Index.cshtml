@@ -9,15 +9,6 @@
 <h2>Modules for Course @ViewBag.CourseName</h2>
 @if (TempData["Event"] != null)
 {
-    <div class="Event alert alert-success">
-        <h4>
-            @TempData["Event"]
-        </h4>
-    </div>
-}
-
-@if (TempData["Event"] != null)
-{
     <div class="Event alert alert-success" id="Event">
         <h4>
             @TempData["Event"]

@@ -20,15 +20,6 @@
     </script>
 }
 
-@if (TempData["Event"] != null)
-{
-    <div class="Event alert alert-success">
-        <h4>
-            @TempData["Event"]
-        </h4>
-    </div>
-}
-
 @if (TempData["NegativeEvent"] != null)
 {
     <div class="TempData alert alert-danger" id="Full">
