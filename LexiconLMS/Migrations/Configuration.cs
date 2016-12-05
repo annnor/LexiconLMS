@@ -159,6 +159,69 @@ namespace LexiconLMS.Migrations
             context.ActivityTypes.AddOrUpdate(t => t.Name, activityTypes);
             context.SaveChanges();
 
+            // --------------- Activities -------------------------------------
+
+            var activities = new Activity[] {
+                new Activity {
+                    Name = "C# Intro",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 08, 30, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 08, 30, 17, 0, 0),
+                    Description = "C# Intro - med Adrian",
+                    ModuleId = modules[0].Id
+                },
+                new Activity {
+                    Name = "Intro + C# Fundamentals with Visual Studio 2015, Kap 1-2",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 08, 29, 17, 0, 0),
+                    Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
+                    ModuleId = modules[0].Id
+                },
+                new Activity {
+                    Name = "C# Fundamentals with Visual Studio 2015, Kap 4-5",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 08, 31, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 08, 31, 17, 0, 0),
+                    Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
+                    ModuleId = modules[0].Id
+                },
+                new Activity {
+                    Name = "C# Fundamentals with Visual Studio 2015, Kap 3",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 08, 31, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 08, 31, 12, 0, 0),
+                    Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
+                    ModuleId = modules[0].Id
+                },
+                new Activity {
+                    Name = "C# Grunderna",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 9, 1, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 9, 1, 17, 0, 0),
+                    Description = "C# Grunderna - med Adrian",
+                    ModuleId = modules[0].Id
+                },
+                new Activity {
+                    Name = "C# Fundamentals with Visual Studio 2015, Kap 6-7",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 9, 2, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 9, 2, 12, 0, 0),
+                    Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
+                    ModuleId = modules[0].Id
+                },
+                new Activity {
+                    Name = "C# Fundamentals with Visual Studio 2015, Kap 8",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 9, 2, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 9, 2, 17, 0, 0),
+                    Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
+                    ModuleId = modules[0].Id
+                }
+            };
+            context.Activities.AddOrUpdate(a => a.Name, activities);
+            context.SaveChanges();
+            
             // --------------- Students -------------------------------------
 
             string[,] studentList = {
