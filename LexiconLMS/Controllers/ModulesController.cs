@@ -111,6 +111,8 @@ namespace LexiconLMS.Controllers
                         }
                     }
                 }
+                try
+                {
                 db.Modules.Add(module);
                 db.SaveChanges();
                 TempData["Event"] = "Module " + module.Name + " added.";
@@ -125,6 +127,13 @@ namespace LexiconLMS.Controllers
                     default:
                         throw new Exception();
                         //break;
+                }
+
+            }
+                catch (Exception e)
+                {
+                    TempData["NegativeEvent"] = e.Message;
+                    return View();
                 }
             }
             return View(module);
@@ -192,10 +201,18 @@ namespace LexiconLMS.Controllers
                         }
                     }
                 }
+                try
+                {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Event"] = "Module " + module.Name + " edited.";
                 return RedirectToAction("Index", new { courseId = module.CourseId });
+            }
+                catch(Exception e)
+                {
+                    TempData["NegativeEvent"] = e.Message;
+            return View(module);
+        }
             }
             return View(module);
         }
@@ -226,9 +243,16 @@ namespace LexiconLMS.Controllers
             
             Module module = db.Modules.Find(id);
             //ViewBag.CourseId = module.CourseId;
+            try
+            {
             db.Modules.Remove(module);
             db.SaveChanges();
             TempData["Event"] = "Module " + module.Name + " removed.";
+            }
+            catch (Exception e)
+            {
+                TempData["NegativeEvent"] = e.Message;
+            }
             return RedirectToAction("Index", new { courseId = module.CourseId });
         }
 

@@ -2,12 +2,22 @@
 <head>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
-
 @{
     ViewBag.Title = "Activity Types";
 }
 
 <h2>Activity Types</h2>
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
+}
 
 @if (TempData["Event"] != null)
 {

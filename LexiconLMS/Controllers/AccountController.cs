@@ -67,6 +67,8 @@ namespace LexiconLMS.Controllers
             //skapa temporär anslutning till databasen
             ApplicationDbContext newDbContext = new ApplicationDbContext();
 
+
+
             if (oldEmail == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -74,20 +76,23 @@ namespace LexiconLMS.Controllers
             //kontroll av att användaren finns i databasen
             var originalUser = newDbContext.Users.FirstOrDefault(u => u.Email == oldEmail);
             bool hasUpdated = false;
-
+            bool emailChanged = false;
             if (originalUser!=null)
             {
                 //uppdatera fälten - nullcheck innan. kan behövas att e-postformatet är korrekt. detta bör ske på klientsidan (antar jag)
                 if (email!=null && email!=oldEmail) //om nya email har ett värde och att värdet inte är samma som gamla värdet så fortsätt
-                {
+                {   //om eposten är ändrad-i så fall skall användaren loggas ut efter ändringen och meddelande skall skickas till klient
+
                     originalUser.Email = email;
                     originalUser.UserName = email;
                     hasUpdated = true;
+                    emailChanged = true;
                 }
                 if (firstName!=null && firstName!=originalUser.FirstName)
                 {
                     originalUser.FirstName = firstName;
                     hasUpdated = true;
+                    TempData["NegativeEvent"] = "Since you have changed your e-mail adress you are automatically logged out and must log in with your new e-mailadress";
                 }
                 if (lastName!=null &&lastName!=originalUser.LastName)
                 {
@@ -107,6 +112,11 @@ namespace LexiconLMS.Controllers
                     //skicka ok meddelande till klient.
                     TempData["Event"] = originalUser.FullName + " updated.";
                 }
+                if (emailChanged)
+                {
+                    var AutheticationManager = HttpContext.GetOwinContext().Authentication;
+                    AuthenticationManager.SignOut();
+                }
                 //redirecta till rätt lista
 
                 if (selectedList== "PartialList")
@@ -120,9 +130,6 @@ namespace LexiconLMS.Controllers
                     return RedirectToAction("TeacherList");
                 }
                 else return RedirectToAction("StudentList");
-                
-
-
                 
             }
             //om vi har kommit hit är originaluser inte hittad. skicka felmeddelande till klient 
@@ -146,7 +153,7 @@ namespace LexiconLMS.Controllers
             }
             if (user.Email==User.Identity.Name) //användare kan inte ta bort själv. Remove-knappen är borta men detta är en extra koll
             {
-                TempData["NegativeEvent"] = "You cannot remove yourself.";
+                TempData["NegativeEvent"] = "You cannot remove yourself. Ask a colleague to remove your account.";
                 return RedirectToAction("Index", "Courses");
             }
 

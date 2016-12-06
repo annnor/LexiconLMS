@@ -27,17 +27,19 @@
         </h4>
     </div>
 }
+@if(User.IsInRole("Teacher"))
+{
 <p>
 
     @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName }) |
     @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
 </p>
+}
+
 
 @if (User.IsInRole("Student"))
 {
-    <p>
-        @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
-</p>
+    @Html.ActionLink("Back to your course page", "StudentHome", "Courses")
 }
 
 <table class="table table-bordered table-condensed table-striped table-hover sortable">
@@ -92,6 +94,12 @@
                     @Html.ActionLink("Remove", "Delete", new { id = item.Id, courseName = @ViewBag.CourseName })
         </td>
 }
+@if (User.IsInRole("Student"))
+{
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName })
+    </td>
+}
     </tr>
 }
    
@@ -103,8 +111,5 @@
 </div>
 }
 
-@if (User.IsInRole("Student"))
-{
-    @Html.ActionLink("Back to your course page","StudentHome","Courses")
-}
+
 
