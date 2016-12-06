@@ -20,7 +20,7 @@
                 @if (User.IsInRole("Teacher"))
                 {
 
-                    <a href='@Url.Action("Index")'>
+                    <a href='@Url.Action("Index","Courses")'>
                         <img src='@Url.Content("~/Images/logo-lexicon_small.gif")' alt="Lexicon">
                     </a>
                     @*@Html.ActionLink("Lexicon LMS", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })*@
@@ -29,7 +29,7 @@
                 }
                 else
                 {
-                    <a href='@Url.Action("StudentHome")'>
+                    <a href='@Url.Action("StudentHome","Courses")'>
                         <img src='@Url.Content("~/Images/logo-lexicon_small.gif")' alt="Lexicon" id="LexiconSmall">
                     </a>
                         @*@Html.ActionLink("Lexicon LMS", "StudentHome", "Courses", new { area = "" }, new { @class = "navbar-brand" })*@

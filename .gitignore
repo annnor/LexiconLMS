@@ -242,3 +242,4 @@ ModelManifest.xml
 .fake/
 /Lexicon-LMS_keep/
 /LexiconLMS/Migrations
+/LexiconLMS/Scripts
