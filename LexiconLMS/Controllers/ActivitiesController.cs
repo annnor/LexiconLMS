@@ -58,7 +58,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, ModuleId")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, ModuleId")] Activity activity, string save1, string saveMultiple)
         {
             var module = db.Modules.Find(activity.ModuleId);
             if (module == null)
@@ -75,7 +75,9 @@ namespace LexiconLMS.Controllers
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Modules", new { id = activity.ModuleId, courseName = course.Name });
+                TempData["Event"] = "Activity " + activity.Name + " added.";
+                if (save1 != null) return RedirectToAction("Details", "Modules", new { id = activity.ModuleId, courseName = course.Name });
+                if (saveMultiple != null) return RedirectToAction("Create", "Activities", new { moduleId = activity.ModuleId });
             }
             ViewBag.ModuleId = module.Id;
             ViewBag.ModuleName = module.Name;
@@ -117,6 +119,7 @@ namespace LexiconLMS.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Event"] = "Activity " + activity.Name + " edited.";
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
@@ -149,6 +152,7 @@ namespace LexiconLMS.Controllers
             var moduleId = activity.ModuleId;
             db.Activities.Remove(activity);
             db.SaveChanges();
+            TempData["Event"] = "Activity " + activity.Name + " removed.";
             return RedirectToAction("Details", "Modules", new { id = moduleId });
         }
 

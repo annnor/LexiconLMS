@@ -133,7 +133,7 @@ namespace LexiconLMS.Controllers
                 db.Courses.Add(course);
                 db.SaveChanges();
                 //meddelande till klient att kursen är skapad
-                TempData["Event"] = course.Name+" added to LMS.";
+                TempData["Event"] = "Course " + course.Name + " added.";
                 //return RedirectToAction("Index");//, new { Id = course.Id });
             }
 
@@ -186,7 +186,7 @@ namespace LexiconLMS.Controllers
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 //text till klient
-                TempData["Event"] = course.Name + " edited.";
+                TempData["Event"] = "Course " + course.Name + " edited.";
                 return RedirectToAction("Index");
             }
             return View(course);
@@ -221,7 +221,7 @@ namespace LexiconLMS.Controllers
                 Course course = db.Courses.Find(id);
                 db.Courses.Remove(course);
                 db.SaveChanges();
-                TempData["Event"] ="Course " +course.Name + " removed from LMS.";
+                TempData["Event"] ="Course " + course.Name + " removed.";
             }
             return RedirectToAction("Index");
         }

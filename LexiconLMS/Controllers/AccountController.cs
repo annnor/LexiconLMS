@@ -209,7 +209,7 @@ namespace LexiconLMS.Controllers
                 newDbContext.SaveChanges();
 
                 //in med konfirmeringsmeddelande nedan
-                TempData["Event"] = presentedName + " deleted from the LMS.";
+                TempData["Event"] = presentedName + " removed from the LMS.";
 
                 if (selectedList == "PartialList")
                 {

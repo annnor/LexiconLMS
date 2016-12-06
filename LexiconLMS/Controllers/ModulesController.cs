@@ -113,7 +113,7 @@ namespace LexiconLMS.Controllers
                 }
                 db.Modules.Add(module);
                 db.SaveChanges();
-                TempData["Event"] = "You have created Module " + module.Name;
+                TempData["Event"] = "Module " + module.Name + " added.";
 
                 switch (Add)
                 {
@@ -194,7 +194,7 @@ namespace LexiconLMS.Controllers
                 }
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["Event"] = "You have edited Module " + module.Name;
+                TempData["Event"] = "Module " + module.Name + " edited.";
                 return RedirectToAction("Index", new { courseId = module.CourseId });
             }
             return View(module);
@@ -228,7 +228,7 @@ namespace LexiconLMS.Controllers
             //ViewBag.CourseId = module.CourseId;
             db.Modules.Remove(module);
             db.SaveChanges();
-            TempData["Event"] = "You have deleted Module " + module.Name;
+            TempData["Event"] = "Module " + module.Name + " removed.";
             return RedirectToAction("Index", new { courseId = module.CourseId });
         }
 

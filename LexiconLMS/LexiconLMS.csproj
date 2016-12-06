@@ -205,9 +205,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612061242464_tuesdayMerge.cs" />
-    <Compile Include="Migrations\201612061242464_tuesdayMerge.Designer.cs">
-      <DependentUpon>201612061242464_tuesdayMerge.cs</DependentUpon>
+    <Compile Include="Migrations\201612061344249_AfterMigration.cs" />
+    <Compile Include="Migrations\201612061344249_AfterMigration.Designer.cs">
+      <DependentUpon>201612061344249_AfterMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -339,8 +339,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612061242464_tuesdayMerge.resx">
-      <DependentUpon>201612061242464_tuesdayMerge.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612061344249_AfterMigration.resx">
+      <DependentUpon>201612061344249_AfterMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

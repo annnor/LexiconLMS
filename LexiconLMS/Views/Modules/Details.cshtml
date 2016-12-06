@@ -1,5 +1,7 @@
 ﻿@model LexiconLMS.Models.Module
-
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 @{
     ViewBag.Title = "Module Details";
 }
@@ -7,8 +9,7 @@
 <h2>Module Details for Course @ViewBag.courseName</h2>
 
 <div>
-    <hr />
-    <dl class="dl-horizontal">
+     <dl class="dl-horizontal">
         <!--
         <dt>
             @Html.DisplayNameFor(model => model.CourseId)
@@ -63,6 +64,26 @@
 
 <h3>Activities</h3>
 
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+        $('#Event').delay(4000).hide(1500);
+    </script>
+}
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
+
 @if (Model.Activities.Count > 0)
 {
     var firstItem = Model.Activities.First();
@@ -71,7 +92,7 @@
         <thead>
             <tr>
                 <th data-defaultsign="AZ">
-                   <!-- @Html.DisplayNameFor(model => firstItem.Type) -->
+                    <!-- @Html.DisplayNameFor(model => firstItem.Type) -->
                     Type
                 </th>
                 <th data-defaultsign="AZ">
@@ -94,8 +115,8 @@
 
         @foreach (var item in Model.Activities.OrderBy(a => a.StartDateTime))
         {
-            
-            <tr title= "@item.Description">
+
+            <tr title="@item.Description">
                 <td>
                     @Html.DisplayFor(modelItem => item.Type.Name)
                 </td>

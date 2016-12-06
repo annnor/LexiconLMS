@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<LexiconLMS.Models.ActivityType>
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 
 @{
     ViewBag.Title = "Activity Types";
@@ -6,31 +9,54 @@
 
 <h2>Activity Types</h2>
 
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+        $('#Event').delay(4000).hide(1500);
+    </script>
+}
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
+
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add ActivityType", "Create")
 </p>
 <table class="table table-bordered table-condensed table-striped table-hover sortable">
     <thead>
         <tr>
             <th data-defaultsign="AZ">
                 @Html.DisplayNameFor(model => model.Name)
-                </th>
+            </th>
             <th data-defaultsort='disabled'></th>
         </tr>
     </thead>
 
-        @foreach (var item in Model.OrderBy(a => a.Name))
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <!--            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) | -->
-                    <!--            @Html.ActionLink("Details", "Details", new { id=item.Id }) | -->
-                    @Html.ActionLink("Remove", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model.OrderBy(a => a.Name))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id })
+                <!--            @Html.ActionLink("Details", "Details", new { id=item.Id }) | -->
+                @if (item.activities.Count == 0)
+                {
+                    <span>| </span> @Html.ActionLink("Remove", "Delete", new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
 
 </table>

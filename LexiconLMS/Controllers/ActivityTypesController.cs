@@ -52,8 +52,7 @@ namespace LexiconLMS.Controllers
             {
                 db.ActivityTypes.Add(activityType);
                 db.SaveChanges();
-
-                TempData["Event"] = activityType.Name + " added to LMS.";
+                TempData["Event"] = "Activity Type " + activityType.Name + " added.";
                 if (save1 != null) return RedirectToAction("Index");
                 if (saveMultiple != null) return RedirectToAction("Create");
                 return RedirectToAction("Index"); //this redirect is unreachable since the if's above handle that
@@ -88,6 +87,7 @@ namespace LexiconLMS.Controllers
             {
                 db.Entry(activityType).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Event"] = "Activity Type " + activityType.Name + " edited.";
                 return RedirectToAction("Index");
             }
             return View(activityType);
@@ -105,7 +105,12 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            return View(activityType);
+            if (activityType.activities.Count == 0)
+            {
+                return View(activityType);
+            }
+            TempData["NegativeEvent"] = "You cannot remove Activity Type " + activityType.Name + " since it is in use.";
+            return RedirectToAction("Index");
         }
 
         // POST: ActivityTypes/Delete/5
@@ -116,6 +121,7 @@ namespace LexiconLMS.Controllers
             ActivityType activityType = db.ActivityTypes.Find(id);
             db.ActivityTypes.Remove(activityType);
             db.SaveChanges();
+            TempData["Event"] = "Activity Type " + activityType.Name + " removed.";
             return RedirectToAction("Index");
         }
 
