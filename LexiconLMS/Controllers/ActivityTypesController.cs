@@ -116,6 +116,7 @@ namespace LexiconLMS.Controllers
             ActivityType activityType = db.ActivityTypes.Find(id);
             db.ActivityTypes.Remove(activityType);
             db.SaveChanges();
+            TempData["Event"] = "Activity type " + activityType.Name + " removed from LMS.";
             return RedirectToAction("Index");
         }
 
