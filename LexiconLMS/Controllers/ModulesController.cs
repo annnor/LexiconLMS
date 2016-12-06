@@ -119,7 +119,7 @@ namespace LexiconLMS.Controllers
                 {
                     case "Save":
                         return RedirectToAction("Index", new { courseId = module.CourseId });
-                    case "Save & Add New":
+                    case "Save & add new module":
                         ModelState.Clear();
                         return View();
                     default:
