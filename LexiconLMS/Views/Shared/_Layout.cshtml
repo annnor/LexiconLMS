@@ -17,13 +17,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @if (User.IsInRole("Teacher")) {
-                    @Html.ActionLink("Lexicon LMS", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })
-                } else {
-                    @Html.ActionLink("Lexicon LMS", "StudentHome", "Courses", new { area = "" }, new { @class = "navbar-brand" })
-                }
+                @if (User.IsInRole("Teacher"))
+                {
 
-            </div>
+                    <a href='@Url.Action("Index")'>
+                        <img src='@Url.Content("~/Images/logo-lexicon_small.gif")' alt="Lexicon">
+                    </a>
+                    @*@Html.ActionLink("Lexicon LMS", "Index", "Courses", new { area = "" }, new { @class = "navbar-brand" })*@
+                @*@Html.ActionLink(" ", "Index", "Courses",null, new { @style = "background:url('~/Images/logo-lexicon_small.gif') no-repeat center right; display:block; height: 30px; width: 50px" })*@
+                    //Html.ActionLink(" ", "Edit", new { id = c.ID }, new { @style = "background:url('../../Images/Menu/edit.png') no-repeat center right; display:block; height: 30px; width: 50px" }
+                }
+                else
+                {
+                    <a href='@Url.Action("StudentHome")'>
+                        <img src='@Url.Content("~/Images/logo-lexicon_small.gif")' alt="Lexicon" id="LexiconSmall">
+                    </a>
+                        @*@Html.ActionLink("Lexicon LMS", "StudentHome", "Courses", new { area = "" }, new { @class = "navbar-brand" })*@
+                        }
+
+</div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Student"))
