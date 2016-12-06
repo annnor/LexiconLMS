@@ -24,13 +24,15 @@ namespace LexiconLMS.Models
         public string Name { get; set; }
 
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true,
+            DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Start Time")]
         public DateTime StartDateTime { get; set; }
 
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, 
+            DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
         [DataType(DataType.DateTime)]
         [Display(Name = "End Time")]
         public DateTime EndDateTime { get; set; }
