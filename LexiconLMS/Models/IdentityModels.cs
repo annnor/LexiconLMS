@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace LexiconLMS.Models
 {
@@ -15,6 +16,8 @@ namespace LexiconLMS.Models
         public string Adress { get; set; }
         public int? CourseId { get; set; }
 
+        //lägger till en icollection av typen file så kopplingen till filer läggs till applicationuser
+        public virtual ICollection<File> Files { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -37,6 +40,7 @@ namespace LexiconLMS.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Module> Modules { get; set;}
         public DbSet<ActivityType> ActivityTypes { get; set; }
+        public DbSet<File> Files { get; set; }
 
 
 

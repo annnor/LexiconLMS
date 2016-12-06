@@ -3,8 +3,10 @@
 @{
     ViewBag.Title = "StudentHome";
 }
+<head>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
 
-<div>
     <h2>@Html.DisplayFor(model => model.Name)</h2>
     <p>
         @Html.DisplayFor(model => model.Description)
@@ -18,19 +20,20 @@
             @Html.DisplayFor(model => model.StartDate)
         </dd>
     </dl>
+@Html.ActionLink("Click to view all your modules","Index","Modules",new { courseId = Model.Id},null)
 
     <br />
     <hr />
-    <br />
 
     <h3>Current and Upcoming Events</h3>
-    <p>
+   <div>
+    @Html.Action("UpComingEvents","Courses", new { courseId = Model.Id })
+    </div>
         <!-- Table of deadlines-->
-    </p>
+    
 
     <br />
     <hr />
-    <br />
 
     <h3>Course Documents</h3>
     <p>
