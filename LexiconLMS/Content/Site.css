@@ -36,3 +36,9 @@ textarea {
     text-align: right;
     color:red;
 }
+
+#LexiconSmall
+{
+    position: relative;
+    top: 10px;   
+}
