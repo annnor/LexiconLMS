@@ -37,6 +37,7 @@ namespace LexiconLMS.Models
         [Display(Name = "End Time")]
         public DateTime EndDateTime { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
     }

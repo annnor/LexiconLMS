@@ -30,6 +30,7 @@ namespace LexiconLMS.Models
         [Display(Name = "End time")]
         public DateTime EndDateTime { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }
