@@ -133,7 +133,7 @@ namespace LexiconLMS.Migrations
                     Name = "Bootstrap",
                     StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
-                    Description = "Responsiva webb-sidonr.",
+                    Description = "Responsiva webb-sidor.",
                     CourseId = courses[0].Id
                 },
                 new Module {
