@@ -53,12 +53,17 @@
 
     </dl>
 </div>
+@if (User.IsInRole("Teacher"))
+{
 <p>
     @Html.ActionLink("Add Activity", "Create", "Activities", new { moduleId = Model.Id }, null) |
     @Html.ActionLink("Edit Module Info", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName }) |
     @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
 </p>
-
+}
+<p>
+    @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
+</p>
 <hr>
 
 <h3>Activities</h3>

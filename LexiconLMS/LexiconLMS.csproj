@@ -205,7 +205,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\201612060952226_Init.cs" />
+    <Compile Include="Migrations\201612060952226_Init.Designer.cs">
+      <DependentUpon>201612060952226_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612061007485_InitII.cs" />
+    <Compile Include="Migrations\201612061007485_InitII.Designer.cs">
+      <DependentUpon>201612061007485_InitII.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -332,7 +339,14 @@
     </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
- 
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612060952226_Init.resx">
+      <DependentUpon>201612060952226_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612061007485_InitII.resx">
+      <DependentUpon>201612061007485_InitII.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
