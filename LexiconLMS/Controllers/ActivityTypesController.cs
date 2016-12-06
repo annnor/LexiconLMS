@@ -46,13 +46,17 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] ActivityType activityType)
+        public ActionResult Create([Bind(Include = "Id,Name")] ActivityType activityType, string save1, string saveMultiple)
         {
             if (ModelState.IsValid)
             {
                 db.ActivityTypes.Add(activityType);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                TempData["Event"] = activityType.Name + " added to LMS.";
+                if (save1 != null) return RedirectToAction("Index");
+                if (saveMultiple != null) return RedirectToAction("Create");
+                return RedirectToAction("Index"); //this redirect is unreachable since the if's above handle that
             }
 
             return View(activityType);

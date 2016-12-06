@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Create Course";
 }
-
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 <h2>Add Course</h2>
 
 @if (TempData["CreateError"] != null)
@@ -11,6 +13,26 @@
     <div class="TempData alert alert-danger" id="Full">
         <h4>
             @TempData["CreateError"]
+        </h4>
+    </div>
+}
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
         </h4>
     </div>
 }
@@ -48,7 +70,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" name="save1" value="Save" class="btn btn-default" />
+                <input type="submit" name="saveMultiple" value="Save & add new Corse" class="btn btn-default"/>
             </div>
         </div>
     </div>

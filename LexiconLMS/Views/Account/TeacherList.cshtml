@@ -3,15 +3,20 @@
 @{
     ViewBag.Title = "Teacher List";
 }
-
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 <h2>List of all teachers in the LMS</h2>
 @if (TempData["Event"] != null)
 {
-    <div class="Event alert alert-success">
+    <div class="Event alert alert-success" id="Event">
         <h4>
             @TempData["Event"]
         </h4>
     </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
 }
 @if (TempData["NegativeEvent"] != null)
 {
@@ -46,7 +51,7 @@
         </tr>
     </thead>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy(s => s.FirstName))
     {
         <tr>
             <td>
@@ -70,7 +75,7 @@
                 @if (item.Email!=User.Identity.Name)
                 {
                     @Html.Raw(" | ")
-                    @Html.ActionLink("Remove", "Delete", new { id = item.Email })
+                    @Html.ActionLink("Remove", "Delete", new { email = item.Email })
                 }
                 
             </td>

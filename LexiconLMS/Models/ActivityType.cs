@@ -13,7 +13,6 @@ namespace LexiconLMS.Models
         [Index(IsUnique = true)]
         public string Name { get; set; }
 
- //       public virtual ICollection<Activity> activities { get; }  // XXXannika Har vi behov av set här?
-
+        public virtual ICollection<Activity> activities { get; set; }
     }
 }
