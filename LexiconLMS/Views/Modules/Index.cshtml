@@ -22,10 +22,21 @@
             @TempData["NegativeEvent"]
         </h4>
     </div>
+}
+@if (User.IsInRole("Teacher"))
+{
 <p>
-    @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName}) |
-    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new {id = @ViewBag.CourseId }, null)
+
+    @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName }) |
+    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
 </p>
+}
+@if (User.IsInRole("Student"))
+{
+    <p>
+        @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
+    </p>
+}
 
 <table class="table">
     <tr>
@@ -68,11 +79,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
+@if (User.IsInRole("Teacher"))
+{
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id, courseName = @ViewBag.CourseName }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id, courseName = @ViewBag.CourseName}) |
-            @Html.ActionLink("Remove", "Delete", new { id=item.Id, courseName = @ViewBag.CourseName})
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id, courseName = @ViewBag.CourseName }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName }) |
+            @Html.ActionLink("Remove", "Delete", new { id = item.Id, courseName = @ViewBag.CourseName })
         </td>
+}
     </tr>
 }
    
