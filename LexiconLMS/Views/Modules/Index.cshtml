@@ -94,6 +94,12 @@
                     @Html.ActionLink("Remove", "Delete", new { id = item.Id, courseName = @ViewBag.CourseName })
         </td>
 }
+@if (User.IsInRole("Student"))
+{
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName })
+    </td>
+}
     </tr>
 }
    

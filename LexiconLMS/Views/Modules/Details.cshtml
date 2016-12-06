@@ -118,11 +118,21 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                     -->
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null) |
-                    @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null) |
-                    @Html.ActionLink("Remove", "Delete", "Activities", new { id = item.Id }, null)
-                </td>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null) |
+                        @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null) |
+                        @Html.ActionLink("Remove", "Delete", "Activities", new { id = item.Id }, null)
+                    </td>
+                }
+                @if (User.IsInRole("Student"))
+                {
+                    <td>
+                        @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null)
+                        
+                    </td>
+                }
             </tr>
         }
 

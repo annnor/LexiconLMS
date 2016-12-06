@@ -135,8 +135,52 @@ namespace LexiconLMS.Migrations
                     EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
                     Description = "Responsiva webb-sidor.",
                     CourseId = courses[0].Id
+                },
+                new Module {
+                    Name = "Projektledning",
+                    StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
+                    EndDateTime = new DateTime(2016, 09, 16, 15, 0, 0),
+                    Description = "Metodik och projektstyrning.",
+                    CourseId = courses[1].Id
+                },
+                new Module {
+                    Name = "Office365",
+                    StartDateTime = new DateTime(2016, 12, 02, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 09, 15, 0, 0),
+                    Description = "Administera offfice365.",
+                    CourseId = courses[1].Id
+                },
+                new Module {
+                    Name = "Sharepoint",
+                    StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
+                    Description = "Introduktion till Sharepoint Server.",
+                    CourseId = courses[1].Id
+                },
+                new Module {
+                    Name = "Java",
+                    StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
+                    EndDateTime = new DateTime(2016, 09, 16, 15, 0, 0),
+                    Description = "Programmering i Java.",
+                    CourseId = courses[2].Id
+                },
+                new Module {
+                    Name = "JavaBeans",
+                    StartDateTime = new DateTime(2016, 12, 02, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 09, 15, 0, 0),
+                    Description = "Utveckling med JavaBeans.",
+                    CourseId = courses[2].Id
+                },
+                new Module {
+                    Name = "JUnit",
+                    StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
+                    Description = "Test med JUnit.",
+                    CourseId = courses[2].Id
                 }
+                
             };
+
             context.Modules.AddOrUpdate(m => m.Name, modules);
             context.SaveChanges();
 
@@ -266,6 +310,72 @@ namespace LexiconLMS.Migrations
                     EndDateTime = new DateTime(2016, 12, 19, 17, 0, 0),
                     Description = "The exam is 8 hours maximum. Lunch is not allowed. You are permitted to bring smaller foodstuffs such as chocolate, water etc.",
                     ModuleId = modules[0].Id
+                },
+                                 new Activity {
+                    Name = "Office365 for dummies.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 12, 17, 0, 0),
+                    Description = "Introduction to Office365 as it simpliest.",
+                    ModuleId = modules[4].Id
+                },
+
+                                new Activity {
+                    Name = "Advanced Sharepoint and Web Parts.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 12, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 14, 17, 0, 0),
+                    Description = "Programming web parts.",
+                    ModuleId = modules[5].Id
+                },
+                      new Activity {
+                    Name = "Projektledning.",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 14, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 17, 0, 0),
+                    Description = "Planera ditt projekt.",
+                    ModuleId = modules[3].Id
+                },
+                                  new Activity {
+                    Name = "Förvaltningsmodeller.",
+                    ActivityTypeId = activityTypes[3].Id, // Tentamen
+                    StartDateTime = new DateTime(2016, 12, 19, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 19, 17, 0, 0),
+                    Description = "Grundläggande kunkaper för att skapa en förvaltningsorganinsation.",
+                    ModuleId = modules[3].Id
+                },
+                                  new Activity {
+                 Name = "Java programming with Tony Granato.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 12, 17, 0, 0),
+                    Description = "The anonymous Javascript function and it's uses in a bigger context.",
+                    ModuleId = modules[6].Id
+                },
+
+                                new Activity {
+                    Name = "JavaBeans foundations with Dr Drowzee.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 12, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 14, 17, 0, 0),
+                    Description = "Introduction to the JavaBeans concept.",
+                    ModuleId = modules[7].Id
+                },
+                      new Activity {
+                    Name = "Introduction to JUnit.",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 14, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 17, 0, 0),
+                    Description = "Write your first test with JUnit.",
+                    ModuleId = modules[8].Id
+                },
+                                  new Activity {
+                    Name = "Continuous integration with jenkins.",
+                    ActivityTypeId = activityTypes[3].Id, // Tentamen
+                    StartDateTime = new DateTime(2016, 12, 19, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 19, 17, 0, 0),
+                    Description = "Apply continuous integration to your project.",
+                    ModuleId = modules[8].Id
                 }
             };
             context.Activities.AddOrUpdate(a => a.Name, activities);
