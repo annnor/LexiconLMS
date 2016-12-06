@@ -26,7 +26,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (User.IsInRole("Student")){<li>@Html.ActionLink("Student List", "StudentList", "Account")</li> }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <li>@Html.ActionLink("Student List", "StudentList", "Account")</li>
+                         
+                    }
                     @if (User.IsInRole("Teacher"))
                     {
                         <li>@Html.ActionLink("Course List", "Index", "Courses")</li>

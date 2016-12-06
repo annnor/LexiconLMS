@@ -19,15 +19,18 @@ namespace LexiconLMS.Models
         public string Name { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true,
+            DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
         [Display(Name = "Start time")]
         public DateTime StartDateTime { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true,
+            DataFormatString = "{0:yyyy-MM-dd HH\\:mm}")]
         [Display(Name = "End time")]
         public DateTime EndDateTime { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }

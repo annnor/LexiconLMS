@@ -41,7 +41,7 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(int moduleId)
         {
-            var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == moduleId);
+            var module = db.Modules.FirstOrDefault(m => m.Id == moduleId);
             if (module == null)
             {
                 return HttpNotFound();
@@ -60,7 +60,6 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, ModuleId")] Activity activity)
         {
-            //           var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == activity.ModuleId);
             var module = db.Modules.Find(activity.ModuleId);
             if (module == null)
             {
@@ -71,7 +70,8 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            if (ModelState.IsValid)
+            if (ModelState.IsValid &&
+                DateTimeNotOverlap(null, activity.StartDateTime, activity.EndDateTime, module))
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
@@ -108,14 +108,18 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,ModuleId,ActivityTypeId,Name,StartDateTime,EndDateTime,Description")] Activity activity)
         {
-            if (ModelState.IsValid)
+            var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == activity.ModuleId);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid && DateTimeNotOverlap(activity.Id, activity.StartDateTime, activity.EndDateTime, module))
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
-            //return View(activity);
             return View(activity);
         }
 
@@ -156,5 +160,41 @@ namespace LexiconLMS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        private bool DateTimeNotOverlap(int? id, DateTime startDateTime, DateTime endDateTime, Module module)
+        {
+            if (endDateTime <= startDateTime)
+            {
+                ModelState.AddModelError("EndDateTime", "End Time conflicts with Start Time");
+                return false;
+            } else if (startDateTime < module.StartDateTime)
+            {
+                ModelState.AddModelError("StartDateTime", "Start Time cannot be earlier than the Start Time of the module.");
+                return false;
+            } else if (module.EndDateTime < endDateTime)
+            {
+                ModelState.AddModelError("EndDateTime", "End Time cannot be later than the End Time of the module.");
+                return false;
+            }
+            ICollection<Activity> activities = module.Activities;
+            // Collect the activities that starts before this new activity should end:
+            var priorActivities = activities.OrderBy(a => a.StartDateTime)
+                .Where(a => a.StartDateTime < endDateTime && a.Id != id);
+            // Check that there is no overlap between adjacent activities
+            var lastItem = priorActivities.LastOrDefault();
+            if (lastItem == null || lastItem.EndDateTime <= startDateTime)
+            {
+                return true;
+            } else if (endDateTime < lastItem.EndDateTime)
+            {
+                ModelState.AddModelError("EndDateTime", "Activity overlaps another activity.");
+            } else
+            {
+                ModelState.AddModelError("StartDateTime", "Activity overlaps another activity.");
+            }
+            return false;
+        }
+
+
     }
 }

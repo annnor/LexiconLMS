@@ -15,6 +15,34 @@ namespace LexiconLMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        //file handler written by Johan - it is not complete
+        [HttpPost]
+        public ActionResult Upload(string userName, int courseId, HttpPostedFileBase upload) //username is the Identity username(email) and Id is the course Id
+        {
+            if (upload != null && upload.ContentLength > 0)
+            {
+                var file = new File
+                {
+                    Path = System.IO.Path.GetFileName(upload.FileName),
+                    FileType = FileType.Document,
+                    ContentType = upload.ContentType,
+                    CourseId = courseId,
+                    
+
+                };
+                //using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                //{
+                //    file.Content = reader.ReadBytes(upload.ContentLength);
+                //}
+                //student.Files = new List<File> { avatar };
+            }
+
+
+            return View();
+        }
+
+
         // GET: Courses
         public ActionResult Index()
         {
@@ -139,8 +167,22 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,StartDate,Description")] Course course)
         {
+            var oldCourse = db.Courses.AsNoTracking().FirstOrDefault(c => c.Id == course.Id);
+            if (oldCourse == null)
+            {
+                return HttpNotFound();
+            }
+            var modules = oldCourse.Modules;
             if (ModelState.IsValid)
             {
+                if (oldCourse.StartDate < course.StartDate &&
+                    oldCourse.Modules.Count > 0 &&
+                    modules.OrderBy(m => m.StartDateTime)
+                    .First().StartDateTime < course.StartDate)
+                {
+                    ModelState.AddModelError("StartDate", "StartDate overlaps first module.");
+                    return View(course);
+                }
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 //text till klient
@@ -218,6 +260,49 @@ namespace LexiconLMS.Controllers
             //}
             
         }
+
+        /// <summary>
+        /// Shows some modules in a partial view to students. This will hopefully be expandable in the future.
+        /// </summary>
+        public ActionResult UpComingEvents(int courseId)
+        {
+            if (User.IsInRole("Student"))
+            {
+                List<Module> upComingEventsList = new List<Module>();
+                //find lets say 3 modules for that course. use todays date and forward
+                foreach(var module in db.Modules)
+                {
+                    if (module.CourseId==courseId)
+                    {
+                        //här behövs en kontroll så att samma modul inte läggs i listan upcomingevents
+                        //om modulen inte finns i listan samt att startdatum för modulen är större än idag -5 dagar
+                        
+                        if (!upComingEventsList.Contains(module) && module.StartDateTime>=(DateTime.Today.AddDays(-5)))
+                        {
+                            //här behövs en datumkontroll så att inte gamla moduler läggs till
+                            upComingEventsList.Add(module);
+                        }
+                    }
+                    
+
+                }
+                //ordna listan
+                upComingEventsList.OrderBy(o => o.StartDateTime);
+
+                
+                //trimma listan om behövs
+                if (upComingEventsList.Count>3) 
+                {
+                    while (upComingEventsList.Count > 2)
+                        upComingEventsList.RemoveAt(upComingEventsList.Count - 1);
+                }
+                //return the view.
+                return PartialView("_UpComingEvents", upComingEventsList);
+
+            }
+            return View(); //bör ej nå hit
+        }
+
 
         //metod för att visa eleverna på vald kursdetaljsidan
         public ActionResult StudentListForCourse(int courseId) 

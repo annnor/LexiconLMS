@@ -113,23 +113,23 @@ namespace LexiconLMS.Controllers
                 }
                 try
                 {
-                    db.Modules.Add(module);
-                    db.SaveChanges();
-                    TempData["Event"] = "You have created Module " + module.Name;
+                db.Modules.Add(module);
+                db.SaveChanges();
+                TempData["Event"] = "You have created Module " + module.Name;
 
-                    switch (Add)
-                    {
-                        case "Save":
-                            return RedirectToAction("Index", new { courseId = module.CourseId });
-                        case "Save & Add New":
-                            ModelState.Clear();
-                            return View();
-                        default:
-                            throw new Exception();
-                            //break;
-                    }
-
+                switch (Add)
+                {
+                    case "Save":
+                        return RedirectToAction("Index", new { courseId = module.CourseId });
+                    case "Save & add new module":
+                        ModelState.Clear();
+                        return View();
+                    default:
+                        throw new Exception();
+                        //break;
                 }
+
+            }
                 catch (Exception e)
                 {
                     TempData["NegativeEvent"] = e.Message;
@@ -203,16 +203,16 @@ namespace LexiconLMS.Controllers
                 }
                 try
                 {
-                    db.Entry(module).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["Event"] = "You have edited Module " + module.Name;
-                    return RedirectToAction("Index", new { courseId = module.CourseId });
-                }
+                db.Entry(module).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["Event"] = "You have edited Module " + module.Name;
+                return RedirectToAction("Index", new { courseId = module.CourseId });
+            }
                 catch(Exception e)
                 {
                     TempData["NegativeEvent"] = e.Message;
-                    return View(module);
-                }
+            return View(module);
+        }
             }
             return View(module);
         }
@@ -245,9 +245,9 @@ namespace LexiconLMS.Controllers
             //ViewBag.CourseId = module.CourseId;
             try
             {
-                db.Modules.Remove(module);
-                db.SaveChanges();
-                TempData["Event"] = "You have deleted Module " + module.Name;
+            db.Modules.Remove(module);
+            db.SaveChanges();
+            TempData["Event"] = "You have deleted Module " + module.Name;
             }
             catch (Exception e)
             {

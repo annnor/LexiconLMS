@@ -54,3 +54,18 @@
 <div>
     @Html.Action("StudentListForCourse", new { courseId = Model.Id})
 </div>
+
+@*test av filarea. inte på något sätt klar*@
+@*@using (Html.BeginForm("Upload", "Courses", null, FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    <div id="Buttons">
+        @Html.Label("Upload Course File ", new { @class = "control-label col-md-2" })
+            <input type="hidden" name="userName" value="@User.Identity.Name" />
+            <input type="hidden" name="ourseId" value="@Model.Id" />
+            <input type="file" id="button" name="Choose File"  />
+            <input type="submit" id="button" class="btn btn-default" value="Upload File" name="upload" />
+        </div>
+
+
+}*@

@@ -96,6 +96,15 @@
 }
    
 </table>
+@if (User.IsInRole("Teacher"))
+{
 <div>
-    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new {id = @ViewBag.CourseId }, null)
+    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
 </div>
+}
+
+@if (User.IsInRole("Student"))
+{
+    @Html.ActionLink("Back to your course page","StudentHome","Courses")
+}
+

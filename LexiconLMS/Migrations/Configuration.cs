@@ -124,15 +124,15 @@ namespace LexiconLMS.Migrations
                 },
                 new Module {
                     Name = "MVC",
-                    StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 09, 30, 15, 0, 0),
+                    StartDateTime = new DateTime(2016, 12, 02, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 09, 15, 0, 0),
                     Description = "DotNet utveckling och frontend.",
                     CourseId = courses[0].Id
                 },
                 new Module {
                     Name = "Bootstrap",
-                    StartDateTime = new DateTime(2016, 10, 02, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 10, 06, 15, 0, 0),
+                    StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
                     Description = "Responsiva webb-sidonr.",
                     CourseId = courses[0].Id
                 }
@@ -216,6 +216,55 @@ namespace LexiconLMS.Migrations
                     StartDateTime = new DateTime(2016, 9, 2, 13, 0, 0),
                     EndDateTime = new DateTime(2016, 9, 2, 17, 0, 0),
                     Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
+                    ModuleId = modules[0].Id
+                },
+                                new Activity {
+                    Name = "Exploring great patterns with Johan Sari.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 2, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 5, 17, 0, 0),
+                    Description = "En mästerful e-learning av mästaren.",
+                    ModuleId = modules[1].Id
+                },
+                                                new Activity {
+                    Name = "Front End and You with Dimitris.",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 05, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 10, 17, 0, 0),
+                    Description = "Hur man designar knappar och pilar för HTML.",
+                    ModuleId = modules[1].Id
+                 },
+                                                                new Activity {
+                    Name = "Iffies rules the world, JavaScript with Tony Granato.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 10, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 12, 17, 0, 0),
+                    Description = "The anonymous Javascript function and it's uses in a bigger context.",
+                    ModuleId = modules[1].Id
+                },
+
+                                new Activity {
+                    Name = "Bootstrap foundations with Dr Drowzee.",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 12, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 14, 17, 0, 0),
+                    Description = "Introduction to the Bootstrap concept.",
+                    ModuleId = modules[2].Id
+                },
+                      new Activity {
+                    Name = "Badges and animations for the handy coder.",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 14, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 17, 0, 0),
+                    Description = "Get a job by designing buttons and stuff. And it's fun, too!!.",
+                    ModuleId = modules[2].Id
+                },
+                                  new Activity {
+                    Name = "C# certification exam. Supervised by Tony Montana.",
+                    ActivityTypeId = activityTypes[3].Id, // Tentamen
+                    StartDateTime = new DateTime(2016, 12, 19, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 19, 17, 0, 0),
+                    Description = "The exam is 8 hours maximum. Lunch is not allowed. You are permitted to bring smaller foodstuffs such as chocolate, water etc.",
                     ModuleId = modules[0].Id
                 }
             };
