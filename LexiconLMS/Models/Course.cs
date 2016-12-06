@@ -28,5 +28,6 @@ namespace LexiconLMS.Models
         public string Description { get; set; }
 
         public virtual ICollection<ApplicationUser> Students { get; set; }
+        public virtual ICollection<Module> Modules { get; set; }
     }
 }

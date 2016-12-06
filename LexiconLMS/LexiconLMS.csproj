@@ -205,7 +205,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\201612060936501_PP.cs" />
+    <Compile Include="Migrations\201612060936501_PP.Designer.cs">
+      <DependentUpon>201612060936501_PP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -332,7 +335,11 @@
     </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
- 
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612060936501_PP.resx">
+      <DependentUpon>201612060936501_PP.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

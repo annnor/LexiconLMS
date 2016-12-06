@@ -32,7 +32,7 @@
     @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName }) |
     @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
 </p>
-}
+
 @if (User.IsInRole("Student"))
 {
     <p>
