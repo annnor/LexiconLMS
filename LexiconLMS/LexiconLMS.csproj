@@ -205,13 +205,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612061438177_tuesdaylatebuild.cs" />
-    <Compile Include="Migrations\201612061438177_tuesdaylatebuild.Designer.cs">
-      <DependentUpon>201612061438177_tuesdaylatebuild.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201612061359081_InitIII.cs" />
     <Compile Include="Migrations\201612061359081_InitIII.Designer.cs">
       <DependentUpon>201612061359081_InitIII.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612061527504_InitIV.cs" />
+    <Compile Include="Migrations\201612061527504_InitIV.Designer.cs">
+      <DependentUpon>201612061527504_InitIV.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -343,11 +343,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612061438177_tuesdaylatebuild.resx">
-      <DependentUpon>201612061438177_tuesdaylatebuild.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612061359081_InitIII.resx">
       <DependentUpon>201612061359081_InitIII.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612061527504_InitIV.resx">
+      <DependentUpon>201612061527504_InitIV.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
