@@ -78,7 +78,7 @@
 
 <div>
     @Html.ActionLink("Register Student ", "RegisterStudent", "Account", new { courseId = Model.Id }, null) |
-    @Html.ActionLink("Back to Course List", "Index")
+    @Html.ActionLink("Back to Course Details", "Details", "Courses", new { id = Model.Id }, null)
 </div>
 
 @section Scripts {

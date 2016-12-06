@@ -37,6 +37,15 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            if (courseName == null)
+            {
+                Course course = db.Courses.Find(module.CourseId);
+                if (course == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                courseName = course.Name;
+            }
             ViewBag.CourseName = courseName;
             return View(module);
         }
@@ -56,6 +65,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(string Add, [Bind(Include = "Id,CourseId,Name,StartDateTime,EndDateTime,Description")] Module module)
         {
             if (ModelState.IsValid)

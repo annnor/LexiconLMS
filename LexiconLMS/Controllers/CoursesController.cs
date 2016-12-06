@@ -167,8 +167,22 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,StartDate,Description")] Course course)
         {
+            var oldCourse = db.Courses.AsNoTracking().FirstOrDefault(c => c.Id == course.Id);
+            if (oldCourse == null)
+            {
+                return HttpNotFound();
+            }
+            var modules = oldCourse.Modules;
             if (ModelState.IsValid)
             {
+                if (oldCourse.StartDate < course.StartDate &&
+                    oldCourse.Modules.Count > 0 &&
+                    modules.OrderBy(m => m.StartDateTime)
+                    .First().StartDateTime < course.StartDate)
+                {
+                    ModelState.AddModelError("StartDate", "StartDate overlaps first module.");
+                    return View(course);
+                }
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 //text till klient

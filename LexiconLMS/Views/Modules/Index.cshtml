@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Module>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Modules Index";
 }
 <head>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
 <h2>Modules for Course @ViewBag.CourseName</h2>
-
-
 @if (TempData["Event"] != null)
 {
     <div class="Event alert alert-success" id="Event">
@@ -29,39 +27,45 @@
         </h4>
     </div>
 }
-@if (User.IsInRole("Teacher"))
+<p>
+
+    @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName }) |
+    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
+</p>
+
+@if (User.IsInRole("Student"))
 {
     <p>
-        @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName }) |
         @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
-    </p>
-
+</p>
 }
 
-
-<table class="table">
+<table class="table table-bordered table-condensed table-striped table-hover sortable">
+    <thead>
     <tr>
         <!--
         <th>
             @Html.DisplayNameFor(model => model.CourseId)
         </th>
         -->
-        <th>
+             <th data-defaultsign="AZ">
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+            <th data-defaultsign="AZ">
             @Html.DisplayNameFor(model => model.StartDateTime)
         </th>
-        <th>
+            <th data-defaultsign="AZ">
             @Html.DisplayNameFor(model => model.EndDateTime)
         </th>
-        <th>
+            <th data-defaultsign="AZ">
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th></th>
+            <th data-defaultsort='disabled'></th>
     </tr>
+    </thead>
 
-@foreach (var item in Model) {
+        @foreach (var item in Model.OrderBy(c => c.StartDateTime))
+        {
     <tr>
         <!--
         <td>
@@ -80,11 +84,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
+@if (User.IsInRole("Teacher"))
+{
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id, courseName = @ViewBag.CourseName }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id, courseName = @ViewBag.CourseName}) |
-            @Html.ActionLink("Remove", "Delete", new { id=item.Id, courseName = @ViewBag.CourseName})
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, courseName = @ViewBag.CourseName }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName }) |
+                    @Html.ActionLink("Remove", "Delete", new { id = item.Id, courseName = @ViewBag.CourseName })
         </td>
+}
     </tr>
 }
    

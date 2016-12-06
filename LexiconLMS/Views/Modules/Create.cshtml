@@ -20,15 +20,6 @@
     </script>
 }
 
-@if (TempData["Event"] != null)
-{
-    <div class="Event alert alert-success">
-        <h4>
-            @TempData["Event"]
-        </h4>
-    </div>
-}
-
 @if (TempData["NegativeEvent"] != null)
 {
     <div class="TempData alert alert-danger" id="Full">
@@ -65,7 +56,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StartDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.StartDateTime, new { htmlAttributes = new { @class = "form-control", placeholder = "YYYY-MM-DD HH:mm" } })
                 @Html.ValidationMessageFor(model => model.StartDateTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -73,7 +64,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EndDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.EndDateTime, new { htmlAttributes = new { @class = "form-control", placeholder = "YYYY-MM-DD HH:mm" } })
                 @Html.ValidationMessageFor(model => model.EndDateTime, "", new { @class = "text-danger" })
             </div>
         </div>
