@@ -205,9 +205,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612061242464_tuesdayMerge.cs" />
-    <Compile Include="Migrations\201612061242464_tuesdayMerge.Designer.cs">
-      <DependentUpon>201612061242464_tuesdayMerge.cs</DependentUpon>
+    <Compile Include="Migrations\201612060952226_Init.cs" />
+    <Compile Include="Migrations\201612060952226_Init.Designer.cs">
+      <DependentUpon>201612060952226_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612061007485_InitII.cs" />
+    <Compile Include="Migrations\201612061007485_InitII.Designer.cs">
+      <DependentUpon>201612061007485_InitII.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -339,8 +343,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612061242464_tuesdayMerge.resx">
-      <DependentUpon>201612061242464_tuesdayMerge.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612060952226_Init.resx">
+      <DependentUpon>201612060952226_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612061007485_InitII.resx">
+      <DependentUpon>201612061007485_InitII.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

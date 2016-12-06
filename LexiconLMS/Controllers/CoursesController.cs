@@ -219,9 +219,18 @@ namespace LexiconLMS.Controllers
             if (sucess)
             {
                 Course course = db.Courses.Find(id);
-                db.Courses.Remove(course);
-                db.SaveChanges();
-                TempData["Event"] ="Course " +course.Name + " removed from LMS.";
+                //Course course = db.Courses.Include(m => m.C(id);
+
+                try
+                {
+                    db.Courses.Remove(course);
+                    db.SaveChanges();
+                    TempData["Event"] = "Course " + course.Name + " removed from LMS.";
+                }
+                catch (Exception e)
+                {
+                    TempData["NegativeEvent"] = e.Message;
+                }
             }
             return RedirectToAction("Index");
         }

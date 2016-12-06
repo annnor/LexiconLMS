@@ -48,6 +48,8 @@ namespace LexiconLMS.Models
         {
             return new ApplicationDbContext();
         }
+        
+
 
         public System.Data.Entity.DbSet<LexiconLMS.Models.Activity> Activities { get; set; }
     }
