@@ -30,7 +30,7 @@
                 else
                 {
                     <a href='@Url.Action("StudentHome","Courses")'>
-                        <img src='@Url.Content("~/Images/logo-lexicon_small.gif")' alt="Lexicon" id="LexiconSmall">
+                        <img src='@Url.Content("~/Images/logo-lexicon_small.gif")' alt="Lexicon" @*id="LexiconSmall"*@>
                     </a>
                         @*@Html.ActionLink("Lexicon LMS", "StudentHome", "Courses", new { area = "" }, new { @class = "navbar-brand" })*@
                         }
