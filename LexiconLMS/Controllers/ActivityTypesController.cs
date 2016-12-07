@@ -48,14 +48,19 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] ActivityType activityType, string save1, string saveMultiple)
         {
+            var existingType = db.ActivityTypes.AsNoTracking().Where(a => a.Name == activityType.Name).FirstOrDefault();
             if (ModelState.IsValid)
             {
-                db.ActivityTypes.Add(activityType);
-                db.SaveChanges();
-                TempData["Event"] = "Activity Type " + activityType.Name + " added.";
-                if (save1 != null) return RedirectToAction("Index");
-                if (saveMultiple != null) return RedirectToAction("Create");
-                return RedirectToAction("Index"); //this redirect is unreachable since the if's above handle that
+                if (existingType == null)
+                {
+                    db.ActivityTypes.Add(activityType);
+                    db.SaveChanges();
+                    TempData["Event"] = "Activity Type " + activityType.Name + " added.";
+                    if (save1 != null) return RedirectToAction("Index");
+                    if (saveMultiple != null) return RedirectToAction("Create");
+                    return RedirectToAction("Index"); //this redirect is unreachable since the if's above handle that
+                }
+                ModelState.AddModelError("Name", "An Activity Type with the same name already exists!");
             }
 
             return View(activityType);
