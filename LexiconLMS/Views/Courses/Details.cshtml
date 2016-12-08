@@ -4,7 +4,13 @@
 @{
     ViewBag.Title = "Course Details";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.Id })'>@Html.Raw(Model.Name)   </a></li>
+    </ol>
+}
 <h2>Course Details for @Html.DisplayFor(model => model.Name)</h2>
 
 <div>

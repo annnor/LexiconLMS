@@ -6,6 +6,14 @@
 <head>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new { id=Model.Id})'>@Model.Name</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Edit","Courses",new {id=Model.Id })'>Edit @Html.Raw(Model.Name)   </a></li>
+    </ol>
+}
 <h2>Edit Course</h2>
 
 @if (TempData["Event"] != null)

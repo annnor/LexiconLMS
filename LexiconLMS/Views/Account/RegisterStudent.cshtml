@@ -7,6 +7,16 @@
 <head>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
+@if (User.IsInRole("Teacher"))
+{
+<ol class="breadcrumb">
+    <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=ViewBag.CourseId})'>@ViewBag.CourseName   </a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("RegisterStudent","Account",new {courseId=ViewBag.CourseId })'>Add Student to @ViewBag.CourseName</a></li>
+</ol>
+}
+
+   
 <!--XXX Ta bort...eller flytta alla länkar hit
 <div>
     @Html.ActionLink("Back to Course List", "Index", "Courses")

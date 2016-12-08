@@ -34,6 +34,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
         }
 
@@ -46,6 +47,8 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c=>c.Id==module.CourseId).Name;
+            ViewBag.CourseId = db.Courses.FirstOrDefault(c => c.Id == module.CourseId).Id;
             ViewBag.ModuleId = module.Id;
             ViewBag.ModuleName = module.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
@@ -99,6 +102,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
         }
 
@@ -139,6 +143,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
         }
 

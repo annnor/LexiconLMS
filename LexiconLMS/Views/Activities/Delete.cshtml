@@ -3,7 +3,16 @@
 @{
     ViewBag.Title = "Delete";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.Module.CourseId })'>  @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=Model.Module.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {Id=Model.ModuleId })'>Details for Module @Model.Module.Name</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Delete","Activities",new {id=Model.Id })'>Remove @Html.Raw(Model.Name) from Module @Html.Raw(Model.Module.Name)</a></li>
+    </ol>
+}
 <h2>Remove Activity</h2>
 
 <h3>Are you sure you want to delete this?</h3>

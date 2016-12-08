@@ -6,7 +6,14 @@
 {
     <ol class="breadcrumb">
         <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
-        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Manage",new { courseId = @ViewBag.CourseId })'>Manage Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Manage")'>Manage Password Page</a></li>
+    </ol>
+}
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Manage")'>Manage Password Page</a></li>
     </ol>
 }
 <h2>@ViewBag.Title.</h2>

@@ -3,12 +3,15 @@
 @{
     ViewBag.Title = "Activity Details";
 }
+@if (User.IsInRole("Teacher"))
+{
 <ol class="breadcrumb">
-    <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
-    <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new { courseId = Model.Module.CourseId })'>Student Schedule Page</a></li>
-    <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules",new {id=Model.ModuleId})'>Module @Html.Raw(Model.Module.Name)</a></li>
-    <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities",new {id=Model.Id})'>Activity @Html.Raw(Model.Name)</a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Courses")'>Course Home Page</a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Modules", new { courseId = Model.Module.CourseId })'>@ViewBag.CourseName</a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules", new { id = Model.ModuleId })'>Module @Html.Raw(Model.Module.Name)</a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities", new { id = Model.Id })'>Activity @Html.Raw(Model.Name)</a></li>
 </ol>
+}
 <h2>Details for Module @Model.Module.Name</h2>
 
 <div>

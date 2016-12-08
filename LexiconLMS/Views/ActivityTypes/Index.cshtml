@@ -5,7 +5,13 @@
 @{
     ViewBag.Title = "Activity Types";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","ActivityTypes")'>Manage Activity Types</a></li>
+    </ol>
+}
 <h2>Activity Types</h2>
 @if (TempData["Event"] != null)
 {

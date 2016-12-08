@@ -3,7 +3,15 @@
 @{
     ViewBag.Title = "Edit";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=ViewBag.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=ViewBag.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Edit","Modules",new {courseId=ViewBag.CourseId,courseName=ViewBag.CourseName })'>Edit Module @Model.Name</a></li>
+    </ol>
+}
 <h2>Edit</h2>
 
 
