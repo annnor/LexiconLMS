@@ -195,7 +195,7 @@ namespace LexiconLMS.Controllers
                 {   // The whole new activity is in the time span of the other activity
                     ModelState.AddModelError("StartDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which End Time is " + lastItem.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
                 } else
-                {// The whole new activity is in the time span of the other activity
+                {
                     ModelState.AddModelError("EndDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which Start Time is " + lastItem.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                 }
             } else
