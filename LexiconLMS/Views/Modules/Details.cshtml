@@ -5,8 +5,25 @@
 @{
     ViewBag.Title = "Module Details";
 }
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=Model.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {courseId=ViewBag.CourseId })'>Details for Module @Model.Name</a></li>
+    </ol>
+}
 
-<h2>Module Details for Course @ViewBag.courseName</h2>
+@if (User.IsInRole("Student"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new { courseId = Model.CourseId })'>Student Schedule Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules",new {id=Model.Id})'>Module @Html.Raw(Model.Name)</a></li>
+    </ol>
+}
+<h2>Module @Html.Raw(Model.Name) in Course @ViewBag.courseName</h2>
 
 <div>
      <dl class="dl-horizontal">
@@ -20,13 +37,13 @@
             @Html.HiddenFor(model => model.CourseId)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Name)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.StartDateTime)

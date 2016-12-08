@@ -6,6 +6,14 @@
 <head>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","ActivityTypes")'>Manage Activity Types</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Create","ActivityTypes")'>Create Activity Type</a></li>
+    </ol>
+}
 <h2>Create Activity Type</h2>
 @if (TempData["Event"] != null)
 {

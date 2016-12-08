@@ -44,9 +44,12 @@ namespace LexiconLMS.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                ViewBag.CourseId = course.Id;
                 courseName = course.Name;
             }
+            
             ViewBag.CourseName = courseName;
+            
             return View(module);
         }
 
@@ -54,9 +57,12 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(int courseId, string courseName)
         {
-                      
-            ViewBag.CourseName = courseName;
-            ViewBag.CourseId = courseId;
+
+            //gör denna cyklisk så att viewbag alltid är populerad även när man trycker på refresh hos klienten
+           Course course= db.Courses.Find(courseId);
+
+            ViewBag.CourseName = course.Name;
+            ViewBag.CourseId = course.Id;
             return View();
         }
 
@@ -153,6 +159,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.CourseName = courseName;
+            ViewBag.CourseId = module.CourseId;
             return View(module);
         }
 
@@ -231,6 +238,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.CourseName = courseName;
+            ViewBag.CourseId = module.CourseId;
             return View(module);
         }
 

@@ -3,10 +3,17 @@
 @{
     ViewBag.Title = "Remove Course";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        @*<li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.Id })'>@Html.Raw(Model.Name)   </a></li>*@
+        <li class="breadcrumb-item active"><a href='@Url.Action("Delete","Courses",new {id=Model.Id })'>Remove @Html.Raw(Model.Name)   </a></li>
+    </ol>
+}
 <h2>Remove Course</h2>
 
-<h3>Are you sure you want to delete this course?</h3>
+<h3>Are you sure you want to delete this course? Note! When deleting the course all students registered to the course will be removed as well.</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
