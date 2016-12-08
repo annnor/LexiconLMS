@@ -2,10 +2,17 @@
 @{
     ViewBag.Title = "Manage";
 }
-
+@if (User.IsInRole("Student"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Manage",new { courseId = @ViewBag.CourseId })'>Manage Page</a></li>
+    </ol>
+}
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
+
 <div>
     <h4>Change your account settings</h4>
     <hr />

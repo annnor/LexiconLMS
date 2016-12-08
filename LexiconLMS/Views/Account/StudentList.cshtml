@@ -8,6 +8,14 @@
 </head>
 @if (User.IsInRole("Student"))
 {
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("StudentList","Account")'>Student List</a></li>
+    </ol>
+}
+
+@if (User.IsInRole("Student"))
+{
     var courseName = Model.FirstOrDefault().CourseName; 
     <h2>All Students in Course @courseName</h2>
     
