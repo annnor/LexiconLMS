@@ -37,6 +37,32 @@ namespace LexiconLMS.Controllers
             return View(activity);
         }
 
+        //Post: Activities/Details
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Details(HttpPostedFileBase upload, Activity activity)
+        {
+            if (upload != null && upload.ContentLength > 0)
+            {
+                var document = new File
+                {                                   
+                    FileName = System.IO.Path.GetFileName(upload.FileName),
+                    //FileType = FileType.Document,
+                    ContentType = upload.ContentType,
+                    ActivityId = activity.Id
+                };
+                using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                {
+                    document.Content = reader.ReadBytes(upload.ContentLength);
+                }
+                db.Files.Add(document);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", "Activities", new { id = activity.Id });
+            //return View(activity);
+        }
+
         // GET: Activities/Create
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(int moduleId)
@@ -116,12 +142,13 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             if (ModelState.IsValid && DateTimeNotOverlap(activity.Id, activity.StartDateTime, activity.EndDateTime, module))
-            {
+            {  
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Event"] = "Activity " + activity.Name + " edited.";
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }
+
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
             return View(activity);
         }
