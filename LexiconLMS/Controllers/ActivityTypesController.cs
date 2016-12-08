@@ -10,6 +10,7 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
+    [Authorize(Roles = "Teacher")]
     public class ActivityTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
