@@ -174,15 +174,15 @@ namespace LexiconLMS.Controllers
         {
             if (endDateTime <= startDateTime)
             {
-                ModelState.AddModelError("EndDateTime", "End Time conflicts with Start Time");
+                ModelState.AddModelError("EndDateTime", "The End Time cannot be earlier than the Start Time " + startDateTime.ToString("yyyy-MM-dd HH:mm"));
                 return false;
             } else if (startDateTime < module.StartDateTime)
             {
-                ModelState.AddModelError("StartDateTime", "Start Time cannot be earlier than the Start Time of the module.");
+                ModelState.AddModelError("StartDateTime", "The Start Time of the activity cannot be earlier than the Start Time of the module, " + module.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                 return false;
             } else if (module.EndDateTime < endDateTime)
             {
-                ModelState.AddModelError("EndDateTime", "End Time cannot be later than the End Time of the module.");
+                ModelState.AddModelError("EndDateTime", "The End Time of the activity cannot be later than the End Time of the module, " + module.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
                 return false;
             }
             ICollection<Activity> activities = module.Activities;
@@ -196,14 +196,18 @@ namespace LexiconLMS.Controllers
                 return true;
             } else if (endDateTime < lastItem.EndDateTime)
             {
-                ModelState.AddModelError("EndDateTime", "Activity overlaps another activity.");
+                if (lastItem.StartDateTime <= startDateTime)
+                {   // The whole new activity is in the time span of the other activity
+                    ModelState.AddModelError("StartDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which End Time is " + lastItem.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
+                } else
+                {// The whole new activity is in the time span of the other activity
+                    ModelState.AddModelError("EndDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which Start Time is " + lastItem.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
+                }
             } else
             {
-                ModelState.AddModelError("StartDateTime", "Activity overlaps another activity.");
+                ModelState.AddModelError("StartDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which End Time is " + lastItem.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
             }
             return false;
         }
-
-
     }
 }
