@@ -66,8 +66,16 @@ namespace LexiconLMS.Controllers
                 // För tillfället bara lärare som laddar upp dokument -> PubliclyVisible = true
                 // XXX Behöver ändras om Elever ska kunna ladda upp dokument
                 document.PubliclyVisible = true;
-                db.Files.Add(document);
-                db.SaveChanges();
+                try
+                { 
+                        db.Files.Add(document);
+                        db.SaveChanges();
+                        TempData["Event"] = "File " + document.FileName + " is uploaded.";
+                }
+                catch(Exception e)
+                {
+                    TempData["NegativeEvent"] = e.Message;
+                }
             }
             return RedirectToAction("Details", "Activities", new { id = activity.Id });
             //return View(activity);

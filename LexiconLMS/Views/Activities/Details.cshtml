@@ -1,5 +1,7 @@
 ﻿@model LexiconLMS.Models.Activity
-
+<head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+</head>
 @{
     ViewBag.Title = "Activity Details";
 }
@@ -11,6 +13,26 @@
     <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules", new { id = Model.ModuleId })'>Module @Html.Raw(Model.Module.Name)</a></li>
     <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities", new { id = Model.Id })'>Activity @Html.Raw(Model.Name)</a></li>
 </ol>
+}
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
 }
 <h2>Details for Module @Model.Module.Name</h2>
 
@@ -64,21 +86,6 @@
 
     </dl>
 </div>
-    if (User.IsInRole("Teacher"))
-    {
-        <div class="form-group">
-            @Html.Label("File", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="upload" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    }
-}
 <p>
     @if (User.IsInRole("Teacher"))
     {
@@ -86,12 +93,21 @@
     }
     @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
 </p>
+    if (User.IsInRole("Teacher"))
+    {
+    <br />
+        <div class="form-group">
+            @Html.Label("File upload", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="upload" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="btn btn-default" />
+            </div>
+        </div>
+    }
+    }
 
 
-<div> <!-- Public documents -->
-    @Html.Action("FilesList", new { id = Model.Id, publiclyVisible = true })
-</div>
-
-<div> <!-- Private documents -->
-    @Html.Action("FilesList", new { id = Model.Id, publiclyVisible = false })
-</div>
