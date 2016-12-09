@@ -35,6 +35,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
+            //TempData["Event"] = "";
             return View(activity);
         }
 
@@ -91,7 +92,7 @@ namespace LexiconLMS.Controllers
             Response.AddHeader("Content-Disposition", string.Format(dataFile.ContentType));
             Response.BinaryWrite(fileData);
             Response.End();
-
+            TempData["Event"] = "File "+dataFile.FileName+" downloaded";
             return RedirectToAction("Index");
         }
         // GET: Files 

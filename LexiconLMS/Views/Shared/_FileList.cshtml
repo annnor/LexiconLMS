@@ -54,7 +54,7 @@
                 @if (User.IsInRole("Teacher"))
                 {
                     <span> | </span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete","Files", new { id = item.Id },null)
                 }
             </td>
         </tr>

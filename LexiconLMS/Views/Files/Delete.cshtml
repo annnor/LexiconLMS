@@ -1,0 +1,74 @@
+﻿@model LexiconLMS.Models.File
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Courses")'>Course Home Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Modules", new { courseId = ViewBag.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules", new { id = ViewBag.ModuleId })'>Module @ViewBag.ModuleName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities", new { id = ViewBag.ActivityId })'>Activity @ViewBag.ActivityName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Delete", "Files", new { id = Model.Id })'>Delete @Model.FileName</a></li>
+    </ol>
+}
+@*@if (User.IsInRole("Student"))
+    {
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome", "Courses")'>@ViewBag.CourseName Home Page</a></li>
+            <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Modules", new { courseId = Model.Module.CourseId })'>@ViewBag.CourseName Modules</a></li>
+            <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules", new { id = Model.ModuleId })'>Module @Html.Raw(Model.Module.Name)</a></li>
+            <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities", new { id = Model.Id })'>Activity @Html.Raw(Model.Name)</a></li>
+        </ol>
+    }*@
+
+<h3>Are you sure you want to delete this file?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Uploaded by:  </dt>
+        <dd> @Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)</dd>
+        
+
+        @*<dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>*@
+
+        <dt>
+            File name: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description) :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Activity", "Details","Activities",new {id=ViewBag.ActivityId },null)
+        </div>
+    }
+</div>
