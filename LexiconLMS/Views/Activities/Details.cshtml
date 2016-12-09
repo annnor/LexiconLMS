@@ -93,8 +93,8 @@
     }
     @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
 </p>
-if (User.IsInRole("Teacher"))
-{
+    if (User.IsInRole("Teacher"))
+    {
     <br />
         <div class="form-group">
             @Html.Label("File upload", new { @class = "control-label col-md-2" })
@@ -107,7 +107,7 @@ if (User.IsInRole("Teacher"))
                 <input type="submit" value="Upload" class="btn btn-default" />
             </div>
         </div>
-}
-}
+    }
+    }
 
 

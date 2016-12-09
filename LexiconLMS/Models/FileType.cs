@@ -7,7 +7,7 @@ namespace LexiconLMS.Models
 {
     public enum FileType
     {
-        //måste veta vad numreringen och strängen efter kommat står för
-        Pdf = 1, Document
+        Pdf = 1,
+        Document
     }
 }

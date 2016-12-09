@@ -72,6 +72,35 @@ namespace LexiconLMS.Controllers
             //return View(activity);
         }
 
+        // GET: Files 
+        public ActionResult FilesList(int? id, bool publiclyVisible)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Activity activity = db.Activities.Find(id);
+            if (activity == null)
+            {
+                return HttpNotFound();
+            }
+            ICollection<File> files = null;
+            if (publiclyVisible)
+            {
+                files = activity.Files.Where(f => f.PubliclyVisible).ToList();
+                ViewBag.Heading = "Activity related files";
+            } else if (User.IsInRole("Teacher"))
+            {
+                files = activity.Files.Where(f => ! f.PubliclyVisible).ToList();
+                ViewBag.Heading = "Files uploaded by students";
+            } else
+            {
+                files = activity.Files.Where(f => f.User.Email == User.Identity.Name).ToList();
+                ViewBag.Heading = "Uploaded files";
+            }
+            return PartialView("_FileList", files);
+        }
+
         // GET: Activities/Create
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(int moduleId)
@@ -81,8 +110,13 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseName = db.Courses.FirstOrDefault(c=>c.Id==module.CourseId).Name;
-            ViewBag.CourseId = db.Courses.FirstOrDefault(c => c.Id == module.CourseId).Id;
+            var course = db.Courses.FirstOrDefault(c => c.Id == module.CourseId);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CourseName = course.Name;
+            ViewBag.CourseId = course.Id;
             ViewBag.ModuleId = module.Id;
             ViewBag.ModuleName = module.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
@@ -235,7 +269,7 @@ namespace LexiconLMS.Controllers
                 {   // The whole new activity is in the time span of the other activity
                     ModelState.AddModelError("StartDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which End Time is " + lastItem.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
                 } else
-                {// The whole new activity is in the time span of the other activity
+                {
                     ModelState.AddModelError("EndDateTime", "This Activity overlaps the activity '" + lastItem.Name + "' which Start Time is " + lastItem.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                 }
             } else
