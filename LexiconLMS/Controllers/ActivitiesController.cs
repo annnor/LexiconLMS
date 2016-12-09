@@ -34,7 +34,34 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
+        }
+
+        //Post: Activities/Details
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Details(HttpPostedFileBase upload, Activity activity)
+        {
+            if (upload != null && upload.ContentLength > 0)
+            {
+                var document = new File
+                {                                   
+                    FileName = System.IO.Path.GetFileName(upload.FileName),
+                    //FileType = FileType.Document,
+                    ContentType = upload.ContentType,
+                    ActivityId = activity.Id
+                };
+                using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                {
+                    document.Content = reader.ReadBytes(upload.ContentLength);
+                }
+                db.Files.Add(document);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", "Activities", new { id = activity.Id });
+            //return View(activity);
         }
 
         // GET: Files 
@@ -75,6 +102,13 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            var course = db.Courses.FirstOrDefault(c => c.Id == module.CourseId);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CourseName = courses.Name;
+            ViewBag.CourseId = courses.Id;
             ViewBag.ModuleId = module.Id;
             ViewBag.ModuleName = module.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
@@ -128,6 +162,7 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
         }
 
@@ -145,12 +180,13 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
             if (ModelState.IsValid && DateTimeNotOverlap(activity.Id, activity.StartDateTime, activity.EndDateTime, module))
-            {
+            {  
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Event"] = "Activity " + activity.Name + " edited.";
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }
+
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
             return View(activity);
         }
@@ -168,6 +204,7 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
         }
 

@@ -13,7 +13,14 @@
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new { courseId = @ViewBag.CourseId })'>Student Schedule Page</a></li>
     </ol>
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=ViewBag.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=ViewBag.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+    </ol>
+}
 <h2>Modules for Course @ViewBag.CourseName</h2>
 @if (TempData["Event"] != null)
 {

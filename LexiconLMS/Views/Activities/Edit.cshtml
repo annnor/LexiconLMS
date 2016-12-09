@@ -3,7 +3,16 @@
 @{
     ViewBag.Title = "Edit";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.Module.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=Model.Module.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {id=Model.ModuleId })'>Details for Module @Html.Raw(Model.Module.Name)</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Edit","Activities",new {id=Model.Id })'>Edit Activity @Model.Name for Module @Html.Raw(Model.Module.Name)</a></li>
+    </ol>
+}
 <h2>Edit</h2>
 
 
@@ -65,7 +74,6 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

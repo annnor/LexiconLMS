@@ -3,10 +3,18 @@
 @{
     ViewBag.Title = "Remove";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=ViewBag.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=ViewBag.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Delete","Modules",new {courseId=ViewBag.CourseId,courseName=ViewBag.CourseName })'>Delete Module @Model.Name</a></li>
+    </ol>
+}
 <h2>Remove</h2>
 
-<h3>Are you sure you want to remove this?</h3>
+<h3>Are you sure you want to remove this Module?</h3>
 <div>
     <h4>Module for Course @ViewBag.CourseName</h4>
     <hr />
@@ -58,7 +66,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Remove" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index", new {id = Model.CourseId })
+            @Html.ActionLink("Back to List", "Index", new {courseId = Model.CourseId })
         </div>
     }
 </div>

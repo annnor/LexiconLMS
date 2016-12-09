@@ -5,7 +5,16 @@
 @{
     ViewBag.Title = "Add Activity";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=ViewBag.CourseId })'>@ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=ViewBag.CourseId })'>Modules for @ViewBag.CourseName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {id=ViewBag.ModuleId })'>Details for Module @ViewBag.ModuleName</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Create","Activities",new {moduleId=ViewBag.ModuleId })'>Add Activity for Module @ViewBag.ModuleName</a></li>
+    </ol>
+}
 <h2>Add Activity to Module @ViewBag.ModuleName</h2>
 
 @if (TempData["Event"] != null)
