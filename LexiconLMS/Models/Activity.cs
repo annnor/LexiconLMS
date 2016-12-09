@@ -40,6 +40,9 @@ namespace LexiconLMS.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        [Display(Name = "Student Upload Active")]
+        public bool StudentUpload { get; set; }
+
         public virtual ICollection<File> Files { get; set; }
 
     }

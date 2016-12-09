@@ -151,7 +151,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, ModuleId")] Activity activity, string save1, string saveMultiple)
+        public ActionResult Create([Bind(Include = "Id,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, ModuleId, StudentUpload")] Activity activity, string save1, string saveMultiple)
         {
             var module = db.Modules.Find(activity.ModuleId);
             if (module == null)
@@ -202,7 +202,7 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Edit([Bind(Include = "Id,ModuleId,ActivityTypeId,Name,StartDateTime,EndDateTime,Description")] Activity activity)
+        public ActionResult Edit([Bind(Include = "Id,ModuleId,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, StudentUpload")] Activity activity)
         {
             var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == activity.ModuleId);
             if (module == null)
