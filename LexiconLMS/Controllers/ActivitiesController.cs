@@ -57,8 +57,16 @@ namespace LexiconLMS.Controllers
                 {
                     document.Content = reader.ReadBytes(upload.ContentLength);
                 }
-                db.Files.Add(document);
-                db.SaveChanges();
+                try
+                { 
+                        db.Files.Add(document);
+                        db.SaveChanges();
+                        TempData["Event"] = "File " + document.FileName + " is uploaded.";
+                }
+                catch(Exception e)
+                {
+                    TempData["NegativeEvent"] = e.Message;
+                }
             }
             return RedirectToAction("Details", "Activities", new { id = activity.Id });
             //return View(activity);
