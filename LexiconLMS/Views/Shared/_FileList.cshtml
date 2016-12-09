@@ -50,11 +50,11 @@
             -->
             <td>
 
-                @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, null)
+                @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, new { target = "_blank" })
                 @if (User.IsInRole("Teacher"))
                 {
                     <span> | </span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete","Files", new { id = item.Id },null)
                 }
             </td>
         </tr>

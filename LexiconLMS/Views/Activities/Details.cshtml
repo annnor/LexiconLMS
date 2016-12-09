@@ -14,6 +14,15 @@
         <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities", new { id = Model.Id })'>Activity @Html.Raw(Model.Name)</a></li>
     </ol>
 }
+@if (User.IsInRole("Student"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome", "Courses")'>@ViewBag.CourseName Home Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Modules", new { courseId = Model.Module.CourseId })'>@ViewBag.CourseName Modules</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules", new { id = Model.ModuleId })'>Module @Html.Raw(Model.Module.Name)</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Activities", new { id = Model.Id })'>Activity @Html.Raw(Model.Name)</a></li>
+    </ol>
+}
 @if (TempData["Event"] != null)
 {
     <div class="Event alert alert-success" id="Event">
@@ -28,7 +37,7 @@
 
 @if (TempData["NegativeEvent"] != null)
 {
-    <div class="TempData alert alert-danger" id="Full">
+    <div class="TempData alert alert-danger" id="Full">activity
         <h4>
             @TempData["NegativeEvent"]
         </h4>
@@ -36,7 +45,8 @@
 }
 <h2>Details for Activity @Model.Name</h2>
 
-@using (Html.BeginForm("Details", "Activities", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm("Details", "Activities", null, FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+@using (Html.BeginForm("Create", "Files", new { activityId = Model.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -111,8 +121,15 @@
             @Html.Label("File upload", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="upload" />
+                </div>
             </div>
-        </div>
+            <br />
+            <div class="form-group">
+                @Html.Label("Description for the file:", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" name="description" />
+                </div>
+                </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Upload" class="btn btn-default" />
