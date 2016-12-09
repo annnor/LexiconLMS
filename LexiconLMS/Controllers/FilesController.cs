@@ -50,9 +50,51 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HttpPostedFileBase upload, int activityId)
+        public ActionResult Create(HttpPostedFileBase upload, int activityId, string description)
          {
             if (upload != null && upload.ContentLength > 0)
+            {
+                if (User.IsInRole("Teacher"))
+                {
+
+                
+                var document = new File
+                {
+                    FileName = System.IO.Path.GetFileName(upload.FileName),
+                    //FileType = FileType.Document,
+                    ContentType = upload.ContentType,
+                    ActivityId = activityId
+                };
+                using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                {
+                    document.Content = reader.ReadBytes(upload.ContentLength);
+                }
+                var user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                document.UserId = user.Id;
+                document.Description = description;
+                // För tillfället bara lärare som laddar upp dokument -> PubliclyVisible = true
+                // XXX Behöver ändras om Elever ska kunna ladda upp dokument
+                document.PubliclyVisible = true;
+                try
+                {
+                    db.Files.Add(document);
+                    db.SaveChanges();
+                    TempData["Event"] = "File " + document.FileName + " is uploaded.";
+                }
+                catch (Exception e)
+                {
+                    TempData["NegativeEvent"] = e.Message;
+                }
+
+                    //return RedirectToAction("Details", "Activities", new { id = activityId });
+
+                } //end user is in role teacher
+
+                if (User.IsInRole("Student"))
             {
                 var document = new File
                 {
@@ -71,9 +113,10 @@ namespace LexiconLMS.Controllers
                     return HttpNotFound();
                 }
                 document.UserId = user.Id;
-                // För tillfället bara lärare som laddar upp dokument -> PubliclyVisible = true
-                // XXX Behöver ändras om Elever ska kunna ladda upp dokument
-                document.PubliclyVisible = true;
+                document.Description = description;
+                    // För tillfället bara lärare som laddar upp dokument -> PubliclyVisible = true
+                    // XXX Behöver ändras om Elever ska kunna ladda upp dokument
+                    document.PubliclyVisible = false;
                 try
                 {
                     db.Files.Add(document);
@@ -84,9 +127,13 @@ namespace LexiconLMS.Controllers
                 {
                     TempData["NegativeEvent"] = e.Message;
                 }
-            }
+            } //end user is in role student
+
+           
+                }
             return RedirectToAction("Details", "Activities", new { id = activityId });
         }
+        
 
 
 

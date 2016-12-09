@@ -103,23 +103,30 @@
     }
     @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
 </p>
-    if (User.IsInRole("Teacher"))
-    {
+    //if (User.IsInRole("Teacher"))
+    //{
     <br />
         <div class="form-group">
             @Html.Label("File upload", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="upload" />
+                </div>
             </div>
-        </div>
+            <br />
+            <div class="form-group">
+                @Html.Label("Description for the file:", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" name="description" />
+                </div>
+                </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Upload" class="btn btn-default" />
 
             </div>
         </div>
+        //}
     }
-}
 
 <div>
     <!-- Public documents -->
