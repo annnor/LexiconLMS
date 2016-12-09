@@ -57,6 +57,15 @@ namespace LexiconLMS.Controllers
                 {
                     document.Content = reader.ReadBytes(upload.ContentLength);
                 }
+                var user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                document.UserId = user.Id;
+                // För tillfället bara lärare som laddar upp dokument -> PubliclyVisible = true
+                // XXX Behöver ändras om Elever ska kunna ladda upp dokument
+                document.PubliclyVisible = true;
                 db.Files.Add(document);
                 db.SaveChanges();
             }
