@@ -67,7 +67,7 @@ namespace LexiconLMS.Controllers
                 {
                     TempData["NegativeEvent"] = e.Message;
                 }
-            }
+                            }
             return RedirectToAction("Details", "Activities", new { id = activity.Id });
             //return View(activity);
         }
