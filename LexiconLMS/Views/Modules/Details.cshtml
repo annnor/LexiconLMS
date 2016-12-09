@@ -26,7 +26,7 @@
 <h2>Module @Html.Raw(Model.Name) in Course @ViewBag.courseName</h2>
 
 <div>
-     <dl class="dl-horizontal">
+    <dl class="dl-horizontal">
         <!--
         <dt>
             @Html.DisplayNameFor(model => model.CourseId)
@@ -38,12 +38,12 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.StartDateTime)
@@ -73,15 +73,16 @@
 </div>
 @if (User.IsInRole("Teacher"))
 {
-<p>
-    @Html.ActionLink("Add Activity", "Create", "Activities", new { moduleId = Model.Id }, null) |
-    @Html.ActionLink("Edit Module Info", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName }) |
-    @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
-</p>
-} else {
-<p>
-    @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
-</p>
+    <p>
+        @Html.ActionLink("Add Activity", "Create", "Activities", new { moduleId = Model.Id }, null) |
+        @Html.ActionLink("Edit Module Info", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName }) |
+        @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
+    </p>
+} else
+{
+    <p>
+        @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
+    </p>
 }
 <hr>
 
@@ -127,6 +128,15 @@
                 <th data-defaultsign="AZ">
                     @Html.DisplayNameFor(model => firstItem.EndDateTime)
                 </th>
+                <th data-defaultsign="AZ">
+                    Files
+                </th>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <th data-defaultsign="AZ">
+                        Student Files
+                    </th>
+                }
                 <!--
                 <th data-defaultsign="AZ">
                     @Html.DisplayNameFor(model => firstItem.Description)
@@ -152,6 +162,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EndDateTime)
                 </td>
+                @{var countPublicFiles = item.Files.Where(f => f.PubliclyVisible == true).Count();
+                    <td>@countPublicFiles </td>
+                }
+                @if (User.IsInRole("Teacher"))
+                {
+                    var countPrivateFiles = item.Files.Where(f => f.PubliclyVisible == false).Count();
+                    <td>@countPrivateFiles </td>
+                }
                 <!--
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
@@ -169,15 +187,14 @@
                 {
                     <td>
                         @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null)
-                        
+
                     </td>
                 }
             </tr>
-        }
+                    }
 
     </table>
-} else
-{
-    <p>No activities have been added so far.</p>
-}
-
+                    } else
+                    {
+                        <p>No activities have been added so far.</p>
+                    }

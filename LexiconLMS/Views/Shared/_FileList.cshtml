@@ -3,44 +3,33 @@
 
 @*@if (Model.Count > 0)
     {*@
+<br />
+<br />
 <hr />
-<br />
-<br />
 <br />
 <h3>@ViewBag.Heading</h3>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FileName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <!--
-        <th>
-            @Html.DisplayNameFor(model => model.Path)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActivityId)
-        </th>
-            -->
-        <th>
-            @Html.DisplayNameFor(model => model.ContentType)
-        </th>
-        <!--
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-            -->
-        <th>
-            @Html.DisplayNameFor(model => model.FileType)
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-bordered table-condensed table-striped table-hover sortable">
+    <thead>
+        <tr>
+            <th data-defaultsign="AZ">
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th data-defaultsign="AZ">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th data-defaultsign="AZ">
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <!--
+            <th>
+                @Html.DisplayNameFor(model => model.ContentType)
+            </th>
+                -->
+            <th data-defaultsort='disabled'></th>
+        </tr>
+    </thead>
+
 
     @foreach (var item in Model)
     {
@@ -52,33 +41,20 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <!--
-            <td>
-                @Html.DisplayFor(modelItem => item.Path)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityId)
-            </td>
-                -->
             <td>
                 @Html.DisplayFor(modelItem => item.ContentType)
             </td>
-            <!--
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
             -->
             <td>
-                @Html.DisplayFor(modelItem => item.FileType)
-            </td>
-            <td>
+
                 @Html.ActionLink("Download", "Edit", new { id = item.Id })
                 @if (User.IsInRole("Teacher"))
                 {
                     <span> | </span>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 }
             </td>
         </tr>
@@ -87,12 +63,12 @@
 </table>
 
 @*} else {
-  <hr />
-<br />
-<br />
-<br />
-<h3>@ViewBag.Heading</h3>
+      <hr />
+    <br />
+    <br />
+    <br />
+    <h3>@ViewBag.Heading</h3>
 
-There are no uploaded files.  
-    }*@
+    There are no uploaded files.
+        }*@
 
