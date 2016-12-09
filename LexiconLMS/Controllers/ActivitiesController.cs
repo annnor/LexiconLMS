@@ -80,7 +80,20 @@ namespace LexiconLMS.Controllers
             return RedirectToAction("Details", "Activities", new { id = activity.Id });
             //return View(activity);
         }
+        public ActionResult Download(int id)
+        {
+            File dataFile = db.Files.Find(id);
+            byte[] fileData = dataFile.Content;
+            Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+            Response.ContentType = dataFile.ContentType;
+            Response.AddHeader("Content-Disposition", string.Format(dataFile.ContentType));
+            Response.BinaryWrite(fileData);
+            Response.End();
 
+            return RedirectToAction("Index");
+        }
         // GET: Files 
         public ActionResult FilesList(int? id, bool publiclyVisible)
         {

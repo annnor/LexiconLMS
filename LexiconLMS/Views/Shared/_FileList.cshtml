@@ -50,7 +50,7 @@
             -->
             <td>
 
-                @Html.ActionLink("Download", "Edit", new { id = item.Id })
+                @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, null)
                 @if (User.IsInRole("Teacher"))
                 {
                     <span> | </span>
