@@ -64,3 +64,12 @@
     }
     @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
 </p>
+
+
+<div> <!-- Public documents -->
+    @Html.Action("FilesList", new { id = Model.Id, publiclyVisible = true })
+</div>
+
+<div> <!-- Private documents -->
+    @Html.Action("FilesList", new { id = Model.Id, publiclyVisible = false })
+</div>

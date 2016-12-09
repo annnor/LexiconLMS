@@ -205,6 +205,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612081517162_publicVis.cs" />
+    <Compile Include="Migrations\201612081517162_publicVis.Designer.cs">
+      <DependentUpon>201612081517162_publicVis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612081538325_XXX.cs" />
+    <Compile Include="Migrations\201612081538325_XXX.Designer.cs">
+      <DependentUpon>201612081538325_XXX.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -325,6 +333,7 @@
     <Content Include="Views\Activities\Edit.cshtml" />
     <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Shared\_UpComingEvents.cshtml" />
+    <Content Include="Views\Shared\_FileList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,6 +343,14 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612081517162_publicVis.resx">
+      <DependentUpon>201612081517162_publicVis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612081538325_XXX.resx">
+      <DependentUpon>201612081538325_XXX.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

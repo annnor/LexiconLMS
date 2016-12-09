@@ -40,5 +40,7 @@ namespace LexiconLMS.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        public virtual ICollection<File> Files { get; set; }
+
     }
 }

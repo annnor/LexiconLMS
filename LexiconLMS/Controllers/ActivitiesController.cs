@@ -37,6 +37,35 @@ namespace LexiconLMS.Controllers
             return View(activity);
         }
 
+        // GET: Files 
+        public ActionResult FilesList(int? id, bool publiclyVisible)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Activity activity = db.Activities.Find(id);
+            if (activity == null)
+            {
+                return HttpNotFound();
+            }
+            ICollection<File> files = null;
+            if (publiclyVisible)
+            {
+                files = activity.Files.Where(f => f.PubliclyVisible).ToList();
+                ViewBag.Heading = "Activity related files";
+            } else if (User.IsInRole("Teacher"))
+            {
+                files = activity.Files.Where(f => ! f.PubliclyVisible).ToList();
+                ViewBag.Heading = "Files uploaded by students";
+            } else
+            {
+                files = activity.Files.Where(f => f.User.Email == User.Identity.Name).ToList();
+                ViewBag.Heading = "Uploaded files";
+            }
+            return PartialView("_FileList", files);
+        }
+
         // GET: Activities/Create
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(int moduleId)

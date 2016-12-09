@@ -16,31 +16,31 @@ namespace LexiconLMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
-        //file handler written by Johan - it is not complete
-        [HttpPost]
-        public ActionResult Upload(string userName, int courseId, HttpPostedFileBase upload) //username is the Identity username(email) and Id is the course Id
-        {
-            if (upload != null && upload.ContentLength > 0)
-            {
-                var file = new File
-                {
-                    Path = System.IO.Path.GetFileName(upload.FileName),
-                    FileType = FileType.Document,
-                    ContentType = upload.ContentType,
-                    CourseId = courseId,
+        ////file handler written by Johan - it is not complete
+        //[HttpPost]
+        //public ActionResult Upload(string userName, int courseId, HttpPostedFileBase upload) //username is the Identity username(email) and Id is the course Id
+        //{
+        //    if (upload != null && upload.ContentLength > 0)
+        //    {
+        //        var file = new File
+        //        {
+        //            Path = System.IO.Path.GetFileName(upload.FileName),
+        //            FileType = FileType.Document,
+        //            ContentType = upload.ContentType,
+        //            CourseId = courseId,
                     
 
-                };
-                //using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                //{
-                //    file.Content = reader.ReadBytes(upload.ContentLength);
-                //}
-                //student.Files = new List<File> { avatar };
-            }
+        //        };
+        //        //using (var reader = new System.IO.BinaryReader(upload.InputStream))
+        //        //{
+        //        //    file.Content = reader.ReadBytes(upload.ContentLength);
+        //        //}
+        //        //student.Files = new List<File> { avatar };
+        //    }
 
 
-            return View();
-        }
+        //    return View();
+        //}
 
 
         // GET: Courses
