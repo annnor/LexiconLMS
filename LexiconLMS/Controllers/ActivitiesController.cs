@@ -83,7 +83,10 @@ namespace LexiconLMS.Controllers
         }
         public ActionResult Download(int id)
         {
+            
+
             File dataFile = db.Files.Find(id);
+            
             byte[] fileData = dataFile.Content;
             Response.Clear();
             Response.ClearHeaders();
@@ -92,8 +95,7 @@ namespace LexiconLMS.Controllers
             Response.AddHeader("Content-Disposition", string.Format(dataFile.ContentType));
             Response.BinaryWrite(fileData);
             Response.End();
-            TempData["Event"] = "File "+dataFile.FileName+" downloaded";
-            return RedirectToAction("Index");
+            return RedirectToAction("Details",new { id = dataFile.ActivityId } );
         }
         // GET: Files 
         public ActionResult FilesList(int? id, bool publiclyVisible)
