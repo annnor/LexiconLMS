@@ -34,14 +34,14 @@
         </h4>
     </div>
 }
-<h2>Details for Module @Model.Module.Name</h2>
+<h2>Details for Activity @Model.Name</h2>
 
 @using (Html.BeginForm("Details", "Activities", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 <div>
-    <h4>Activity</h4>
+    @*<h4>Activity</h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
