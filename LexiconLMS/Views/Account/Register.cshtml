@@ -2,6 +2,14 @@
 @{
     ViewBag.Title = "Register Teacher";
 }
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("TeacherList","Account")'>Teacher List - All Teachers</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Register","Account")'>Add Teacher to the LMS</a></li>
+    </ol>
+}
 
 <h2>@ViewBag.Title</h2>
 <head>

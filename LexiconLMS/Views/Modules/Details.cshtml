@@ -19,7 +19,7 @@
 {
     <ol class="breadcrumb">
         <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
-        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new { courseId = Model.CourseId })'>Student Schedule Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new { courseId = Model.CourseId })'>@ViewBag.courseName Student Modules Page</a></li>
         <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Modules",new {id=Model.Id})'>Module @Html.Raw(Model.Name)</a></li>
     </ol>
 }

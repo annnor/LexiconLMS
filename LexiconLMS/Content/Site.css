@@ -42,3 +42,14 @@ textarea {
     position: relative;
     top: 10px;   
 }
+
+.breadcrumb { background-color:#D20013 !important; }
+.breadcrumb li {font-size: 14px;}
+.breadcrumb a {color: #FFFFFF !important;}
+.breadcrumb a:hover {color: rgba(42, 100, 150, 1);}
+.breadcrumb>.active {color: rgba(153, 153, 153, 1);}
+.breadcrumb>li+li:before {color: rgba(204, 204, 204, 1); content: "\002F\00a0";}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF !important;
+}

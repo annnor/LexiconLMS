@@ -10,7 +10,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","ActivityTypes")'>Manage Activity Types</a></li>
-        <li class="breadcrumb-item active"><a href='@Url.Action("Delete","ActivityTypes",new { id = Model.Id })'>Delete Activity Type</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Delete","ActivityTypes",new { id = Model.Id })'>Remove Activity Type @Model.Name</a></li>
     </ol>
 }
 <h2>Remove Activity Type</h2>

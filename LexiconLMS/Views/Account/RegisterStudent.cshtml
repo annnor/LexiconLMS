@@ -3,7 +3,7 @@
     ViewBag.Title = "Register a new student to the course " + @ViewBag.CourseName;
 }
 
-<h2>@ViewBag.Title</h2>
+
 <head>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
@@ -12,11 +12,11 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
     <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=ViewBag.CourseId})'>@ViewBag.CourseName   </a></li>
-    <li class="breadcrumb-item active"><a href='@Url.Action("RegisterStudent","Account",new {courseId=ViewBag.CourseId })'>Add Student to @ViewBag.CourseName</a></li>
+    <li class="breadcrumb-item active"><a href='@Url.Action("RegisterStudent","Account",new {courseId=ViewBag.CourseId })'>Register Student to @ViewBag.CourseName</a></li>
 </ol>
 }
 
-   
+<h2>@ViewBag.Title</h2> 
 <!--XXX Ta bort...eller flytta alla länkar hit
 <div>
     @Html.ActionLink("Back to Course List", "Index", "Courses")
