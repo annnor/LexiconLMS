@@ -108,6 +108,14 @@
             </div>
         </div>
     }
-    }
+}
 
+<div>
+    <!-- Public documents -->
+    @Html.Action("FilesList", new { id = Model.Id, publiclyVisible = true })
+</div>
 
+<div>
+    <!-- Private documents -->
+    @Html.Action("FilesList", new { id = Model.Id, publiclyVisible = false })
+</div>

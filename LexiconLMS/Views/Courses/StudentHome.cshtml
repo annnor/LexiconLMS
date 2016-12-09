@@ -10,7 +10,7 @@
 @if (User.IsInRole("Student"))
 {
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>Course Home Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("StudentHome","Courses")'>@Model.Name Student Home Page</a></li>
     </ol>
 }
 

@@ -3,7 +3,13 @@
 @{
     ViewBag.Title = "Remove";
 }
-
+@if (User.IsInRole("Teacher"))
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Delete","Account", new {email=Model.Email })'>Delete @Model.FirstName @Model.LastName</a></li>
+    </ol>
+}
 <h3>Are you sure you want to remove this account?</h3>
 @if (TempData["NegativeEvent"] != null)
 {
