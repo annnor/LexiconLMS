@@ -107,8 +107,8 @@ namespace LexiconLMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseName = courses.Name;
-            ViewBag.CourseId = courses.Id;
+            ViewBag.CourseName = course.Name;
+            ViewBag.CourseId = course.Id;
             ViewBag.ModuleId = module.Id;
             ViewBag.ModuleName = module.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
