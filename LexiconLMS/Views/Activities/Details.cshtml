@@ -44,64 +44,41 @@
         </h4>
     </div>
 }
-<h2>Details for Activity @Model.Name</h2>
+<h2>Activity @Model.Name</h2>
 
-@*@using (Html.BeginForm("Details", "Activities", null, FormMethod.Post, new { enctype = "multipart/form-data" }))*@
 @using (Html.BeginForm("Create", "Files", new { activityId = Model.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div>
-        @*<h4>Activity</h4>*@
-        <hr />
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
+            <dt> @Html.DisplayNameFor(model => model.Type) </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Type.Name)
-            </dd>
+            <dd> @Html.DisplayFor(model => model.Type.Name) </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.StartDateTime)
-            </dt>
+            <dt> @Html.DisplayNameFor(model => model.StartDateTime) </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.StartDateTime)
-            </dd>
+            <dd> @Html.DisplayFor(model => model.StartDateTime) </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.EndDateTime)
-            </dt>
+            <dt> @Html.DisplayNameFor(model => model.EndDateTime) </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EndDateTime)
-            </dd>
+            <dd> @Html.DisplayFor(model => model.EndDateTime) </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+            <dt> @Html.DisplayNameFor(model => model.Description) </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
+            <dd> @Html.DisplayFor(model => model.Description) </dd>
             @if (User.IsInRole("Teacher"))
             {
-                <dt>
-                    @Html.DisplayNameFor(model => model.StudentUpload)
-                </dt>
+                <dt> @Html.DisplayNameFor(model => model.StudentUpload) </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.StudentUpload)
-                </dd>
+                <dd> @Html.DisplayFor(model => model.StudentUpload) </dd>
             }
         </dl>
     </div>
     <p>
         @if (User.IsInRole("Teacher"))
         {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>|</span>
+            @Html.ActionLink("Edit Activity Info", "Edit", new { id = Model.Id }) <span>|</span>
         }
         @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
     </p>
@@ -115,15 +92,15 @@
             @Html.Label("File upload", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="upload" />
-                </div>
             </div>
-            <br />
-            <div class="form-group">
-                @Html.Label("Description for the file:", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control input-lg" name="description" />
-                </div>
-                </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.Label("Description for the file:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control input-lg" name="description" />
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Upload" class="btn btn-default" />

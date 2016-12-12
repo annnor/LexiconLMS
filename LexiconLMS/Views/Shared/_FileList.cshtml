@@ -2,73 +2,71 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-    @if (Model.Count() > 0)
-    {
-    <br />
-    <hr />
-    <br />
-    <h3>@ViewBag.Heading</h3>
-    <div class="table-responsive">
-        <table class="table table-bordered table-condensed table-striped table-hover sortable">
-            <thead>
-                <tr>
-                    <th data-defaultsign="AZ">
-                        @Html.DisplayNameFor(model => model.FileName)
-                    </th>
-                    <th data-defaultsign="AZ">
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th data-defaultsign="AZ">
-                        @Html.DisplayNameFor(model => model.UserId)
-                    </th>
-                    <!--
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContentType)
-                    </th>
-                        -->
-                    <th data-defaultsort='disabled'></th>
-                </tr>
-            </thead>
 
+<br />
+<hr/>
+<br />
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FileName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.FullName)
-                    </td>
-                    <!--
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ContentType)
-                    </td>
+<h3>@ViewBag.Heading</h3>
+
+@if (Model.Count() > 0)
+{
+
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        <thead>
+            <tr>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.FileName)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <!--
+                <th>
+                    @Html.DisplayNameFor(model => model.ContentType)
+                </th>
                     -->
-                    <td>
+                <th data-defaultsort='disabled'></th>
+            </tr>
+        </thead>
 
-                        @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, new { target = "_blank" })
-                        @if (User.IsInRole("Teacher"))
-                        {
-                            <span> | </span>
-                            @Html.ActionLink("Delete", "Delete", "Files", new { id = item.Id }, null)
-                        }
-                    </td>
-                </tr>
-            }
 
-        </table>
-        </div>
-        } else
+        @foreach (var item in Model)
         {
-        <br />
-        <hr />
-        <br />
-        <h3>@ViewBag.Heading</h3>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <!--
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentType)
+                </td>
+                -->
+                <td>
 
-        <p>There are no uploaded files.</p>
+                    @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, new { target = "_blank" })
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <span> | </span>
+                            @Html.ActionLink("Delete", "Delete", "Files", new { id = item.Id }, null)
+                    }
+                </td>
+            </tr>
         }
+
+    </table>
+
+} else
+{
+    <p>There are no uploaded files.</p>
+}
 
