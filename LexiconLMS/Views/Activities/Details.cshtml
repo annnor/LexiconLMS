@@ -37,7 +37,7 @@
 
 @if (TempData["NegativeEvent"] != null)
 {
-    <div class="TempData alert alert-danger" id="Full">activity
+    <div class="TempData alert alert-danger" id="Full">
         <h4>
             @TempData["NegativeEvent"]
         </h4>
@@ -100,7 +100,7 @@
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.StudentUpload))
+                    @Html.DisplayFor(model => model.StudentUpload)
                 </dd>
             }
         </dl>
@@ -112,6 +112,8 @@
         }
         @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
     </p>
+
+    <hr />
 
     if (User.IsInRole("Teacher") ||
         (Model.StudentUpload && Model.StartDateTime <= DateTime.Now && DateTime.Now <= Model.EndDateTime))
