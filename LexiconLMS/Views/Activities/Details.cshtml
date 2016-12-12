@@ -63,14 +63,6 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
                 @Html.DisplayNameFor(model => model.StartDateTime)
             </dt>
 
@@ -113,11 +105,10 @@
         @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
     </p>
 
-    <hr />
-
     if (User.IsInRole("Teacher") ||
         (Model.StudentUpload && Model.StartDateTime <= DateTime.Now && DateTime.Now <= Model.EndDateTime))
     {
+        <hr />
         <br />
         <div class="form-group">
             @Html.Label("File upload", new { @class = "control-label col-md-2" })
