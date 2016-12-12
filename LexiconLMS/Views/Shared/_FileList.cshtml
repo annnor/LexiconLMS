@@ -11,62 +11,62 @@
 
 @if (Model.Count() > 0)
 {
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed table-striped table-hover sortable">
+            <thead>
+                <tr>
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => model.FileName)
+                    </th>
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </th>
+                    <!--
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentType)
+                    </th>
+                        -->
+                    <th data-defaultsort='disabled'></th>
+                </tr>
+            </thead>
 
-    <table class="table table-bordered table-condensed table-striped table-hover sortable">
-        <thead>
-            <tr>
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => model.FileName)
-                </th>
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
-                <!--
-                <th>
-                    @Html.DisplayNameFor(model => model.ContentType)
-                </th>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.FullName)
+                    </td>
+                    <!--
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContentType)
+                    </td>
                     -->
-                <th data-defaultsort='disabled'></th>
-            </tr>
-        </thead>
+                    <td>
 
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FileName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.FullName)
-                </td>
-                <!--
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContentType)
-                </td>
-                -->
-                <td>
-
-                    @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, new { target = "_blank" })
-                    @if (User.IsInRole("Teacher"))
+                        @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, new { target = "_blank" })
+                        @if (User.IsInRole("Teacher"))
                     {
-                        <span> | </span>
+                            <span> | </span>
                             @Html.ActionLink("Delete", "Delete", "Files", new { id = item.Id }, null)
-                    }
-                </td>
-            </tr>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+        } else
+        {
+        <p>There are no uploaded files.</p>
         }
-
-    </table>
-
-} else
-{
-    <p>There are no uploaded files.</p>
-}
 
