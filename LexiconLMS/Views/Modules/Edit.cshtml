@@ -21,7 +21,7 @@
     
     <div class="form-horizontal">
         <h4>Module for Course @ViewBag.CourseName</h4>
-        <hr />
+        <br />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
@@ -74,7 +74,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { courseId = Model.CourseId })
+    @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
 </div>
 
 @section Scripts {
