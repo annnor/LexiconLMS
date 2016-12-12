@@ -1,4 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
