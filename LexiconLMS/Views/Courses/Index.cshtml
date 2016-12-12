@@ -37,24 +37,25 @@
 <p>
     @Html.ActionLink("Add Course", "Create")
 </p>
-<table class="table table-bordered table-condensed table-striped table-hover sortable">
-    <thead>
-        <tr>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th data-defaultsort='disabled'>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th data-defaultsign="AZ">
-                Amount of Students
-            </th>
-            <th data-defaultsort='disabled'></th>
-        </tr>
-    </thead>
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        <thead>
+            <tr>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th data-defaultsort='disabled'>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-defaultsign="AZ">
+                    Amount of Students
+                </th>
+                <th data-defaultsort='disabled'></th>
+            </tr>
+        </thead>
         @foreach (var item in Model.OrderBy(c => c.StartDate))
         {
             <tr>
@@ -79,4 +80,5 @@
             </tr>
         }
 
-</table>
+    </table>
+    </div>
