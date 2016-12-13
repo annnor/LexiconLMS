@@ -80,7 +80,7 @@
         {
             @Html.ActionLink("Edit Activity Info", "Edit", new { id = Model.Id }) <span>|</span>
         }
-        @Html.ActionLink("Back to Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
+        @Html.ActionLink("Module Details", "Details", "Modules", new { id = Model.ModuleId }, null)
     </p>
 
     if (User.IsInRole("Teacher") ||
