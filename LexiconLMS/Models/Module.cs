@@ -34,5 +34,11 @@ namespace LexiconLMS.Models
         public string Description { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }
+
+
+        public bool isOngoing(DateTime dateTime)
+        {
+            return StartDateTime <= dateTime && dateTime <= EndDateTime;
+        }
     }
 }
