@@ -273,10 +273,11 @@ namespace LexiconLMS.Controllers
                 {
                     return HttpNotFound();
                 }
+                // Som mest visas 3 moduler. 
                 int MaxListedModules = 3;
                 List<Module> upComingEventsList = new List<Module>();
-                //find lets say 3 modules for that course. use todays date and forward
 
+                // Om föregående modul slutade mindre än 5 dagar sedan så visas den.
                 var earlierDate = today.AddDays(-5);
                 var orderedModules = course.Modules.Where(m => m.EndDateTime >= earlierDate).OrderBy(m => m.StartDateTime);
 
@@ -298,9 +299,8 @@ namespace LexiconLMS.Controllers
                         break;
                     }
                 }
-                //return the view.
+                ViewBag.CourseName = course.Name;
                 return PartialView("_UpComingEvents", upComingEventsList);
-
             }
             return View(); //bör ej nå hit
         }
