@@ -206,14 +206,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612131155299_addedNullableActivityIdonFiles.cs" />
-    <Compile Include="Migrations\201612131155299_addedNullableActivityIdonFiles.Designer.cs">
-      <DependentUpon>201612131155299_addedNullableActivityIdonFiles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612131157170_addedNullableCourseIdonFiles.cs" />
-    <Compile Include="Migrations\201612131157170_addedNullableCourseIdonFiles.Designer.cs">
-      <DependentUpon>201612131157170_addedNullableCourseIdonFiles.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -350,14 +342,6 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612131155299_addedNullableActivityIdonFiles.resx">
-      <DependentUpon>201612131155299_addedNullableActivityIdonFiles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612131157170_addedNullableCourseIdonFiles.resx">
-      <DependentUpon>201612131157170_addedNullableCourseIdonFiles.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
