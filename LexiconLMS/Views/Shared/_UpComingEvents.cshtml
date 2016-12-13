@@ -51,11 +51,23 @@
                     @Html.DisplayFor(activityItem => activity.EndDateTime)
                     <br />
                     <b>@Html.Raw("Activity type: ")</b>
-                        @Html.DisplayFor(activityItem => activity.Type.Name)
-                        <br />
-                        <b> @Html.Raw("Description: ")</b>
+                    @Html.DisplayFor(activityItem => activity.Type.Name)
+                    <br />
+                    <b> @Html.Raw("Description: ")</b>
                         @Html.DisplayFor(activityItem => activity.Name)
-                        <br /><br />
+                        <br />
+                    var countPublicFiles = activity.Files.Where(f => f.PubliclyVisible == true).Count();
+                    if (countPublicFiles > 0)
+                    {
+                        <b> @Html.Raw("Files: ")</b> @countPublicFiles
+                        <br />
+                    }
+                    if (activity.StudentUpload)
+                    {
+                        <b style="color:red;">Assignment</b>
+                        <br />
+                    }
+                    <br />
                 }
             </div>
         </div>
