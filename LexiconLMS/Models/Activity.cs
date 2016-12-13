@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -39,11 +40,13 @@ namespace LexiconLMS.Models
 
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-
+        
+    
+        [DefaultValue(false)]
         [Display(Name = "Student Upload Active")]
         public bool StudentUpload { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
-
+        
     }
 }
