@@ -234,7 +234,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\logo-lexicon.png" />
     <Content Include="Images\logo-lexicon_small.gif" />
     <Content Include="Scripts\bootstrap-sortable.js" />
     <Content Include="Scripts\bootstrap.js" />
