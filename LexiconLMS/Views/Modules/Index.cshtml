@@ -4,6 +4,7 @@
     ViewBag.Title = "Modules Index";
 }
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
 @if (User.IsInRole("Student"))
@@ -61,68 +62,72 @@
 
 <br />
 <br />
-<table class="table table-bordered table-condensed table-striped table-hover sortable">
-    <thead>
-    <tr>
-        <!--
-        <th>
-            @Html.DisplayNameFor(model => model.CourseId)
-        </th>
-        -->
-             <th data-defaultsign="AZ">
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-            <th data-defaultsign="AZ">
-            @Html.DisplayNameFor(model => model.StartDateTime)
-        </th>
-            <th data-defaultsign="AZ">
-            @Html.DisplayNameFor(model => model.EndDateTime)
-        </th>
-            <th data-defaultsign="AZ">
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-            <th data-defaultsort='disabled'></th>
-    </tr>
-    </thead>
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+
+        <thead>
+
+            <tr>
+                <!--
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseId)
+                </th>
+                -->
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.StartDateTime)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.EndDateTime)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-defaultsort='disabled'></th>
+            </tr>
+        </thead>
 
         @foreach (var item in Model.OrderBy(c => c.StartDateTime))
         {
-    <tr>
-        <!--
-        <td>
-            @Html.HiddenFor(modelItem => item.CourseId)
-        </td>
-        -->
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-@if (User.IsInRole("Teacher"))
-{
-        <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, courseName = @ViewBag.CourseName }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName }) |
-                    @Html.ActionLink("Remove", "Delete", new { id = item.Id, courseName = @ViewBag.CourseName })
-        </td>
-}
-@if (User.IsInRole("Student"))
-{
-    <td>
-        @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName })
-    </td>
-}
-    </tr>
-}
-   
-</table>
+            <tr>
+                <!--
+                <td>
+                    @Html.HiddenFor(modelItem => item.CourseId)
+                </td>
+                -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id, courseName = @ViewBag.CourseName }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName }) |
+                        @Html.ActionLink("Remove", "Delete", new { id = item.Id, courseName = @ViewBag.CourseName })
+                    </td>
+                }
+                @if (User.IsInRole("Student"))
+                {
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id, courseName = @ViewBag.CourseName })
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>
+</div>
 @if (User.IsInRole("Teacher"))
 {
 <div>

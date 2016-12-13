@@ -1,5 +1,6 @@
 ﻿@model LexiconLMS.Models.Module
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
 @{
@@ -98,83 +99,84 @@
 @if (Model.Activities.Count > 0)
 {
     var firstItem = Model.Activities.First();
-
-    <table class="table table-bordered table-condensed table-striped table-hover sortable">
-        <thead>
-            <tr>
-                <th data-defaultsign="AZ">
-                    <!-- @Html.DisplayNameFor(model => firstItem.Type) -->
-                    Type
-                </th>
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => firstItem.Name)
-                </th>
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => firstItem.StartDateTime)
-                </th>
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => firstItem.EndDateTime)
-                </th>
-                <th data-defaultsign="AZ">
-                    Files
-                </th>
-                @if (User.IsInRole("Teacher"))
-                {
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed table-striped table-hover sortable">
+            <thead>
+                <tr>
                     <th data-defaultsign="AZ">
-                        Student Files
+                        <!-- @Html.DisplayNameFor(model => firstItem.Type) -->
+                        Type
                     </th>
-                }
-                <!--
-                <th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => firstItem.Description)
-                </th>
-                    -->
-                <th data-defaultsort='disabled'></th>
-            </tr>
-        </thead>
-
-        @foreach (var item in Model.Activities.OrderBy(a => a.StartDateTime))
-        {
-
-            <tr title="@item.Description">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDateTime)
-                </td>
-                @{var countPublicFiles = item.Files.Where(f => f.PubliclyVisible == true).Count();
-                    <td>@countPublicFiles </td>
-                }
-                @if (User.IsInRole("Teacher"))
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => firstItem.Name)
+                    </th>
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => firstItem.StartDateTime)
+                    </th>
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => firstItem.EndDateTime)
+                    </th>
+                    <th data-defaultsign="AZ">
+                        Files
+                    </th>
+                    @if (User.IsInRole("Teacher"))
                 {
-                    var countPrivateFiles = item.Files.Where(f => f.PubliclyVisible == false).Count();
-                    <td>@countPrivateFiles </td>
-                }
-                @if (User.IsInRole("Teacher"))
-                {
+                        <th data-defaultsign="AZ">
+                            Student Files
+                        </th>
+                    }
+                    <!--
+                    <th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => firstItem.Description)
+                    </th>
+                        -->
+                    <th data-defaultsort='disabled'></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.Activities.OrderBy(a => a.StartDateTime))
+            {
+
+                <tr title="@item.Description">
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null) |
-                        @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null) |
-                        @Html.ActionLink("Remove", "Delete", "Activities", new { id = item.Id }, null)
+                        @Html.DisplayFor(modelItem => item.Type.Name)
                     </td>
-                }
-                @if (User.IsInRole("Student"))
-                {
                     <td>
-                        @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                }
-            </tr>
-       }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDateTime)
+                    </td>
+                    @{var countPublicFiles = item.Files.Where(f => f.PubliclyVisible == true).Count();
+                        <td>@countPublicFiles </td>
+                    }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        var countPrivateFiles = item.Files.Where(f => f.PubliclyVisible == false).Count();
+                        <td>@countPrivateFiles </td>
+                    }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null) |
+                            @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null) |
+                            @Html.ActionLink("Remove", "Delete", "Activities", new { id = item.Id }, null)
+                        </td>
+                    }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Activities", new { id = item.Id }, null)
+                        </td>
+                    }
+                </tr>
+                        }
 
-    </table>
-} else {
-    <p>No activities have been added so far.</p>
-}
+        </table>
+        </div>
+        } else {
+        <p>No activities have been added so far.</p>
+        }

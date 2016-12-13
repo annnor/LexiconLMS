@@ -4,6 +4,7 @@
     ViewBag.Title = "StudentHome";
 }
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 
@@ -14,37 +15,45 @@
     </ol>
 }
 
+<div class="row">
+    <div class="col-xs-12">
+        <h2>@Html.DisplayFor(model => model.Name)</h2>
+        <p>
+            @Html.DisplayFor(model => model.Description)
+        </p>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
 
-    <h2>@Html.DisplayFor(model => model.Name)</h2>
-    <p>
-        @Html.DisplayFor(model => model.Description)
-    </p>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-    </dl>
-@Html.ActionLink("Click to view all your modules","Index","Modules",new { courseId = Model.Id},null)
-
-    <br />
-    <hr />
-
-    <h3>Current and Upcoming Events</h3>
-   <div>
-    @Html.Action("UpComingEvents","Courses", new { courseId = Model.Id })
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+        </dl>
+        @Html.ActionLink("Click to view all your modules", "Index", "Modules", new { courseId = Model.Id }, null)
     </div>
-        <!-- Table of deadlines-->
-    
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <hr />
 
-    <br />
-    <hr />
+        <h3>Current and Upcoming Events</h3>
+        <div>
+            @Html.Action("UpComingEvents", "Courses", new { courseId = Model.Id })
+        </div>
+    </div>
+</div>
+<!-- Table of deadlines-->
 
-    <h3>Course Documents</h3>
-    <p>
-        <!-- Table of course documents-->
-    </p>
-    <br />
+
+<br />
+<hr />
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Course Documents</h3>
+        <p>
+            <!-- Table of course documents-->
+        </p>
+        <br />
+    </div>
+</div>

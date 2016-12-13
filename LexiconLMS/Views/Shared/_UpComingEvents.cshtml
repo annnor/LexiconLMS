@@ -1,70 +1,127 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Module>
-
+@{int nrOfActivites = 0; }
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script language="javascript">
-function toggle(elementId) {
-	var ele = document.getElementById(elementId);
-	if(ele.style.display == "block") {
-    		ele.style.display = "none";
-  	}
-	else {
-		ele.style.display = "block";
-	}
-}
+        function toggle(elementId) {
+            var ele = document.getElementById(elementId);
+            if (ele.style.display == "block") {
+                ele.style.display = "none";
+            }
+            else {
+                ele.style.display = "block";
+            }
+        }
     </script>
 </head>
-<table class="table">
 
 
-        @*<tr>
 
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
+@foreach (var item in Model)
+{
 
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-        </tr>*@
 
-        @foreach (var item in Model)
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    @if (nrOfActivites == 0)
+                    {
+                        <a data-toggle="collapse" href="#collapse1">
+                            <b><i> @Html.DisplayFor(modelItem => item.Name) : </i></b>
+
+                            <b>   @Html.DisplayFor(modelItem => item.Description)</b>
+                        </a>
+                    }
+                    @if (nrOfActivites == 1)
+                    {
+                        <a data-toggle="collapse" href="#collapse2">
+                            <b><i> @Html.DisplayFor(modelItem => item.Name) : </i></b>
+
+                            <b>   @Html.DisplayFor(modelItem => item.Description)</b>
+                        </a>
+                    }
+                    @if (nrOfActivites == 2)
+                    {
+                        <a data-toggle="collapse" href="#collapse3">
+                            <b><i> @Html.DisplayFor(modelItem => item.Name) : </i></b>
+
+                            <b>   @Html.DisplayFor(modelItem => item.Description)</b>
+                        </a>
+                    }
+                </h4>
+            </div>
+        </div>
+
+        @* här måste jag nog svepa in hela foreachen i en div med rätt id *@
+        @if (nrOfActivites == 0)
         {
-            <tr>
-                <td>
-                    <b><i> @Html.DisplayFor(modelItem => item.Name)</i></b>
-                </td>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
 
-                <td>
-                    <b>   @Html.DisplayFor(modelItem => item.Description)</b>
-</td>
-            </tr>
-            int nrOfActivites = 0;
-            foreach (var activity in item.Activities.OrderBy(o => o.StartDateTime))
-            {
-                <tr>
-                    <td></td>
-                    <td>
+                    @foreach (var activity in item.Activities.OrderBy(o => o.StartDateTime))
+                    {
+
                         @Html.DisplayFor(activityItem => activity.StartDateTime)
-                    </td>
-                    <td>
+                        @Html.Raw(" to ")
                         @Html.DisplayFor(activityItem => activity.EndDateTime)
-                    </td>
-                    <td>
+                            <br/>
+                            <b>@Html.Raw("Activity type: ") </b>
                         @Html.DisplayFor(activityItem => activity.Type.Name)
-                    </td>
-                    <td>
+                            <br/>
+                            <b> @Html.Raw("Description: ")</b>
                         @Html.DisplayFor(activityItem => activity.Name)
-                    </td>
-                </tr>
-                nrOfActivites = nrOfActivites + 1;
+                        <br/><br />
+                    }
+                </div >
+            </div >
+                }
+@if (nrOfActivites == 1)
+{
+    <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+
+            @foreach (var activity in item.Activities.OrderBy(o => o.StartDateTime))
+                    {
+                    @Html.DisplayFor(activityItem => activity.StartDateTime)
+                    @Html.Raw(" to ")
+                    @Html.DisplayFor(activityItem => activity.EndDateTime)
+                <br />
+                <b>@Html.Raw("Activity type: ")</b>
+                            @Html.DisplayFor(activityItem => activity.Type.Name)
+                            <br />
+                            <b> @Html.Raw("Description: ")</b>
+                            @Html.DisplayFor(activityItem => activity.Name)
+                <br /><br />
+                //denna ger massa tomma rader under, vet ej varför
             }
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+        </div>
+    </div>
+}
+@if (nrOfActivites == 2)
+{
+    <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">
 
-        }
+            @foreach (var activity in item.Activities.OrderBy(o => o.StartDateTime))
+                    {
 
-
-</table>
+                @Html.DisplayFor(activityItem => activity.StartDateTime)
+                @Html.Raw(" to ")
+                @Html.DisplayFor(activityItem => activity.EndDateTime)
+                <br />
+                <b>@Html.Raw("Activity type: ")</b>
+                            @Html.DisplayFor(activityItem => activity.Type.Name)
+                            <br />
+                            <b> @Html.Raw("Description: ")</b>
+                            @Html.DisplayFor(activityItem => activity.Name)
+                            <br /><br />
+            }
+        </div>
+    </div>
+}
+        @*  slut på if nrofactivities==0*@
+                @{nrOfActivites = nrOfActivites + 1;}
+            </div>
+                    }
 

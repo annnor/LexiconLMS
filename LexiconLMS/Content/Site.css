@@ -53,3 +53,8 @@ textarea {
 .navbar-inverse .navbar-nav > li > a {
     color: #FFFFFF !important;
 }
+
+.panel > .panel-heading {    
+    background-color: white !important;
+    color: black !important;
+    }

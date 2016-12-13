@@ -207,20 +207,27 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,ModuleId,ActivityTypeId,Name,StartDateTime,EndDateTime,Description, StudentUpload")] Activity activity)
         {
-            var module = db.Modules.AsNoTracking().FirstOrDefault(m => m.Id == activity.ModuleId);
-            if (module == null)
+            var oldActivity = db.Activities.AsNoTracking().FirstOrDefault(a => a.Id == activity.Id);
+            if (oldActivity == null)
             {
                 return HttpNotFound();
             }
-            if (ModelState.IsValid && DateTimeNotOverlap(activity.Id, activity.StartDateTime, activity.EndDateTime, module))
-            {  
+            if (ModelState.IsValid && DateTimeNotOverlap(activity.Id, activity.StartDateTime, activity.EndDateTime, oldActivity.Module))
+            {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Event"] = "Activity " + activity.Name + " edited.";
                 return RedirectToAction("Details", "Modules", new { id = activity.ModuleId });
             }
-
+            var course = db.Courses.AsNoTracking().FirstOrDefault(c => c.Id == oldActivity.Module.CourseId);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            activity.Module = oldActivity.Module;
+            ViewBag.CourseName = course.Name;
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
+            ViewBag.CourseName = db.Courses.FirstOrDefault(c => c.Id == activity.Module.CourseId).Name;
             return View(activity);
         }
 

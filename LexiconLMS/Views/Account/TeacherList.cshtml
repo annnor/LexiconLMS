@@ -4,6 +4,7 @@
     ViewBag.Title = "Teacher List";
 }
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
 @if (User.IsInRole("Teacher"))
@@ -36,57 +37,59 @@
 <p>
     @Html.ActionLink("Register Teacher", "Register")
 </p>
-<table class="table table-bordered table-condensed table-striped table-hover sortable">
-    <thead>
-        <tr>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.Adress)
-            </th>
-            <th data-defaultsign="AZ">
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            @*<th data-defaultsign="AZ">
-                    @Html.DisplayNameFor(model => model.CourseName)
-                </th>*@
-            <th data-defaultsort='disabled'></th>
-        </tr>
-    </thead>
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        <thead>
+            <tr>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.Adress)
+                </th>
+                <th data-defaultsign="AZ">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                @*<th data-defaultsign="AZ">
+                        @Html.DisplayNameFor(model => model.CourseName)
+                    </th>*@
+                <th data-defaultsort='disabled'></th>
+            </tr>
+        </thead>
 
-    @foreach (var item in Model.OrderBy(s => s.FirstName))
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.CourseName)
-                </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { email = item.Email }) 
-                @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-                @if (item.Email!=User.Identity.Name)
-                {
-                    @Html.Raw(" | ")
-                    @Html.ActionLink("Remove", "Delete", new { email = item.Email })
-                }
-                
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model.OrderBy(s => s.FirstName))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { email = item.Email })
+                    @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+                    @if (item.Email != User.Identity.Name)
+                    {
+                        @Html.Raw(" | ")
+                        @Html.ActionLink("Remove", "Delete", new { email = item.Email })
+                    }
 
-</table>
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>
