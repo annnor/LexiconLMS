@@ -5,6 +5,7 @@
 }
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
 @if (User.IsInRole("Teacher"))
 {
@@ -16,7 +17,27 @@
     </ol>
 }
 <h2>Edit</h2>
+<br />
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+    $('#Event').delay(4000).hide(1500);
+    </script>
+}
 
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
 
 @using (Html.BeginForm())
 {
