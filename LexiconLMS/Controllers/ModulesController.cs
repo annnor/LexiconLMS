@@ -171,25 +171,49 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,CourseId,Name,StartDateTime,EndDateTime,Description")] Module module)
         {
+            
             if (ModelState.IsValid)
             {
                 var course = db.Courses.First(u => u.Id == module.CourseId);
+                ViewBag.CourseId = course.Id;
+                ViewBag.CourseName = course.Name;
                 if (course.StartDate > module.StartDateTime)
                 {
                     ModelState.AddModelError("StartDateTime", "Start date can´t be earlier than course start date " + course.StartDate.ToString("yyyy-MM-dd HH:mm"));
-                    return View();
+                    return View(module);
                 }
                 if (module.StartDateTime >= module.EndDateTime)
                 {
                     ModelState.AddModelError("StartDateTime", "The End Time cannot be earlier than the Start Time " + module.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                     return View(module);
                 }
+                
                 //Find modules by CourseId
                 var modules = db.Modules.AsNoTracking().ToList().Where(c => c.CourseId == module.CourseId);
-
+                //var activities = module.Activities.ToList();
+                foreach (var mod in modules)
+                {   
+                    
+                    if (module.Id == mod.Id)
+                    {
+                        foreach (var activity in mod.Activities)
+                        {
+                            if (module.StartDateTime > activity.StartDateTime)
+                            {
+                                TempData["NegativeEvent"] = "You can't save because you have an activity that starts earlier than the new module startdate";
+                                return View(module);
+                            }
+                            else if (module.EndDateTime < activity.EndDateTime)
+                            {
+                                TempData["NegativeEvent"] = "You can't save because you have an activity that ends later than the new module enddate";
+                                return View(module);
+                            }
+                        }
+                    }
+                }
                 foreach (var mod in modules)
                 {
-                    if (module.Id != mod.Id)
+                        if (module.Id != mod.Id)
                     {
                         if (module.StartDateTime == mod.StartDateTime)
                         {
