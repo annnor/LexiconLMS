@@ -15,6 +15,26 @@
     </ol>
 }
 
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+        $('#Event').delay(4000).hide(1500);
+    </script>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
+}
 <div class="row">
     <div class="col-xs-12">
         <h2>@Html.DisplayFor(model => model.Name)</h2>
@@ -53,6 +73,7 @@
         <h3>Course Documents</h3>
         <p>
             <!-- Table of course documents-->
+            @Html.Action("ShowCourseFiles", "Files", new { courseId = Model.Id })
         </p>
         <br />
     </div>
