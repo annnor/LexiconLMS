@@ -6,13 +6,34 @@
 }
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
 </head>
 @if (User.IsInRole("Teacher"))
 {
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
-        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.Id })'>@Html.Raw(Model.Name)   </a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Index", "Courses")'>Courses Overview Page</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details", "Courses", new { id = Model.Id })'>@Html.Raw(Model.Name)   </a></li>
     </ol>
+}
+@if (TempData["Event"] != null)
+{
+    <div class="Event alert alert-success" id="Event">
+        <h4>
+            @TempData["Event"]
+        </h4>
+    </div>
+    <script type="text/javascript">
+        $('#Event').delay(4000).hide(1500);
+    </script>
+}
+
+@if (TempData["NegativeEvent"] != null)
+{
+    <div class="TempData alert alert-danger" id="Full">
+        <h4>
+            @TempData["NegativeEvent"]
+        </h4>
+    </div>
 }
 <h2>Course Details for @Html.DisplayFor(model => model.Name)</h2>
 
@@ -49,7 +70,38 @@
     @Html.ActionLink("Modules", "Index", "Modules", new { courseId = Model.Id }, null)
 </p>
 
+@*file upload area for course*@
+    @if (User.IsInRole("Teacher"))
+    {
+        using (Html.BeginForm("CreateCourseFile", "Files", new { courseId = Model.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            @Html.Label("File upload at Course level.")
+                <input type="file" name="upload" />
+    <br />
+        @*</div>*@
+        @*<div class="form-group" >*@
+             @Html.Label("Description:")
+            &nbsp;
+                <input class="form-control input-sm" name="description" />
+        @*</div>*@
+        @*<div class="form-group">*@
+                <input type="submit" value="Upload" class="btn btn-default" />
+        </div>
+    </div>@*end of upload area div*@
+    <div class="col-md-7">
+    <h4>Uploaded files at course level:</h4>
+    @Html.Action("ShowCourseFiles","Files",new { courseId=Model.Id})
+    </div>@*end of row already uploaded files*@
 
+</div> @*end of row div*@
+        }
+    }@* end of @using html.beginform *@
     @*show student list for this course*@
 
 <div>

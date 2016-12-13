@@ -83,11 +83,17 @@ namespace LexiconLMS.Controllers
                 if (course.StartDate > module.StartDateTime)
                 {
                     ModelState.AddModelError("StartDateTime", "Start date can´t be earlier than course start date " + course.StartDate.ToString("yyyy-MM-dd HH:mm"));
+                    //in med viewbags för modules
+                    ViewBag.CourseName = course.Name;
+                    ViewBag.CourseId = course.Id;
                     return View();
                 }
                 if (module.StartDateTime >= module.EndDateTime)
                 {
                     ModelState.AddModelError("StartDateTime", "The End Time cannot be earlier than the Start Time " + module.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
+                    //in med viewbags för modules
+                    ViewBag.CourseName = course.Name;
+                    ViewBag.CourseId = course.Id;
                     return View();
                 }
                 //Find modules by CourseId
@@ -98,6 +104,9 @@ namespace LexiconLMS.Controllers
                     if (module.StartDateTime == mod.StartDateTime)
                     {
                         ModelState.AddModelError("StartDateTime", "Start Time of the module overlaps with Start date for module '" + mod.Name + "' that starts " + mod.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
+                        //in med viewbags för modules
+                        ViewBag.CourseName = course.Name;
+                        ViewBag.CourseId = course.Id;
                         return View();
                     }
                     else if (module.StartDateTime < mod.StartDateTime)
@@ -105,6 +114,9 @@ namespace LexiconLMS.Controllers
                         if (module.EndDateTime > mod.StartDateTime)
                         {
                             ModelState.AddModelError("EndDateTime", "End Time overlaps Start Time for module '" + mod.Name + "' that starts " + mod.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
+                            //in med viewbags för modules
+                            ViewBag.CourseName = course.Name;
+                            ViewBag.CourseId = course.Id;
                             return View();
                         }
                     }
@@ -113,6 +125,9 @@ namespace LexiconLMS.Controllers
                         if (module.StartDateTime < mod.EndDateTime)
                         {
                             ModelState.AddModelError("StartDateTime", "Start Time overlaps End Time for module '" + mod.Name + "' that ends '" + mod.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
+                            //in med viewbags för modules
+                            ViewBag.CourseName = course.Name;
+                            ViewBag.CourseId = course.Id;
                             return View();
                         }
                     }
@@ -129,7 +144,10 @@ namespace LexiconLMS.Controllers
                         return RedirectToAction("Index", new { courseId = module.CourseId });
                     case "Save & add new module":
                         ModelState.Clear();
-                        return View();
+                            //in med viewbags för modules
+                            ViewBag.CourseName = course.Name;
+                            ViewBag.CourseId = course.Id;
+                            return View();
                     default:
                         throw new Exception();
                         //break;
