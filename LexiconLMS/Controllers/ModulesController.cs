@@ -173,9 +173,15 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(module.StartDateTime >= module.EndDateTime)
+                var course = db.Courses.First(u => u.Id == module.CourseId);
+                if (course.StartDate > module.StartDateTime)
                 {
-                    ModelState.AddModelError("StartDateTime", "Start date conflicts with end date ");
+                    ModelState.AddModelError("StartDateTime", "Start date can´t be earlier than course start date " + course.StartDate.ToString("yyyy-MM-dd HH:mm"));
+                    return View();
+                }
+                if (module.StartDateTime >= module.EndDateTime)
+                {
+                    ModelState.AddModelError("StartDateTime", "The End Time cannot be earlier than the Start Time " + module.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                     return View(module);
                 }
                 //Find modules by CourseId
@@ -187,14 +193,14 @@ namespace LexiconLMS.Controllers
                     {
                         if (module.StartDateTime == mod.StartDateTime)
                         {
-                            ModelState.AddModelError("StartDateTime", "Start date conflicts with Start date for another module");
+                            ModelState.AddModelError("StartDateTime", "Start Time of the module overlaps with Start date for module '" + mod.Name + "' that starts " + mod.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                             return View(module);
                         }
                         else if (module.StartDateTime < mod.StartDateTime)
                         {
                             if (module.EndDateTime > mod.StartDateTime)
                             {
-                                ModelState.AddModelError("EndDateTime", "End date conflicts with Start date for another module");
+                                ModelState.AddModelError("EndDateTime", "End Time overlaps Start Time for module '" + mod.Name + "' that starts " + mod.StartDateTime.ToString("yyyy-MM-dd HH:mm"));
                                 return View(module);
                             }
                         }
@@ -202,7 +208,7 @@ namespace LexiconLMS.Controllers
                         {
                             if (module.StartDateTime < mod.EndDateTime)
                             {
-                                ModelState.AddModelError("StartDateTime", "Start date conflicts with End date for another module");
+                                ModelState.AddModelError("StartDateTime", "Start Time overlaps End Time for module '" + mod.Name + "' that ends '" + mod.EndDateTime.ToString("yyyy-MM-dd HH:mm"));
                                 return View(module);
                             }
                         }
