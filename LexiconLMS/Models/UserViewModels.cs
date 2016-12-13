@@ -16,6 +16,7 @@ namespace LexiconLMS.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Adress { get; set; }
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }
 
         [Display(Name = "Course Name")]

@@ -76,18 +76,28 @@ namespace LexiconLMS.Controllers
             //kontroll av att användaren finns i databasen
             var originalUser = newDbContext.Users.FirstOrDefault(u => u.Email == oldEmail);
             bool hasUpdated = false;
-            bool emailChanged = false;
+            bool LoggedInemailChanged = false;
             if (originalUser!=null)
             {
                 //uppdatera fälten - nullcheck innan. kan behövas att e-postformatet är korrekt. detta bör ske på klientsidan (antar jag)
-                if (email!=null && email!=oldEmail) //om nya email har ett värde och att värdet inte är samma som gamla värdet så fortsätt
+                //case när lärare försöker editera sig själv
+                if (email!=null && email!=oldEmail && User.Identity.Name==oldEmail) //om nya email har ett värde och att värdet inte är samma som gamla värdet så fortsätt
                 {   //om eposten är ändrad-i så fall skall användaren loggas ut efter ändringen och meddelande skall skickas till klient
 
                     originalUser.Email = email;
                     originalUser.UserName = email;
                     hasUpdated = true;
-                    emailChanged = true;
+                    LoggedInemailChanged = true;
                 }
+
+                //case när lärare uppdaterar någon annan än sig själv
+                if (email!=oldEmail &&User.Identity.Name!=oldEmail)
+                {
+                    originalUser.Email = email;
+                    originalUser.UserName = email;
+                    hasUpdated = true;
+                }
+
                 if (firstName!=null && firstName!=originalUser.FirstName)
                 {
                     originalUser.FirstName = firstName;
@@ -112,7 +122,7 @@ namespace LexiconLMS.Controllers
                     //skicka ok meddelande till klient.
                     TempData["Event"] = originalUser.FullName + " updated.";
                 }
-                if (emailChanged)
+                if (LoggedInemailChanged)
                 {
                     var AutheticationManager = HttpContext.GetOwinContext().Authentication;
                     AuthenticationManager.SignOut();
