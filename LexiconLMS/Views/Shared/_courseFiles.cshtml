@@ -7,7 +7,7 @@
             Uploader:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FileName) 
+            File name:
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -78,7 +78,7 @@
             @if (User.IsInRole("Student"))
             {
                 <td>
-                    @Html.ActionLink("Download", "StudentDownloadFile", "Files", new { id = item.Id },null )
+                    @Html.ActionLink("Download", "StudentDownloadFile", "Files", new { id = item.Id }, new { target = "_blank" })
                 </td>
             }
 
