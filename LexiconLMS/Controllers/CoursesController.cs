@@ -28,7 +28,7 @@ namespace LexiconLMS.Controllers
         //            FileType = FileType.Document,
         //            ContentType = upload.ContentType,
         //            CourseId = courseId,
-                    
+
 
         //        };
         //        //using (var reader = new System.IO.BinaryReader(upload.InputStream))
@@ -108,10 +108,10 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
         //modified parameter head to allow save multiple and redirect appropriately - test
-        public ActionResult Create([Bind(Include = "Id,Name,StartDate,Description"),] Course course,string save1,string saveMultiple)
+        public ActionResult Create([Bind(Include = "Id,Name,StartDate,Description"),] Course course, string save1, string saveMultiple)
         {
             //kontroll av att startdatum inte är satt tidigare än idag
-            if (course.StartDate<DateTime.Today)
+            if (course.StartDate < DateTime.Today)
             {
                 //felmeddelande + returnera view
                 //ViewBag.Message = "You tried to create a course with a startdate earlier than today. Please try again.";
@@ -121,13 +121,13 @@ namespace LexiconLMS.Controllers
             }
             //kontroll av att kursnamnet är unikt
             foreach (var existingcourse in db.Courses)
-                {
-                    if (existingcourse.Name==course.Name)
-                    {//kurs med det namnet existerar redan i databasen. skicka felmeddelande till klient.
+            {
+                if (existingcourse.Name == course.Name)
+                {//kurs med det namnet existerar redan i databasen. skicka felmeddelande till klient.
                     TempData["CreateError"] = "You tried to create a course with a name that already exists. Please try again with another name!";
                     return View();
-                    }
                 }
+            }
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -226,8 +226,7 @@ namespace LexiconLMS.Controllers
                     db.Courses.Remove(course);
                     db.SaveChanges();
                     TempData["Event"] = "Course " + course.Name + " removed.";
-                }
-                catch (Exception e)
+                } catch (Exception e)
                 {
                     TempData["NegativeEvent"] = e.Message;
                 }
@@ -238,27 +237,26 @@ namespace LexiconLMS.Controllers
         {
             ApplicationDbContext newDbContext = new ApplicationDbContext();
             LexiconLMS.Models.ApplicationUser student;
-            
+
             //Find students by courseId    
             var allStudents = newDbContext.Users.Where(u => u.CourseId == id);
 
-                try
+            try
+            {
+                //Delete students by course
+                foreach (var students in allStudents.ToList())
                 {
-                    //Delete students by course
-                    foreach (var students in allStudents.ToList())
-                    {
-                        student = db.Users.Find(students.Id);
-                        db.Users.Remove(student);
-                        //db.SaveChanges();
-                    }
-                    return true;
+                    student = db.Users.Find(students.Id);
+                    db.Users.Remove(student);
+                    //db.SaveChanges();
                 }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return true;
+            } catch (Exception)
+            {
+                return false;
+            }
             //}
-            
+
         }
 
         /// <summary>
@@ -266,35 +264,39 @@ namespace LexiconLMS.Controllers
         /// </summary>
         public ActionResult UpComingEvents(int courseId)
         {
+            var today = DateTime.Today;
+
             if (User.IsInRole("Student"))
             {
+                var course = db.Courses.Find(courseId);
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+                int MaxListedModules = 3;
                 List<Module> upComingEventsList = new List<Module>();
                 //find lets say 3 modules for that course. use todays date and forward
-                foreach(var module in db.Modules)
+
+                var earlierDate = today.AddDays(-5);
+                var orderedModules = course.Modules.Where(m => m.EndDateTime >= earlierDate).OrderBy(m => m.StartDateTime);
+
+                Module tmpModule = null;
+                foreach (var module in orderedModules)
                 {
-                    if (module.CourseId==courseId)
+                    if (module.EndDateTime < today)
                     {
-                        //här behövs en kontroll så att samma modul inte läggs i listan upcomingevents
-                        //om modulen inte finns i listan samt att startdatum för modulen är större än idag -5 dagar
-                        
-                        if (!upComingEventsList.Contains(module) && module.StartDateTime>=(DateTime.Today.AddDays(-5)))
-                        {
-                            //här behövs en datumkontroll så att inte gamla moduler läggs till
-                            upComingEventsList.Add(module);
-                        }
+                        tmpModule = module;
+                    } else if (upComingEventsList.Count == 0 && tmpModule != null)
+                    {
+                        upComingEventsList.Add(tmpModule);
+                        upComingEventsList.Add(module);
+                    } else if (upComingEventsList.Count < MaxListedModules)
+                    {
+                        upComingEventsList.Add(module);
+                    } else
+                    {
+                        break;
                     }
-                    
-
-                }
-                //ordna listan
-                upComingEventsList.OrderBy(o => o.StartDateTime);
-
-                
-                //trimma listan om behövs
-                if (upComingEventsList.Count>3) 
-                {
-                    while (upComingEventsList.Count > 2)
-                        upComingEventsList.RemoveAt(upComingEventsList.Count - 1);
                 }
                 //return the view.
                 return PartialView("_UpComingEvents", upComingEventsList);
@@ -305,18 +307,18 @@ namespace LexiconLMS.Controllers
 
 
         //metod för att visa eleverna på vald kursdetaljsidan
-        public ActionResult StudentListForCourse(int courseId) 
-        {                   
+        public ActionResult StudentListForCourse(int courseId)
+        {
             ApplicationDbContext newDbContext = new ApplicationDbContext();
             //skapa en tom lista. fyll på med lämliga applicationusers i if-satserna
             List<UserViewModels> listOfUsers = new List<UserViewModels>();
 
             if (User.IsInRole("Teacher")) //lärare skall se alla studenter i kursen han är på i detaljsidan
             {
-               foreach (var user in newDbContext.Users.ToList()) //sen måste eleverna som går den kursen fås fram från identitymodels och föras över till userviewmodel
+                foreach (var user in newDbContext.Users.ToList()) //sen måste eleverna som går den kursen fås fram från identitymodels och föras över till userviewmodel
                 {
                     if (courseId == user.CourseId) //elev är med i kursen på detaljsidan
-                    {                                                                                    
+                    {
                         UserViewModels studenInSameCourse = new UserViewModels
                         {
                             Adress = user.Adress,
@@ -324,7 +326,7 @@ namespace LexiconLMS.Controllers
                             //Id = int.Parse(user.Id),
                             LastName = user.LastName,
                             Email = user.Email
-                           // CourseName = getCourseName
+                            // CourseName = getCourseName
                         };
                         listOfUsers.Add(studenInSameCourse);
                     }
@@ -336,7 +338,7 @@ namespace LexiconLMS.Controllers
             AccountController.selectedList = "PartialList";
             AccountController.details = courseId;
             //sen måste den skickas till klienten
-            return PartialView("_StudentList", listOfUsers); 
+            return PartialView("_StudentList", listOfUsers);
         }
 
         protected override void Dispose(bool disposing)
