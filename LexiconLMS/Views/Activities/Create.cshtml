@@ -91,8 +91,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StudentUpload, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.RadioButtonFor(model => model.StudentUpload, "True", new { htmlAttributes = new { @class = "form-control" } }) True<br />
-                @Html.RadioButtonFor(model => model.StudentUpload, "False", new { htmlAttributes = new { @class = "form-control" } }) False
+                @Html.RadioButtonFor(model => model.StudentUpload, "True") 
+                @Html.Label("True")
+                <br />
+                @Html.RadioButtonFor(model => model.StudentUpload, "False", new { @checked = true}) 
+                @Html.Label("False")
+                @Html.ValidationMessageFor(model => model.StudentUpload, "", new { @class = "text-danger" })
             </div>
         </div>
 
