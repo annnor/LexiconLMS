@@ -82,9 +82,23 @@ namespace LexiconLMS.Controllers
                     filesToShow.Add(file);
                 }
             }
-
-
+            
             return PartialView("_courseFiles",filesToShow);
+        }
+
+        public ActionResult ShowModuleFiles(int moduleId)
+        {
+            List<File> filesToShow = new List<File>();
+
+            foreach (var file in db.Files)
+            {
+                if (file.ModuleId == moduleId)
+                {
+                    filesToShow.Add(file);
+                }
+            }
+
+            return PartialView("_moduleFiles", filesToShow); 
         }
 
 
@@ -232,6 +246,60 @@ namespace LexiconLMS.Controllers
             return RedirectToAction("Details", "Courses", new { id = courseId });
         }
 
+        // Ny post Create av Johan - för filer på module nivå
+        //denna är en modifiering av create på aktivitetsnivå pga av tidsnöd
+        // POST: Files/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateModuleFile(HttpPostedFileBase upload, int moduleId, string description)
+        {
+            if (upload != null && upload.ContentLength > 0)
+            {
+                if (User.IsInRole("Teacher"))
+                {
+                    var document = new File
+                   {
+                       FileName = System.IO.Path.GetFileName(upload.FileName),
+                       //FileType = FileType.Document,
+                       ContentType = upload.ContentType,
+                       ModuleId = moduleId
+                   };
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        document.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    var user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                    if (user == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    document.UserId = user.Id;
+                    document.Description = description;
+                    // För tillfället bara lärare som laddar upp dokument -> PubliclyVisible = true
+                    // XXX Behöver ändras om Elever ska kunna ladda upp dokument
+                    document.PubliclyVisible = true;
+                    try
+                    {
+                        db.Files.Add(document);
+                        db.SaveChanges();
+                        TempData["Event"] = "File " + document.FileName + " is uploaded.";
+                    }
+                    catch (Exception e)
+                    {
+                        TempData["NegativeEvent"] = e.Message;
+                    }
+
+                    //return RedirectToAction("Details", "Activities", new { id = activityId });
+
+                } //end user is in role teacher
+            
+        }
+            return RedirectToAction("Details", "Modules", new { id = moduleId });
+        }
+
+
 
 
         // POST: Files/Create
@@ -349,6 +417,28 @@ namespace LexiconLMS.Controllers
             TempData["Event"] = "File " + file.FileName + " deleted from the LMS";
             return RedirectToAction("Details", "Courses", new { id = tempCourseId });
         }
+
+
+        public ActionResult DeleteModuleFile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            File file = db.Files.Find(id);
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+            int tempCourseId = file.ModuleId.GetValueOrDefault();
+            //nedan är alla viewbags som behövs för deletefönstret
+            db.Files.Remove(file);
+            db.SaveChanges();
+            TempData["Event"] = "File " + file.FileName + " deleted from the LMS";
+            return RedirectToAction("Details", "Modules", new { id = tempCourseId });
+        }
+
 
         // POST: Files/Delete/5
         [HttpPost, ActionName("Delete")]

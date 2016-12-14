@@ -50,14 +50,14 @@
 <p>
 
     @Html.ActionLink("Add Module", "Create", new { courseId = @ViewBag.CourseId, courseName = @ViewBag.CourseName }) |
-    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
+    @Html.ActionLink("Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
 </p>
 }
 
 
 @if (User.IsInRole("Student"))
 {
-    @Html.ActionLink("Back to your course page", "StudentHome", "Courses")
+    @Html.ActionLink("Your course page", "StudentHome", "Courses")
 }
 
 <br />
@@ -128,12 +128,12 @@
 
     </table>
 </div>
-@if (User.IsInRole("Teacher"))
+@*@if (User.IsInRole("Teacher"))
 {
 <div>
-    @Html.ActionLink("Back to Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
+    @Html.ActionLink("Course Details ", "Details", "Courses", new { id = @ViewBag.CourseId }, null)
 </div>
-}
+}*@
 
 
 
