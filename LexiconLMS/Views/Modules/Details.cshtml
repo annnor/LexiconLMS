@@ -12,7 +12,7 @@
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
         <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.CourseId })'>@ViewBag.CourseName</a></li>
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=Model.CourseId })'>Modules for @ViewBag.CourseName</a></li>
-        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {courseId=ViewBag.CourseId })'>Details for Module @Model.Name</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {courseId=ViewBag.CourseId })'>Activities for Module @Model.Name</a></li>
     </ol>
 }
 
