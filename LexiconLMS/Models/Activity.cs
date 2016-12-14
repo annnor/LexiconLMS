@@ -47,6 +47,10 @@ namespace LexiconLMS.Models
         public bool StudentUpload { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
-        
+
+        public bool IsOngoing(DateTime dateTime)
+        {
+            return StartDateTime <= dateTime && dateTime <= EndDateTime;
+        }
     }
 }
