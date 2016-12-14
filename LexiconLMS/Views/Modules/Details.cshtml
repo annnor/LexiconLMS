@@ -12,7 +12,7 @@
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","Courses")'>Courses Overview Page</a></li>
         <li class="breadcrumb-item active"><a href='@Url.Action("Details","Courses",new {id=Model.CourseId })'>@ViewBag.CourseName</a></li>
         <li class="breadcrumb-item active"><a href='@Url.Action("Index","Modules",new {courseId=Model.CourseId })'>Modules for @ViewBag.CourseName</a></li>
-        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {courseId=ViewBag.CourseId })'>Details for Module @Model.Name</a></li>
+        <li class="breadcrumb-item active"><a href='@Url.Action("Details","Modules",new {courseId=ViewBag.CourseId })'>Activities for Module @Model.Name</a></li>
     </ol>
 }
 
@@ -73,7 +73,56 @@
     </p>
 }
 <hr>
+@*file upload area for course*@
+@if (User.IsInRole("Teacher"))
+{
+    using (Html.BeginForm("CreateModuleFile", "Files", new { moduleId = Model.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+       
+       
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    @Html.Label("File upload at Module level.")
+                    <input type="file" name="upload" />
+                    <br />
+                    @*</div>*@
+                    @*<div class="form-group" >*@
+                    @Html.Label("Description:")
+                    &nbsp;
+                    <input class="form-control input-sm" name="description" />
+                    @*</div>*@
+                    @*<div class="form-group">*@
+                    <input type="submit" value="Upload" class="btn btn-default" />
+                </div>
+            </div>@*end of upload area div*@
+            <div class="col-md-7">
+                <h4>Uploaded files at course level:</h4>
+                @Html.Action("ShowModuleFiles", "Files", new { moduleId = Model.Id })
+            </div>@*end of row already uploaded files*@
 
+        </div> @*end of row div*@
+    }
+}@* end of @using html.beginform *@
+ 
+@if (User.IsInRole("Student")) //visa list över moduldokument för studenter
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Module Documents</h3>
+            <p>
+                <!-- Table of course documents-->
+                @Html.Action("ShowModuleFiles", "Files", new { moduleId = Model.Id })
+            </p>
+            <br />
+        </div>
+    </div>
+}
+
+
+
+<hr>
 <h3>Activities</h3>
 
 @if (TempData["Event"] != null)

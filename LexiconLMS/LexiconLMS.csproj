@@ -206,6 +206,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612141241562_addedModuleIdonFiles.cs" />
+    <Compile Include="Migrations\201612141241562_addedModuleIdonFiles.Designer.cs">
+      <DependentUpon>201612141241562_addedModuleIdonFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -230,6 +234,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\logo-lexicon.png" />
     <Content Include="Images\logo-lexicon_small.gif" />
     <Content Include="Scripts\bootstrap-sortable.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -333,6 +338,7 @@
     <Content Include="Views\Files\Edit.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
     <Content Include="Views\Shared\_courseFiles.cshtml" />
+    <Content Include="Views\Shared\_moduleFiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +348,11 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612141241562_addedModuleIdonFiles.resx">
+      <DependentUpon>201612141241562_addedModuleIdonFiles.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

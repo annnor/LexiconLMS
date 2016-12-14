@@ -252,11 +252,24 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Activity activity = db.Activities.Find(id);
+            FilesController file = new FilesController();
+            Activity activity = db.Activities.AsNoTracking().FirstOrDefault(a => a.Id == id);
+            var files = activity.Files.ToList();
             var moduleId = activity.ModuleId;
-            db.Activities.Remove(activity);
-            db.SaveChanges();
-            TempData["Event"] = "Activity " + activity.Name + " removed.";
+            bool result = file.DeleteFiles(files);
+
+            if (result)
+            {
+                activity = db.Activities.Find(id);
+                db.Activities.Remove(activity);
+                db.SaveChanges();
+                TempData["Event"] = "Activity " + activity.Name + " removed.";
+            }
+            else
+            {
+                TempData["NegativeEvent"] = "Activity " + activity.Name + " couldn´t be removed.";
+            }
+
             return RedirectToAction("Details", "Modules", new { id = moduleId });
         }
 

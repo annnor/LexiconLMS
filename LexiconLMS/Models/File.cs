@@ -22,7 +22,7 @@ namespace LexiconLMS.Models
 
         //these 3 fields below are used to to determine where a document belongs. they are set when a file is uploaded. they are get when a file will be shown.
         public int? CourseId { get; set; }
-        //public int? ModuleId { get; set; }
+        public int? ModuleId { get; set; }
         public int? ActivityId { get; set; }
 
         [StringLength(100)]
