@@ -64,12 +64,12 @@
     <p>
         @Html.ActionLink("Add Activity", "Create", "Activities", new { moduleId = Model.Id }, null) |
         @Html.ActionLink("Edit Module Info", "Edit", new { id = Model.Id, courseName = ViewBag.CourseName }) |
-        @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
+        @Html.ActionLink("Module List", "Index", new { courseId = Model.CourseId })
     </p>
 } else
 {
     <p>
-        @Html.ActionLink("Back to Module List", "Index", new { courseId = Model.CourseId })
+        @Html.ActionLink("Module List", "Index", new { courseId = Model.CourseId })
     </p>
 }
 <hr>

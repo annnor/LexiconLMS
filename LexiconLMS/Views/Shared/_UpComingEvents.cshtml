@@ -45,7 +45,6 @@
 
                 @foreach (var activity in item.Activities.OrderBy(o => o.StartDateTime))
                 {
-
                     @Html.DisplayFor(activityItem => activity.StartDateTime)
                     @Html.Raw(" to ")
                     @Html.DisplayFor(activityItem => activity.EndDateTime)
@@ -67,7 +66,9 @@
                         <b style="color:red;">Assignment</b>
                         <br />
                     }
+                    @Html.ActionLink("Details", "Details", "Activities", new { id = activity.Id, courseName = @ViewBag.CourseName }, null)  <br />
                     <br />
+
                 }
             </div>
         </div>
