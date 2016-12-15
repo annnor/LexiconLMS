@@ -41,8 +41,7 @@ namespace LexiconLMS.Models
         public DbSet<Module> Modules { get; set;}
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<File> Files { get; set; }
-
-
+        public DbSet<Activity> Activities { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -51,6 +50,5 @@ namespace LexiconLMS.Models
         
 
 
-        public System.Data.Entity.DbSet<LexiconLMS.Models.Activity> Activities { get; set; }
     }
 }

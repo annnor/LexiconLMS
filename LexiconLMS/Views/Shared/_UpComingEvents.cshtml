@@ -36,6 +36,7 @@
                         <b>   @Html.DisplayFor(modelItem => item.Description)</b>
                     </a>
                 </h4>
+                <div class="model-details"> @Html.ActionLink("Details", "Details", "Modules", new { id = item.Id, courseName = @ViewBag.CourseName }, null) </div>
             </div>
         </div>
 
@@ -50,27 +51,27 @@
                     @Html.Raw(" to ")
                     @Html.DisplayFor(activityItem => activity.EndDateTime)
                     <br />
-                    <b>@Html.Raw("Activity type: ")</b>
                     @Html.DisplayFor(activityItem => activity.Type.Name)
                     <br />
-                    <b> @Html.Raw("Description: ")</b>
                     @Html.DisplayFor(activityItem => activity.Name)
                     <br />
-                    var countPublicFiles = activity.Files.Where(f => f.PubliclyVisible == true).Count();
-                    if (countPublicFiles > 0)
-                    {
+                        var countPublicFiles = activity.Files.Where(f => f.PubliclyVisible == true).Count();
+                        if (countPublicFiles > 0)
+                        {
                     <b> @Html.Raw("Files: ")</b> @countPublicFiles
                     <br />
-                    }
-                    if (activity.StudentUpload && activity.IsOngoing(DateTime.Now))
-                    {
-                        <b style="color:red;">Assignment</b>
-                        <br />
-                    } else if (activity.StudentUpload)
-                    {
-                        <span style="color:orange;">Assignment</span>
-                        <br />
-                    }
+                        }
+
+                        if (activity.StudentUpload && activity.IsOngoing(DateTime.Now))
+                        {
+                    <b style="color:red;">Assignment</b>
+                    <br />
+                        } else if (activity.StudentUpload)
+                        {
+                    <span style="color:orange;">Assignment</span>
+                    <br />
+                            }
+                      
                     @Html.ActionLink("Details", "Details", "Activities", new { id = activity.Id, courseName = @ViewBag.CourseName }, null)  <br />
                     <br />
                 }

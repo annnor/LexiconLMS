@@ -94,48 +94,81 @@ namespace LexiconLMS.Migrations
             var courses = new Course[] {
                 new Course {
                     Name = ".Net HT16",
-                    StartDate = new DateTime(2016, 08, 29, 10, 0, 0),
+                    StartDate = new DateTime(2016, 10, 31),
                     Description = "DotNet utveckling och frontend."
                 },
                 new Course {
                     Name = "It-tekniker",
-                    StartDate = new DateTime(2016, 08, 29, 13, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29),
                     Description = "Utbildning för potentiella it-tekniker."
                 },
                 new Course {
                     Name = "Java4W",
-                    StartDate = new DateTime(2016, 08, 29, 13, 0, 0),
+                    StartDate = new DateTime(2016, 08, 29),
                     Description = "Java-utveckling för tjejer."
                 }
             };
+
+            int courseNetHt16 = 0;
+
             context.Courses.AddOrUpdate(c => c.Name, courses);
             context.SaveChanges();
 
             int amountOfCourses = courses.Length;
 
             // --------------- Modules -------------------------------------
+            // -------- till kursen '.Net HT16'
             var modules = new Module[] {
+                // Index 0
                 new Module {
                     Name = "C#",
-                    StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
-                    EndDateTime = new DateTime(2016, 09, 16, 15, 0, 0),
+                    StartDateTime = new DateTime(2016, 10, 29, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 11, 16, 17, 0, 0),
                     Description = "Programmering i C#.",
-                    CourseId = courses[0].Id
+                    CourseId = courses[courseNetHt16].Id
                 },
+                // Index 1
                 new Module {
                     Name = "MVC",
-                    StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 11, 01, 15, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 19, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 11, 30, 17, 0, 0),
                     Description = "DotNet utveckling och frontend.",
-                    CourseId = courses[0].Id
+                    CourseId = courses[courseNetHt16].Id
                 },
+                // Index 2
                 new Module {
                     Name = "Bootstrap",
-                    StartDateTime = new DateTime(2016, 11, 03, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
+                    StartDateTime = new DateTime(2016, 12, 01, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 02, 17, 0, 0),
                     Description = "Responsiva webb-sidor.",
-                    CourseId = courses[0].Id
+                    CourseId = courses[courseNetHt16].Id
                 },
+                // Index 3
+                new Module {
+                    Name = "App-utveckling",
+                    StartDateTime = new DateTime(2016, 12, 5, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 9, 17, 0, 0),
+                    Description = "UX-design, AngularJS, Client vs Server",
+                    CourseId = courses[courseNetHt16].Id
+                },
+                // Index 4
+                new Module {
+                    Name = "Testning",
+                    StartDateTime = new DateTime(2016, 12, 12, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 16, 0, 0),
+                    Description = "Allmänt om test. Möjlighet till ISTQB certifiering",
+                    CourseId = courses[courseNetHt16].Id
+                },
+                // Index 5
+                new Module {
+                    Name = "MVC fördjupning",
+                    StartDateTime = new DateTime(2017, 1, 9, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 2, 3, 17, 0, 0),
+                    Description = "Projekt enligt Scrum",
+                    CourseId = courses[courseNetHt16].Id
+                },
+            // -------- till kursen 'It-tekniker'
+                // Index 6
                 new Module {
                     Name = "Projektledning",
                     StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
@@ -143,6 +176,7 @@ namespace LexiconLMS.Migrations
                     Description = "Metodik och projektstyrning.",
                     CourseId = courses[1].Id
                 },
+                // Index 7
                 new Module {
                     Name = "Office365",
                     StartDateTime = new DateTime(2016, 09, 18, 09, 0, 0),
@@ -150,6 +184,7 @@ namespace LexiconLMS.Migrations
                     Description = "Administera offfice365.",
                     CourseId = courses[1].Id
                 },
+                // Index 8
                 new Module {
                     Name = "Sharepoint",
                     StartDateTime = new DateTime(2016, 10, 03, 09, 0, 0),
@@ -157,6 +192,8 @@ namespace LexiconLMS.Migrations
                     Description = "Introduktion till Sharepoint Server.",
                     CourseId = courses[1].Id
                 },
+            // -------- till kursen 'Java4W'
+                // Index 9
                 new Module {
                     Name = "Java",
                     StartDateTime = new DateTime(2016, 08, 29, 10, 0, 0),
@@ -164,6 +201,7 @@ namespace LexiconLMS.Migrations
                     Description = "Programmering i Java.",
                     CourseId = courses[2].Id
                 },
+                // Index 10
                 new Module {
                     Name = "JavaBeans",
                     StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
@@ -171,6 +209,7 @@ namespace LexiconLMS.Migrations
                     Description = "Utveckling med JavaBeans.",
                     CourseId = courses[2].Id
                 },
+                // Index 11
                 new Module {
                     Name = "JUnit",
                     StartDateTime = new DateTime(2016, 10, 10, 09, 0, 0),
@@ -178,7 +217,7 @@ namespace LexiconLMS.Migrations
                     Description = "Test med JUnit.",
                     CourseId = courses[2].Id
                 }
-                
+
             };
 
             context.Modules.AddOrUpdate(m => m.Name, modules);
@@ -187,204 +226,428 @@ namespace LexiconLMS.Migrations
             // --------------- Activity Types -------------------------------------
 
             var activityTypes = new ActivityType[] {
+            // Index 0
                 new ActivityType {
                     Name = "Föreläsning"
                 },
+            // Index 1
                 new ActivityType {
                     Name = "E-learning"
                 },
+            // Index 2
                 new ActivityType {
                     Name = "Övning"
                 },
+            // Index 3
                 new ActivityType {
                     Name = "Tentamen"
+                },
+            // Index 4
+                new ActivityType {
+                    Name = "Projektarbete"
+                },
+            // Index 5
+                new ActivityType {
+                    Name = "Sprintredovisning"
                 }
             };
             context.ActivityTypes.AddOrUpdate(t => t.Name, activityTypes);
             context.SaveChanges();
 
             // --------------- Activities -------------------------------------
-
+            // ----------- till Module 'C#' (kurs .NET)
+            // Index 0
             var activities = new Activity[] {
                 new Activity {
                     Name = "C# Intro",
                     ActivityTypeId = activityTypes[0].Id, // Föreläsning
-                    StartDateTime = new DateTime(2016, 08, 30, 8, 30, 0),
-                    EndDateTime = new DateTime(2016, 08, 30, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 10, 30, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 10, 30, 17, 0, 0),
                     Description = "C# Intro - med Adrian",
                     ModuleId = modules[0].Id
                 },
+                // Index 1
                 new Activity {
                     Name = "Intro + C# Fundamentals with Visual Studio 2015, Kap 1-2",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 08, 29, 13, 0, 0),
-                    EndDateTime = new DateTime(2016, 08, 29, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 10, 29, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 10, 29, 17, 0, 0),
                     Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
                     ModuleId = modules[0].Id
                 },
+                // Index 2
                 new Activity {
                     Name = "C# Fundamentals with Visual Studio 2015, Kap 4-5",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 08, 31, 13, 0, 0),
-                    EndDateTime = new DateTime(2016, 08, 31, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 10, 31, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 10, 31, 17, 0, 0),
                     Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
                     ModuleId = modules[0].Id
                 },
+                // Index 3
                 new Activity {
                     Name = "C# Fundamentals with Visual Studio 2015, Kap 3",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 08, 31, 8, 30, 0),
-                    EndDateTime = new DateTime(2016, 08, 31, 12, 0, 0),
+                    StartDateTime = new DateTime(2016, 10, 31, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 10, 31, 12, 0, 0),
                     Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
                     ModuleId = modules[0].Id
                 },
+                // Index 4
                 new Activity {
                     Name = "C# Grunderna",
                     ActivityTypeId = activityTypes[0].Id, // Föreläsning
-                    StartDateTime = new DateTime(2016, 9, 1, 8, 30, 0),
-                    EndDateTime = new DateTime(2016, 9, 1, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 1, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 11, 1, 17, 0, 0),
                     Description = "C# Grunderna - med Adrian",
                     ModuleId = modules[0].Id
                 },
+                // Index 5
                 new Activity {
                     Name = "C# Fundamentals with Visual Studio 2015, Kap 6-7",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 9, 2, 8, 30, 0),
-                    EndDateTime = new DateTime(2016, 9, 2, 12, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 2, 8, 30, 0),
+                    EndDateTime = new DateTime(2016, 11, 2, 12, 0, 0),
                     Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
                     ModuleId = modules[0].Id
                 },
+                // Index 6
                 new Activity {
                     Name = "C# Fundamentals with Visual Studio 2015, Kap 8",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 9, 2, 13, 0, 0),
-                    EndDateTime = new DateTime(2016, 9, 4, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 2, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 11, 4, 17, 0, 0),
                     Description = "Scott Allens föreläsning: https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015/table-of-contents",
                     ModuleId = modules[0].Id
                 },
-                              new Activity {
+                // Index 7
+                new Activity {
                     Name = "C# certification exam. Supervised by Tony Montana.",
                     ActivityTypeId = activityTypes[3].Id, // Tentamen
-                    StartDateTime = new DateTime(2016, 09, 16, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 09, 16, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 16, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 11, 16, 17, 0, 0),
                     Description = "The exam is 8 hours maximum. Lunch is not allowed. You are permitted to bring smaller foodstuffs such as chocolate, water etc.",
                     ModuleId = modules[0].Id
                 },
-                                new Activity {
+            // ----------- till Module 'MVC' (kurs .NET)
+                new Activity {
                     Name = "Exploring great patterns with Johan Sari.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 09, 19, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 19, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 11, 19, 17, 0, 0),
                     Description = "En mästerful e-learning av mästaren.",
                     ModuleId = modules[1].Id
                 },
-                                                new Activity {
+                new Activity {
                     Name = "Front End and You with Dimitris.",
                     ActivityTypeId = activityTypes[0].Id, // Föreläsning
-                    StartDateTime = new DateTime(2016, 09, 22, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 09, 28, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 22, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 11, 28, 17, 0, 0),
                     Description = "Hur man designar knappar och pilar för HTML.",
                     ModuleId = modules[1].Id
                  },
-                                                                new Activity {
+                new Activity {
                     Name = "Iffies rules the world, JavaScript with Tony Granato.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 09, 29, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 09, 30, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 11, 29, 09, 0, 0),
+                    EndDateTime = new DateTime(2016, 11, 30, 17, 0, 0),
                     Description = "The anonymous Javascript function and it's uses in a bigger context.",
                     ModuleId = modules[1].Id
                 },
-
-                                new Activity {
+            // ----------- till Module 'Bootstrap' (kurs .NET)
+                new Activity {
                     Name = "Bootstrap foundations with Dr Drowzee.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
-                    StartDateTime = new DateTime(2016, 11, 03, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 11, 05, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 12, 1, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 1, 17, 0, 0),
                     Description = "Introduction to the Bootstrap concept.",
                     ModuleId = modules[2].Id
                 },
-                      new Activity {
+                new Activity {
                     Name = "Badges and animations for the handy coder.",
                     ActivityTypeId = activityTypes[0].Id, // Föreläsning
-                    StartDateTime = new DateTime(2016, 11, 07, 09, 0, 0),
-                    EndDateTime = new DateTime(2016, 11, 15, 17, 0, 0),
+                    StartDateTime = new DateTime(2016, 12, 2, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 2, 17, 0, 0),
                     Description = "Get a job by designing buttons and stuff. And it's fun, too!!.",
                     ModuleId = modules[2].Id
                 },
-                    
-                                 new Activity {
+
+                  //  ----------- till Module 'App-utveckling' (kurs .NET)
+                new Activity {
+                    Name = "XXX E-L 9XXX",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 5, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 5, 12, 0, 0),
+                    Description = "",
+                    ModuleId = modules[3].Id
+                },
+                new Activity {
+                    Name = "UX-övning",
+                    ActivityTypeId = activityTypes[1].Id, // Övning
+                    StartDateTime = new DateTime(2016, 12, 5, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 5, 17, 0, 0),
+                    Description = "",
+                    StudentUpload = true,
+                    ModuleId = modules[3].Id
+                },
+                new Activity {
+                    Name = "UX",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 6, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 6, 12, 0, 0),
+                    Description = "Föreläsning med Adrian",
+                    ModuleId = modules[3].Id
+                },
+                new Activity {
+                    Name = "Övning 16",
+                    ActivityTypeId = activityTypes[1].Id, // Övning
+                    StartDateTime = new DateTime(2016, 12, 6, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 6, 17, 0, 0),
+                    Description = "Adrian närvarande",
+                    StudentUpload = true,
+                    ModuleId = modules[3].Id
+                },
+                new Activity {
+                    Name = "Angular JS",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 7, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 9, 12, 0, 0),
+                    Description = "XXX E-learning XXX. Adrian på plats.",
+                    ModuleId = modules[3].Id
+                },
+                new Activity {
+                    Name = "Client vs Server",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 9, 13, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 9, 17, 0, 0),
+                    Description = "Adrian föreläser",
+                    ModuleId = modules[3].Id
+                },
+                  //  ----------- till Module 'Testning' (kurs .NET)
+                new Activity {
+                    Name = "ISTQB",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 12, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 12, 17, 0, 0),
+                    Description = "",
+                    ModuleId = modules[4].Id
+                },
+                new Activity {
+                    Name = "TDD",
+                    ActivityTypeId = activityTypes[1].Id, // E-learning
+                    StartDateTime = new DateTime(2016, 12, 13, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 13, 17, 0, 0),
+                    Description = "Test Driven Development  XXX E-L XXX",
+                    ModuleId = modules[4].Id
+                },
+                new Activity {
+                    Name = "ISTQB",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2016, 12, 14, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 15, 0, 0),
+                    Description = "Föreläsning inför certifiering.",
+                    ModuleId = modules[4].Id
+                },
+                /*
+                new Activity {
+                    Name = "ISTQB Certifiering",
+                    ActivityTypeId = activityTypes[3].Id, // Tentamen
+                    StartDateTime = new DateTime(2016, 12, 16, 15, 30, 0),
+                    EndDateTime = new DateTime(2016, 12, 16, 17, 0, 0),
+                    Description = "Man får endast ha med sig dokumentet 'ISTQB Testtermer' på skrivningen.",
+                    StudentUpload = true,
+                    ModuleId = modules[4].Id
+                },
+    */
+                  //  ----------- till Module 'MVC fördjupning' (kurs .NET)
+                  
+                new Activity {
+                    Name = "SCRUM",
+                    ActivityTypeId = activityTypes[0].Id, // Föreläsning
+                    StartDateTime = new DateTime(2017, 1, 9, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 9, 17, 0, 0),
+                    Description = "Föreläsning med Adrian",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Projektplanering",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 10, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 12, 12, 0, 0),
+                    Description = "Indelning i projektgrupper med 3-4 medlemmar.",
+                    ModuleId = modules[5].Id
+                },
+
+                new Activity {
+                    Name = "Planering sprint 1",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 12, 13, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 12, 17, 0, 0),
+                    Description = "Start på första sprinten. En vecka lång sprint.",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Projekt sprint 1",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 12, 8, 0, 0),
+                    EndDateTime = new DateTime(2016, 1, 17, 17, 0, 0),
+                    Description = "Arbete enl scrum, med scrummöten.",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Sprintredovisning 1",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 18, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 18, 12, 0, 0),
+                    Description = "Varje grupp redovisar de nya fungerande features som tillkommit under senaste sprinten",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Retrospektiv. Planering sprint 2",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 18, 13, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 18, 17, 0, 0),
+                    Description = "Start på andra sprinten. En vecka lång sprint.",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Projekt sprint 2",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 19, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 24, 17, 0, 0),
+                    Description = "Arbete enl scrum, med scrummöten.",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Sprintredovisning 2",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 25, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 25, 13, 0, 0),
+                    Description = "Varje grupp redovisar de nya fungerande features som tillkommit under senaste sprinten",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Retrospektiv. Planering sprint 3",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 25, 13, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 25, 17, 0, 0),
+                    Description = "Start på tredje sprinten. En vecka lång sprint.",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Projekt sprint 3",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 1, 26, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 1, 31, 17, 0, 0),
+                    Description = "Arbete enl scrum, med scrummöten.",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Sprintredovisning 3",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 2, 1, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 2, 1, 13, 0, 0),
+                    Description = "Varje grupp redovisar de nya fungerande features som tillkommit under senaste sprinten",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Förberedelse inför avslutande presentation",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 2, 1, 13, 0, 0),
+                    EndDateTime = new DateTime(2017, 2, 2, 17, 0, 0),
+                    Description = "Varje grupp redovisar de nya fungerande features som tillkommit under senaste sprinten",
+                    ModuleId = modules[5].Id
+                },
+                new Activity {
+                    Name = "Presentation av projektarbete",
+                    ActivityTypeId = activityTypes[4].Id, // Projektarbete
+                    StartDateTime = new DateTime(2017, 2, 3, 8, 0, 0),
+                    EndDateTime = new DateTime(2017, 2, 3, 17, 0, 0),
+                    Description = "Varje grupp presenterar sin applikation, hur den fungerar och bakomliggande kod.",
+                    ModuleId = modules[5].Id
+                },
+    
+            // ----------- till Module 'Office365' (kurs 'It-tekniker')
+                new Activity {
                     Name = "Office365 for dummies.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
                     StartDateTime = new DateTime(2016, 09, 18, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 09, 18, 17, 0, 0),
                     Description = "Introduction to Office365 as it simpliest.",
-                    ModuleId = modules[4].Id
+                    ModuleId = modules[7].Id
                 },
-
-                                new Activity {
+            // ----------- till Module 'Sharepoint' (kurs 'It-tekniker')
+                new Activity {
                     Name = "Advanced Sharepoint and Web Parts.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
                     StartDateTime = new DateTime(2016, 10, 01, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 10, 14, 17, 0, 0),
                     Description = "Programming web parts.",
-                    ModuleId = modules[5].Id
+                    ModuleId = modules[8].Id
                 },
-                      new Activity {
+            // ----------- till Module 'Projektledning' (kurs 'It-tekniker')
+                new Activity {
                     Name = "Projektledning.",
                     ActivityTypeId = activityTypes[0].Id, // Föreläsning
                     StartDateTime = new DateTime(2016, 08, 29, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 09, 14, 17, 0, 0),
                     Description = "Planera ditt projekt.",
-                    ModuleId = modules[3].Id
+                    ModuleId = modules[6].Id
                 },
-                                  new Activity {
+                new Activity {
                     Name = "Förvaltningsmodeller.",
                     ActivityTypeId = activityTypes[3].Id, // Tentamen
                     StartDateTime = new DateTime(2016, 09, 15, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 09, 15, 17, 0, 0),
                     Description = "Grundläggande kunkaper för att skapa en förvaltningsorganinsation.",
-                    ModuleId = modules[3].Id
+                    ModuleId = modules[6].Id
                 },
-                                  new Activity {
+            // ----------- till Module 'Java' (kursen 'Java4W')
+                new Activity {
                  Name = "Java programming with Tony Granato.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
                     StartDateTime = new DateTime(2016, 08, 29, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 09, 07, 17, 0, 0),
                     Description = "The anonymous Javascript function and it's uses in a bigger context.",
-                    ModuleId = modules[6].Id
+                    ModuleId = modules[9].Id
                 },
-
-                                new Activity {
+            // ----------- till Module 'JavaBeans' (kursen 'Java4W')
+                new Activity {
                     Name = "JavaBeans foundations with Dr Drowzee.",
                     ActivityTypeId = activityTypes[1].Id, // E-learning
                     StartDateTime = new DateTime(2016, 09, 19, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 09, 23, 17, 0, 0),
                     Description = "Introduction to the JavaBeans concept.",
-                    ModuleId = modules[7].Id
+                    ModuleId = modules[10].Id
                 },
-                      new Activity {
+            // ----------- till Module 'JUnit' (kursen 'Java4W')
+                new Activity {
                     Name = "Introduction to JUnit.",
                     ActivityTypeId = activityTypes[0].Id, // Föreläsning
                     StartDateTime = new DateTime(2016, 10, 10, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 10, 13, 17, 0, 0),
                     Description = "Write your first test with JUnit.",
-                    ModuleId = modules[8].Id
+                    ModuleId = modules[11].Id
                 },
-                                  new Activity {
+                new Activity {
                     Name = "Continuous integration with jenkins.",
                     ActivityTypeId = activityTypes[3].Id, // Tentamen
                     StartDateTime = new DateTime(2016, 10, 14, 09, 0, 0),
                     EndDateTime = new DateTime(2016, 10, 14, 17, 0, 0),
                     Description = "Apply continuous integration to your project.",
-                    ModuleId = modules[8].Id
+                    ModuleId = modules[11].Id
                 }
             };
-            context.Activities.AddOrUpdate(a => a.Name, activities);
+            foreach (var v in activities)
+            {
+                context.Activities.AddOrUpdate(a => new { a.Name, a.ActivityTypeId },v);
+            }
             context.SaveChanges();
-            
-            // --------------- Students -------------------------------------
 
-            string[,] studentList = {
+            // --------------- Files ----------------------------------------
+    // --------------- Students -------------------------------------
+
+    string[,] studentList = {
                 { "Bengt", "Carlen" },
                 { "Carl",  "Bengtsson"},
                 { "Anna", "Andersson" },
