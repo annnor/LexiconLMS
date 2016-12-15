@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<hr/>
+<hr />
 <br />
 
 <h3>@ViewBag.Heading</h3>
@@ -53,8 +53,8 @@
                     <td>
 
                         @Html.ActionLink("Download", "Download", "Activities", new { id = item.Id }, new { target = "_blank" })
-                        @if (User.IsInRole("Teacher"))
-                    {
+                        @if (User.IsInRole("Teacher") || item.User.Email == User.Identity.Name)
+                        {
                             <span> | </span>
                             @Html.ActionLink("Delete", "Delete", "Files", new { id = item.Id }, null)
                         }
@@ -63,9 +63,9 @@
             }
 
         </table>
-        </div>
-        } else
-        {
-        <p>There are no uploaded files.</p>
-        }
+    </div>
+} else
+{
+    <p>There are no uploaded files.</p>
+}
 

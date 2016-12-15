@@ -221,7 +221,29 @@ namespace LexiconLMS.Controllers
             ApplicationUser user = newDbContext.Users.FirstOrDefault(u => u.Email == email);
             if (user!=null)
             {
+                
                 string presentedName = user.FullName;
+                if(selectedList == "PartialList" || selectedList == "StudentList")
+                {
+                    var file = new FilesController();
+                    var files = user.Files.ToList();
+                    bool result = file.DeleteFiles(files);
+                    if (!result)
+                    {
+                        TempData["NegativeEvent"] = "User couldn´t be removed. Error when trying to remove files for student";
+                        if (selectedList == "StudentList")
+                        { return RedirectToAction("StudentList"); }
+                        else
+                        { return RedirectToAction("Details", "Courses", new { id = details }); }
+
+                    }
+                }
+                if (selectedList == "Teacherlist" && user.Files.Count > 0)
+                {
+                    TempData["NegativeEvent"] = "User couldn´t be removed. Has uploaded course files.";
+                    return RedirectToAction("TeacherList");
+                }
+
                 newDbContext.Users.Remove(user);
                 newDbContext.SaveChanges();
 

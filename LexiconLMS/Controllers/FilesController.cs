@@ -14,6 +14,34 @@ namespace LexiconLMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public bool DeleteFiles(ICollection<File> files)
+        {
+            bool result = true;
+            if (files.Count > 0)
+            {
+
+                foreach (var f in files.ToList())
+                {
+
+                    try
+                    {
+                        File file = db.Files.Find(f.Id);
+                        db.Files.Remove(file);
+                        db.SaveChanges();
+                        result = true;
+
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return result;
+
+
+        }
         // GET: Files
         public ActionResult Index()
         {
@@ -426,7 +454,7 @@ namespace LexiconLMS.Controllers
 
             return RedirectToAction("Details","Activities", new { id = activityId });
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

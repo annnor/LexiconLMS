@@ -35,8 +35,9 @@ namespace LexiconLMS.Models
 
         public virtual ICollection<Activity> Activities { get; set; }
 
+        public virtual ICollection<File> Files { get; set; }
 
-        public bool isOngoing(DateTime dateTime)
+        public bool IsOngoing(DateTime dateTime)
         {
             return StartDateTime <= dateTime && dateTime <= EndDateTime;
         }
