@@ -296,11 +296,23 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
+            var file = new FilesController();
+
+            Module module = db.Modules.AsNoTracking().FirstOrDefault(a => a.Id == id);                 //Find(id);
+            var activities = module.Activities.ToList();
             
-            Module module = db.Modules.Find(id);
+            foreach (var a in activities)
+            {
+                var files = a.Files.ToList();
+                file.DeleteFiles(files);
+            }
+
+            var moduleFiles = module.Files.ToList();
+            file.DeleteFiles(moduleFiles);
             //ViewBag.CourseId = module.CourseId;
             try
             {
+            module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
             TempData["Event"] = "Module " + module.Name + " removed.";

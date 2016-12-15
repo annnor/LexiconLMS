@@ -214,11 +214,51 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
-            bool sucess = DeleteStudents(id);
+            bool result = true;
+            var file = new FilesController();
+            Course course = db.Courses.AsNoTracking().FirstOrDefault(a => a.Id == id);   //Find(id);
+            var modules = course.Modules.ToList();
+            foreach (var m in modules)
+            {
+                var activities = m.Activities.ToList();
+                foreach (var a in activities)
+                {
+                    var activityFiles = a.Files.ToList();
+                    result = file.DeleteFiles(activityFiles);
+                }
+                if (result)
+                {
+                    var moduleFiles = m.Files.ToList();
+                    result = file.DeleteFiles(moduleFiles);
+                    if (!result)
+                    {
+                        TempData["NegativeEvent"] = "Course " + course.Name + " not removed.";
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    TempData["NegativeEvent"] = "Course " + course.Name + " not removed.";
+                    return RedirectToAction("Index");
+                }
+            }
+            if (result)
+            {
+                var courseFiles = course.Files.ToList();
+                result = file.DeleteFiles(courseFiles);
+                if (!result)
+                {
+                    TempData["NegativeEvent"] = "Course " + course.Name + " not removed.";
+                    return RedirectToAction("Index");
+                }
+            }
 
+
+            bool sucess = DeleteStudents(id);
+            
             if (sucess)
             {
-                Course course = db.Courses.Find(id);
+                course = db.Courses.Find(id);
                 //Course course = db.Courses.Include(m => m.C(id);
 
                 try
@@ -279,8 +319,8 @@ namespace LexiconLMS.Controllers
 
                 // Om föregående modul slutade mindre än 5 dagar sedan så visas den.
                 var earlierDate = today.AddDays(-5);
-                var orderedModules = course.Modules.Where(m => m.EndDateTime >= earlierDate).OrderBy(m => m.StartDateTime);
-
+                var orderedModules = 
+                course.Modules.Where(m => m.EndDateTime >= earlierDate).OrderBy(m => m.StartDateTime);
                 Module tmpModule = null;
                 foreach (var module in orderedModules)
                 {
