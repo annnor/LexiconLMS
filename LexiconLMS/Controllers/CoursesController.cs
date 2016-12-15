@@ -279,8 +279,8 @@ namespace LexiconLMS.Controllers
 
                 // Om föregående modul slutade mindre än 5 dagar sedan så visas den.
                 var earlierDate = today.AddDays(-5);
-                var orderedModules = course.Modules.Where(m => m.EndDateTime >= earlierDate).OrderBy(m => m.StartDateTime);
-
+                var orderedModules = 
+                course.Modules.Where(m => m.EndDateTime >= earlierDate).OrderBy(m => m.StartDateTime);
                 Module tmpModule = null;
                 foreach (var module in orderedModules)
                 {
