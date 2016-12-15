@@ -54,27 +54,30 @@
                     @Html.DisplayFor(activityItem => activity.Type.Name)
                     <br />
                     <b> @Html.Raw("Description: ")</b>
-                        @Html.DisplayFor(activityItem => activity.Name)
-                        <br />
+                    @Html.DisplayFor(activityItem => activity.Name)
+                    <br />
                     var countPublicFiles = activity.Files.Where(f => f.PubliclyVisible == true).Count();
                     if (countPublicFiles > 0)
                     {
-                        <b> @Html.Raw("Files: ")</b> @countPublicFiles
-                        <br />
+                    <b> @Html.Raw("Files: ")</b> @countPublicFiles
+                    <br />
                     }
-                    if (activity.StudentUpload)
+                    if (activity.StudentUpload && activity.IsOngoing(DateTime.Now))
                     {
                         <b style="color:red;">Assignment</b>
+                        <br />
+                    } else if (activity.StudentUpload)
+                    {
+                        <span style="color:orange;">Assignment</span>
                         <br />
                     }
                     @Html.ActionLink("Details", "Details", "Activities", new { id = activity.Id, courseName = @ViewBag.CourseName }, null)  <br />
                     <br />
-
                 }
             </div>
         </div>
         @*  slut på if nrofactivities==0*@
         @{nrOfActivites = nrOfActivites + 1;}
     </div>
-            }
+}
 
