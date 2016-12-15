@@ -206,9 +206,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612141241562_addedModuleIdonFiles.cs" />
-    <Compile Include="Migrations\201612141241562_addedModuleIdonFiles.Designer.cs">
-      <DependentUpon>201612141241562_addedModuleIdonFiles.cs</DependentUpon>
+    <Compile Include="Migrations\201612141546019_initIX.cs" />
+    <Compile Include="Migrations\201612141546019_initIX.Designer.cs">
+      <DependentUpon>201612141546019_initIX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612141555561_initX.cs" />
+    <Compile Include="Migrations\201612141555561_initX.Designer.cs">
+      <DependentUpon>201612141555561_initX.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -350,8 +354,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612141241562_addedModuleIdonFiles.resx">
-      <DependentUpon>201612141241562_addedModuleIdonFiles.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612141546019_initIX.resx">
+      <DependentUpon>201612141546019_initIX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612141555561_initX.resx">
+      <DependentUpon>201612141555561_initX.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
