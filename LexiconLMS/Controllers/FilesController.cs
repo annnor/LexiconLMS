@@ -31,7 +31,7 @@ namespace LexiconLMS.Controllers
                         result = true;
 
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return false;
                     }
