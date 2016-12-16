@@ -5467,6 +5467,9 @@ button.list-group-item-danger.active:focus {
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
 }
+.panel-heading > .model-details > a {
+  color: wheat;
+}
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
