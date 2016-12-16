@@ -42,6 +42,10 @@
         <div id=@id class="panel-collapse collapse">
             <div class="panel-body">
 
+                <b> @Html.Raw("Files on module level: ")</b> @item.Files.Count()
+                <br />
+                <br />
+
                 @foreach (var activity in item.Activities.OrderBy(o => o.StartDateTime))
                 {
                     @Html.DisplayFor(activityItem => activity.StartDateTime)
